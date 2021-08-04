@@ -1,8 +1,9 @@
+import bgImage from '../images/Home.jpg';
 
 function Login() {
     return (
-      <div className="login bg-snow w-52 h-32">
-          
+      <div className="login bg-snow w-4/5 h-4/5 rounded-md">
+          <img className="bgimage rounded-t-md w-full h-32" src={bgImage} alt="Home"/>
       </div>
     );
 }
