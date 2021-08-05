@@ -1,10 +1,67 @@
-import bgImage from '../images/Home.jpg';
-
+import mobileBanner from "../images/mobliebanner.png";
+import banner from "../images/banner.jpg";
+import iconFacebook from "../images/Iconfacebook.png";
+import iconGmail from "../images/Icongmail.png";
+import iconTwitter from "../images/Icontwitter.png";
+const Title = () => (
+  <h1 className="font-medium pt-16 sm:pt-2">Create your account</h1>
+);
+const Input = () => (
+  <form>
+    <div className="space-y-2 mt-5 flex flex-col py-1.5 px-6 sm:mt-2">
+      <input
+        className="border border-gray-300 py-1.5 px-6 rounded-md text-center "
+        type="text"
+        name="username"
+        placeholder="Username"
+      />
+      <input
+        className="border border-gray-300 py-1.5 px-6 rounded-md text-center "
+        type="text"
+        name="EmailorMoblie"
+        placeholder="Email or Moblie"
+      />
+      <input
+        className="border border-gray-300 py-1.5 px-6 rounded-md text-center "
+        type="password"
+        name="password"
+        placeholder="Password"
+      />
+    </div>
+    <input
+      className="mt-5 bg-cyan-blue text-white border border-gray-300 py-1.5 px-6 rounded-md text-center sm:mt-3"
+      type="submit"
+      value="Create your account now!"
+    />
+    <div className="border-b border-gray-700 mt-7 sm:hidden"></div>
+    <div className="mt-4  text-gray-600 sm:mt-1">or sign in with</div>
+    <div className="flex flex-row space-x-4 justify-center mt-2">
+      <img className="w-10 h-10" src={iconFacebook} alt="iconfacebook" />
+      <img className="w-10 h-10" src={iconGmail} alt="icongmail" />
+      <img className="w-10 h-10" src={iconTwitter} alt="icontwitter" />
+    </div>
+  </form>
+);
 function Login() {
-    return (
-      <div className="login bg-snow w-4/5 h-4/5 rounded-md">
-          <img className="bgimage rounded-t-md w-full h-32" src={bgImage} alt="Home"/>
+  return (
+    <div className="login flex flex-col bg-snow w-4/5 h-5/6 rounded-lg shadow-lg sm:flex sm:flex-row-reverse text-sm">
+      <div className="w-full h-3/4 rounded-lg sm:h-full sm:w-3/5 sm:rounded-none sm:rounded-r-lg">
+        <Title />
+        <Input />
       </div>
-    );
+      <div className="w-full h-1/4 rounded-b-md mt-5 sm:mt-0 sm:h-full sm:w-2/5 sm:rounded-l-lg sm:rounded-br-none">
+        <img
+          className="mobileBanner rounded-b-lg w-full h-full sm:hidden"
+          src={mobileBanner}
+          alt="Home"
+        />
+        <img
+          className="banner rounded-l-lg hidden sm:flex h-full w-full"
+          src={banner}
+          alt="Home"
+        />
+      </div>
+    </div>
+  );
 }
-export default Login
+export default Login;

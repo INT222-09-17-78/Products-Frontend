@@ -17,6 +17,7 @@ module.exports = {
       current: 'currentColor',
       'snow': '#FAFAFA',
       'cyan-blue': '#70a3d2',
+      'whitesmoke':'#EFEFEF',
       black: colors.black,
       white: colors.white,
       gray: colors.coolGray,
