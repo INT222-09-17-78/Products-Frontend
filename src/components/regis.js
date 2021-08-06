@@ -4,7 +4,8 @@ import iconFacebook from "../images/Iconfacebook.png";
 import iconGmail from "../images/Icongmail.png";
 import iconTwitter from "../images/Icontwitter.png";
 import { useState } from "react";
-const accountData = [];
+
+
 const Title = () => {
   return <h1 className="font-medium pt-16 sm:pt-2">Create your account</h1>;
 };
@@ -12,7 +13,15 @@ const FormRegister = () => {
   const [username, setUsername] = useState("");
   const [phoneOrEmail, setPhoneOrEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [formValid,setFormValid] = useState(true);
 
+  // const checkForm = () =>{
+  //   if(username.trim().length>0 && phoneOrEmail.trim().length>0 && password.trim().length>0){
+  //     setFormValid(true)
+  //   }else{
+  //     setFormValid(false)
+  //   }
+  // } 
   const inputUsername = (event) => {
     setUsername(event.target.value);
   };
@@ -24,13 +33,32 @@ const FormRegister = () => {
   };
   const regisAccount = (event) => {
     event.preventDefault();
-    console.log("สมัครเรียบร้อย!!");
-    accountData.push({username,phoneOrEmail,password});
-    console.log(accountData);
-    setUsername("")
-    setPhoneOrEmail("")
-    setPassword("")
+    if(username.trim().length>0 && phoneOrEmail.trim().length>0 && password.trim().length>0){
+      setFormValid(true)
+      console.log("สมัครเรียบร้อย!!");
+      const accountData = {
+        username,
+        phoneOrEmail,
+        password,
+      };
+      console.log(accountData);
+      setUsername("");
+      setPhoneOrEmail("");
+      setPassword("");
+    }else{
+      setFormValid(false)
+      console.log("please!!");
+    }
   };
+
+  // useEffect(()=>{
+  //   if(username.trim().length>0 && phoneOrEmail.trim().length>0 && password.trim().length>0){
+  //     setFormValid(true)
+  //   }else{
+  //     setFormValid(false)
+  //   }
+  // },[username,phoneOrEmail,password])
+
   return (
     <form onSubmit={regisAccount}>
       <div className="form-control space-y-2 mt-5 flex flex-col py-1.5 px-6 sm:mt-2">
@@ -56,6 +84,7 @@ const FormRegister = () => {
           value={password}
         />
       </div>
+      <div className="text-red-500 mr-28 sm:mr-32">{ formValid ? null : "ใส่ข้อมูลก่อนดิ้ ไอสัส!!" }</div>
       <input
         className="mt-5 bg-cyan-blue text-white border border-gray-300 py-1.5 px-6 rounded-md text-center sm:mt-3"
         type="submit"
@@ -64,9 +93,9 @@ const FormRegister = () => {
     </form>
   );
 };
-const Login = () => {
+const Regis = () => {
   return (
-    <div className="login flex flex-col bg-snow w-4/5 h-5/6 rounded-lg shadow-lg sm:flex sm:flex-row-reverse text-sm">
+    <div className="regis flex flex-col bg-snow w-4/5 h-5/6 rounded-lg shadow-lg sm:flex sm:flex-row-reverse text-sm">
       <div className="w-full h-3/4 rounded-lg sm:h-full sm:w-3/5 sm:rounded-none sm:rounded-r-lg">
         <Title />
         <FormRegister />
@@ -93,4 +122,4 @@ const Login = () => {
     </div>
   );
 };
-export default Login;
+export default Regis;
