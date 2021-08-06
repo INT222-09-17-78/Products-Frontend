@@ -84,7 +84,7 @@ const FormRegister = () => {
           value={password}
         />
       </div>
-      <div className="text-red-500 mr-28 sm:mr-32">{ formValid ? null : "ใส่ข้อมูลก่อนดิ้ ไอสัส!!" }</div>
+      <div className="text-red-500 mr-28 sm:mr-32">{ formValid ? null : "please!!" }</div>
       <input
         className="mt-5 bg-cyan-blue text-white border border-gray-300 py-1.5 px-6 rounded-md text-center sm:mt-3"
         type="submit"
