@@ -16,7 +16,8 @@
     "build": "npm run watch:css && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "watch:css": "postcss src/styles/tailwind.css -o src/styles/output.css"
+    "watch:css": "postcss src/styles/tailwind.css -o src/styles/output.css",
+    "backend" : "json-server --watch db.json --port 3001"
   },
   "eslintConfig": {
     "extends": [

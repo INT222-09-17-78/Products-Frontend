@@ -3,8 +3,8 @@ import banner from "../images/banner.jpg";
 import iconFacebook from "../images/Iconfacebook.png";
 import iconGmail from "../images/Icongmail.png";
 import iconTwitter from "../images/Icontwitter.png";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import Axios from "axios";
 
 const Title = () => {
   return <h1 className="font-medium pt-16 sm:pt-2">Create your account</h1>;
@@ -13,7 +13,7 @@ const FormRegister = () => {
   const [username, setUsername] = useState("");
   const [phoneOrEmail, setPhoneOrEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [formValid,setFormValid] = useState(true);
+  const [formValid, setFormValid] = useState(true);
 
   // const checkForm = () =>{
   //   if(username.trim().length>0 && phoneOrEmail.trim().length>0 && password.trim().length>0){
@@ -21,7 +21,7 @@ const FormRegister = () => {
   //   }else{
   //     setFormValid(false)
   //   }
-  // } 
+  // }
   const inputUsername = (event) => {
     setUsername(event.target.value);
   };
@@ -33,8 +33,12 @@ const FormRegister = () => {
   };
   const regisAccount = (event) => {
     event.preventDefault();
-    if(username.trim().length>0 && phoneOrEmail.trim().length>0 && password.trim().length>0){
-      setFormValid(true)
+    if (
+      username.trim().length > 0 &&
+      phoneOrEmail.trim().length > 0 &&
+      password.trim().length > 0
+    ) {
+      setFormValid(true);
       console.log("สมัครเรียบร้อย!!");
       const accountData = {
         username,
@@ -45,8 +49,8 @@ const FormRegister = () => {
       setUsername("");
       setPhoneOrEmail("");
       setPassword("");
-    }else{
-      setFormValid(false)
+    } else {
+      setFormValid(false);
       console.log("please!!");
     }
   };
@@ -84,7 +88,9 @@ const FormRegister = () => {
           value={password}
         />
       </div>
-      <div className="text-red-500 mr-28 sm:mr-32">{ formValid ? null : "please!!" }</div>
+      <div className="text-red-500 mr-28 sm:mr-32">
+        {formValid ? null : "please!!"}
+      </div>
       <input
         className="mt-5 bg-cyan-blue text-white border border-gray-300 py-1.5 px-6 rounded-md text-center sm:mt-3"
         type="submit"
@@ -94,6 +100,22 @@ const FormRegister = () => {
   );
 };
 const Regis = () => {
+  const [usersList, setUserList] = useState([]);
+
+  useEffect(() => {
+    Axios.get("http://localhost:3001/data").then((response) => {
+      setUserList(response.data);
+      console.log(response.data);
+    });
+  }, []);
+
+  const user = usersList.map((user) =>
+    <div>
+      <div key="user.username" >{user.username}</div>
+
+    </div>
+  );
+
   return (
     <div className="regis flex flex-col bg-snow w-4/5 h-5/6 rounded-lg shadow-lg sm:flex sm:flex-row-reverse text-sm">
       <div className="w-full h-3/4 rounded-lg sm:h-full sm:w-3/5 sm:rounded-none sm:rounded-r-lg">
