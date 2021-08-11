@@ -3,7 +3,7 @@ import banner from "../images/banner.jpg";
 import iconFacebook from "../images/Iconfacebook.png";
 import iconGmail from "../images/Icongmail.png";
 import iconTwitter from "../images/Icontwitter.png";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import Axios from "axios";
 
 const Title = () => {
@@ -11,12 +11,12 @@ const Title = () => {
 };
 const FormRegister = () => {
   const [username, setUsername] = useState("");
-  const [phoneOrEmail, setPhoneOrEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [formValid, setFormValid] = useState(true);
 
   // const checkForm = () =>{
-  //   if(username.trim().length>0 && phoneOrEmail.trim().length>0 && password.trim().length>0){
+  //   if(username.trim().length>0 && email.trim().length>0 && password.trim().length>0){
   //     setFormValid(true)
   //   }else{
   //     setFormValid(false)
@@ -26,42 +26,57 @@ const FormRegister = () => {
     setUsername(event.target.value);
   };
   const inputPhoneOrEmail = (event) => {
-    setPhoneOrEmail(event.target.value);
+    setEmail(event.target.value);
   };
   const inputPassword = (event) => {
     setPassword(event.target.value);
   };
   const regisAccount = (event) => {
     event.preventDefault();
+
+    const mailformat = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g);
+    //validate all field should not be empty
     if (
-      username.trim().length > 0 &&
-      phoneOrEmail.trim().length > 0 &&
-      password.trim().length > 0
+      username.trim().length <= 0 &&
+      email.trim().length <= 0 &&
+      password.trim().length <= 0
     ) {
+      setFormValid(false);
+      console.log("All field are required");
+    } 
+    else if(!mailformat.test(email)){
+      setFormValid(false);
+      console.log("Email is invaild");
+    }
+    else{
       setFormValid(true);
       console.log("สมัครเรียบร้อย!!");
       const accountData = {
         username,
-        phoneOrEmail,
+        email,
         password,
       };
       console.log(accountData);
       setUsername("");
-      setPhoneOrEmail("");
+      setEmail("");
       setPassword("");
-    } else {
-      setFormValid(false);
-      console.log("please!!");
+      Axios.post("http://localhost:5000/api",{
+        username: username,
+        password: password
+      }).then(()=>{
+        console.log("very good")
+      })
+
     }
   };
 
   // useEffect(()=>{
-  //   if(username.trim().length>0 && phoneOrEmail.trim().length>0 && password.trim().length>0){
+  //   if(username.trim().length>0 && email.trim().length>0 && password.trim().length>0){
   //     setFormValid(true)
   //   }else{
   //     setFormValid(false)
   //   }
-  // },[username,phoneOrEmail,password])
+  // },[username,email,password])
 
   return (
     <form onSubmit={regisAccount}>
@@ -76,9 +91,9 @@ const FormRegister = () => {
         <input
           className="border border-gray-300 py-1.5 px-6 rounded-md text-center "
           type="text"
-          placeholder="Email or Moblie"
+          placeholder="Email"
           onChange={inputPhoneOrEmail}
-          value={phoneOrEmail}
+          value={email}
         />
         <input
           className="border border-gray-300 py-1.5 px-6 rounded-md text-center "
@@ -89,7 +104,7 @@ const FormRegister = () => {
         />
       </div>
       <div className="text-red-500 mr-28 sm:mr-32">
-        {formValid ? null : "please!!"}
+        {/* {formValid ? null : "please!!"} */}
       </div>
       <input
         className="mt-5 bg-cyan-blue text-white border border-gray-300 py-1.5 px-6 rounded-md text-center sm:mt-3"
@@ -100,25 +115,24 @@ const FormRegister = () => {
   );
 };
 const Regis = () => {
-  const [usersList, setUserList] = useState([]);
+  // const [usersList, setUserList] = useState([]);
 
-  useEffect(() => {
-    Axios.get("http://localhost:3001/data").then((response) => {
-      setUserList(response.data);
-      console.log(response.data);
-    });
-  }, []);
-
-  const user = usersList.map((user) =>
-    <div>
-      <div key="user.username" >{user.username}</div>
-
-    </div>
-  );
+  // useEffect(() => {
+  //   Axios.get("http://localhost:3001/data").then((response) => {
+  //     setUserList(response.data);
+  //     console.log(response.data);
+  //   });
+  // }, []);
+  // const user = usersList.map((user) =>
+  //   <div key={user.id}>
+  //     {user.username}
+  //     {user.password}
+  //   </div>
+  // );
 
   return (
-    <div className="regis flex flex-col bg-snow w-4/5 h-5/6 rounded-lg shadow-lg sm:flex sm:flex-row-reverse text-sm">
-      <div className="w-full h-3/4 rounded-lg sm:h-full sm:w-3/5 sm:rounded-none sm:rounded-r-lg">
+    <div className="regis flex flex-col bg-snow w-72 h-108 sm:w-108 sm:h-80 rounded-lg shadow-lg sm:flex sm:flex-row-reverse text-sm absolute">
+      <div className="w-full h-108 rounded-lg sm:h-full sm:w-100 sm:rounded-none sm:rounded-r-lg p-2">
         <Title />
         <FormRegister />
         <div className="border-b border-gray-700 mt-7 sm:hidden"></div>
