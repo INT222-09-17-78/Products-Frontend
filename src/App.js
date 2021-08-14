@@ -3,7 +3,7 @@ import "./styles/output.css";
 import BaseLogin from "./components/baselogin.js";
 
 const Logo = () => (
-  <div className="sm:hidden logo w-24 h-24 bg-whitesmoke rounded-full text-2xl font-bold text-cyan-blue flex items-center justify-center absolute z-10 mt-12">LOGO</div>
+  <div className="logo w-24 h-24 bg-whitesmoke rounded-full text-2xl font-bold text-cyan-blue flex items-center justify-center absolute z-10 mt-12">LOGO</div>
 );
 function App() {
   return (

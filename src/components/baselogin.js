@@ -53,10 +53,10 @@ import FormRegister from "./formregis";
 import tiles from "../images/tiles.jpg";
 const BaseLogin = () => {
   return (
-    <div className="bg-snow w-72 h-104 shadow-xl rounded-xl mt-24 flex items-end">
+    <div className="bg-snow w-72 h-108 shadow-xl rounded-xl mt-24 flex items-end">
       <div className="img-container w-full">
         <FormRegister />
-        <img src={tiles} alt="Tiles" className="rounded-b-xl w-full h-40" />
+        <img src={tiles} alt="Tiles" className="rounded-b-xl w-full h-36" />
       </div>
     </div>
   );

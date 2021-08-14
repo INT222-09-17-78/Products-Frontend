@@ -64,11 +64,12 @@ module.exports = {
       64: '16rem',
       72: '18rem',
       80: '20rem',
+      86: '21rem',
       96: '24rem',
      100: '28rem',
      104: '32rem',
      108: '36rem',
-     112: '40rem'
+     112: '40rem',
     },
     animation: {
       none: 'none',
