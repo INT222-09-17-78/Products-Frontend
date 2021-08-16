@@ -214,7 +214,7 @@ const FormRegister = () => {
       errors.username = "Your username must contain only alphanumerics";
       
     } else if (values.username.trim().length < 7) {
-      errors.username = "Your password must be at least 6 characters";
+      errors.username = "Your username must be at least 6 characters";
       
     } else {
       errors.username = "";
@@ -224,7 +224,7 @@ const FormRegister = () => {
       errors.password = "This field is required";
     } else if (values.password.trim().length < 8) {
       errors.password = "Your password must be at least 8 characters";
-    } else if(values.rePassword !== values.password){
+    } else if(values.rePassword !== values.password && !isLogin){
       errors.password = "Your password not the same";
     }else {
       errors.password = "";

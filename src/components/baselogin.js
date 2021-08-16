@@ -4,6 +4,7 @@
 // import iconGmail from "../images/Icongmail.png";
 // import iconTwitter from "../images/Icontwitter.png";
 import FormRegister from "./formregis";
+import {withRouter} from 'react-router';
 
 // const BaseLogin = () => {
 //   // const [usersList, setUserList] = useState([]);
@@ -53,10 +54,12 @@ import FormRegister from "./formregis";
 import tiles from "../images/tiles.jpg";
 const BaseLogin = () => {
   return (
-    <div className="bg-snow w-72 h-108 shadow-xl rounded-xl mt-24 flex items-end">
-      <div className="img-container w-full">
-        <FormRegister />
-        <img src={tiles} alt="Tiles" className="rounded-b-xl w-full h-36" />
+    <div className="App w-screen h-screen flex justify-center overflow-auto">
+      <div className="bg-snow w-72 h-108 shadow-xl rounded-xl flex items-end">
+        <div className="img-container w-full">
+          <FormRegister />
+          <img src={tiles} alt="Tiles" className="rounded-b-xl w-full h-36" />
+        </div>
       </div>
     </div>
   );
