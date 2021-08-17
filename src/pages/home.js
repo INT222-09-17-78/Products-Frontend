@@ -25,13 +25,20 @@ const Home = () => {
       );
     };
     return (
-      <div className="Header w-screen py-5 flex space-x-6 items-center justify-center">
-        <Logo />
-        <Search />
+      <div className="Home">
         <Router>
-          <Link to="/login" >
-            <LoginButton />
-          </Link>
+          <div className="Header w-screen py-5 flex space-x-6 items-center justify-center">
+            <Link to="/">
+              <Logo />
+            </Link>
+            <Search />
+            <Link to="/login">
+              <LoginButton />
+            </Link>
+          </div>
+          <Switch>
+            <Route path="/login" component={BaseLogin} />
+          </Switch>
         </Router>
       </div>
     );

@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Axios from "axios";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import BaseLogin from "../components/baselogin.js";
 // const FormRegister = (props) => {
 //   const Title = (props) => {
 //     return (
@@ -170,7 +172,7 @@ const FormRegister = () => {
     username: "",
     password: "",
     emailOrMobile: "",
-    rePassword: ""
+    rePassword: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -197,25 +199,21 @@ const FormRegister = () => {
       username: "",
       password: "",
       emailOrMobile: "",
+      rePassword: "",
     });
     setErrors({});
   };
   const regisAccount = (event) => {
     event.preventDefault();
-
     //Username validation
     if (!values.username.trim()) {
       errors.username = "This field is required";
-     
     } else if (values.username.trim().length > 25) {
       errors.username = "Your username must be only 25 characters";
-      
     } else if (!usernameFormat.test(values.username)) {
       errors.username = "Your username must contain only alphanumerics";
-      
     } else if (values.username.trim().length < 7) {
       errors.username = "Your username must be at least 6 characters";
-      
     } else {
       errors.username = "";
     }
@@ -224,39 +222,60 @@ const FormRegister = () => {
       errors.password = "This field is required";
     } else if (values.password.trim().length < 8) {
       errors.password = "Your password must be at least 8 characters";
-    } else if(values.rePassword !== values.password && !isLogin){
+    } else if (values.rePassword !== values.password && !isLogin) {
       errors.password = "Your password not the same";
-    }else {
+    } else {
       errors.password = "";
     }
     //Re-type Password
-     if (!values.rePassword.trim()) {
+    if (!values.rePassword.trim() && !isLogin) {
       errors.rePassword = "This field is required";
-    } else if (values.rePassword.trim().length < 8) {
+    } else if (values.rePassword.trim().length < 8 && !isLogin) {
       errors.rePassword = "Your password must be at least 8 characters";
-    } else if(values.rePassword !== values.password){
+    } else if (values.rePassword !== values.password && !isLogin) {
       errors.rePassword = "Your password not the same";
-    }else {
+    } else {
       errors.rePassword = "";
     }
     //Email and Phone
-    if (!values.emailOrMobile.trim()) {
+    if (!values.emailOrMobile.trim() && !isLogin) {
       errors.emailOrMobile = "This field is required";
-    } else if (!mailFormat.test(values.emailOrMobile)) {
+    } else if (!mailFormat.test(values.emailOrMobile) && !isLogin) {
       errors.emailOrMobile = "Enter your moblie or email only";
     } else {
-      errors.emailOrMobile = ""
+      errors.emailOrMobile = "";
     }
-
-    console.log(errors);
     setValues({
       ...values,
       username: values.username,
       password: values.password,
       emailOrMobile: values.emailOrMobile,
-      rePassword : values.rePassword
+      rePassword: values.rePassword,
     });
+    if (
+      errors.username === "" &&
+      errors.emailOrMobile === "" &&
+      errors.password === "" &&
+      errors.rePassword === ""
+    ) {
+      setValues({
+        ...values,
+        username: "",
+        password: "",
+        emailOrMobile: "",
+        rePassword: "",
+      });
+      Axios.post("http://localhost:5000/api/login", {
+        username: values.username,
+        password: values.password,
+        emailOrMobile: values.emailOrMobile,
+        rePassword: values.rePassword
+      }).then(() => {
+        console.log("very good");
+      });
+    }
   };
+
   // //validate username must be at least six alphanumerics and at least one letter
   // else if (!mailFormat.test(emailOrMobile)) {
   //   // setIsEmpty(false);
@@ -318,7 +337,8 @@ const FormRegister = () => {
           value={values.emailOrMobile}
         />
         <div
-          className={`text-red-600 self-start text-xs mt-0.5 text-left ${!isLogin ? "" : "hidden"
+          className={`text-red-600 self-start text-xs mt-0.5 text-left ${
+            !isLogin ? "" : "hidden"
           }`}
         >
           {errors.emailOrMobile}
@@ -345,9 +365,24 @@ const FormRegister = () => {
           onChange={handleChange}
           value={values.rePassword}
         />
-        <div className={`text-red-600 self-start text-xs mt-0.5 text-left ${!isLogin ? "" : "hidden"
-          }`}>
+        <div
+          className={`text-red-600 self-start text-xs mt-0.5 text-left ${
+            !isLogin ? "" : "hidden"
+          }`}
+        >
           {errors.rePassword}
+        </div>
+        <div
+          className={`text-green-600 self-start text-xs mt-0.5 text-left ${
+            errors.username === "" &&
+            errors.emailOrMobile === "" &&
+            errors.password === "" &&
+            errors.rePassword === ""
+              ? ""
+              : "hidden"
+          }`}
+        >
+          Login Successful
         </div>
         <div
           className={`text-cyan-blue self-start mt-3 text-xs ${
@@ -359,15 +394,18 @@ const FormRegister = () => {
         <button className="bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
           {!isLogin ? "Create your account now!" : "Sign in"}
         </button>
-        <div
-          className={`text-cyan-blue mt-3 font-semibold cursor-pointer hover:text-blue-300 hover:underline ${
-            isLogin ? "" : "hidden"
-          }`}
-          onClick={switchToRegis}
-        >
-          Create an account
-        </div>
-        
+        <Router>
+          <Link to="/registration">
+            <div
+              className={`text-cyan-blue mt-3 font-semibold cursor-pointer hover:text-blue-300 hover:underline ${
+                isLogin ? "" : "hidden"
+              }`}
+              onClick={switchToRegis}
+            >
+              Create an account
+            </div>
+          </Link>   
+        </Router>
       </div>
     </form>
   );
