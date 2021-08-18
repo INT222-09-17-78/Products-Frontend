@@ -2,8 +2,12 @@ import Logo from "../components/logo.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import BaseLogin from "../components/baselogin.js";
 import FormLogin from "../components/formlogin.js";
+import { useState } from "react";
+import FormRegister from "../components/formregis.js";
+
 const Home = () => {
   const Header = () => {
+    // const [showResults, setShowResults] = useState(false)
     const Search = () => {
       return (
         <div className="Search flex items-center text-sm">
@@ -19,6 +23,7 @@ const Home = () => {
       );
     };
     const LoginButton = () => {
+      // const onClickForLogin = () => setShowResults(true)
       return (
         <button className="LoginButton text-xs border-2 border-gray-400 w-14 h-6 text-gray-400 rounded-md self-start font-semibold flex-shrink-0 mb-10">
           Log in
@@ -29,7 +34,7 @@ const Home = () => {
       <div className="Home">
         <Router>
           <div className="Header w-screen py-5 flex space-x-6 items-center justify-center">
-            <Link exact to="/">
+            <Link to="/">
               <Logo />
             </Link>
             <Search />
@@ -38,7 +43,8 @@ const Home = () => {
             </Link>
           </div>
           <Switch>
-            <Route path="/login" component={BaseLogin} />
+            <Route path="/login" component={FormLogin}></Route>
+            <Route path="/registration" component={FormRegister}></Route>
           </Switch>
         </Router>
       </div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import FormRegister from "./formregis";
+import tiles from "../images/tiles.jpg";
 // const FormLogin = (props) => {
 //   const Title = (props) => {
 //     return (
@@ -269,55 +270,59 @@ const FormLogin = () => {
   // }
   // };
   return (
-    <form onSubmit={regisAccount}>
-   <div className="form-content w-full h-86 text-sm flex flex-col px-10 mt-4">
-        <input
-          className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none "
-          type="text"
-          placeholder="Username, Email or Phone"
-          name="username"
-          onChange={handleChange}
-          value={values.username}
-        />
-        <div className="text-red-600 self-start text-xs mt-0.5 text-left">
-          {errors.username}
-        </div>
-        <input
-          className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-          value={values.password}
-        />
-        <div className="text-red-600 self-start text-xs mt-0.5 text-left">
-          {errors.password}
-        </div>
-        <div
-          className={`text-green-600 self-start text-xs mt-0.5 text-left ${
-            errors.username === "" && errors.password === "" ? "" : "hidden"
-          }`}
-        >
-          Login Successful
-        </div>
-        <div className="text-cyan-blue self-start mt-3 text-xs">
-          forgot your password ?
-        </div>
-        <button className="bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
-          Sign in
-        </button>   
-        <Router>
-          <Link to="/registration">
-            <div className="text-cyan-blue mt-3 font-semibold cursor-pointer hover:text-blue-300 hover:underline ">
-              Create an account
+    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-20 bg-black bg-opacity-50">
+      <div className="bg-snow w-72 h-108 shadow-xl rounded-xl flex items-end">
+        <div className="img-container w-full">
+          <form onSubmit={regisAccount}>
+            <div className="form-content w-full h-86 text-sm flex flex-col px-10 mt-4">
+              <input
+                className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none "
+                type="text"
+                placeholder="Username, Email or Phone"
+                name="username"
+                onChange={handleChange}
+                value={values.username}
+              />
+              <div className="text-red-600 self-start text-xs mt-0.5 text-left">
+                {errors.username}
+              </div>
+              <input
+                className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                value={values.password}
+              />
+              <div className="text-red-600 self-start text-xs mt-0.5 text-left">
+                {errors.password}
+              </div>
+              <div
+                className={`text-green-600 self-start text-xs mt-0.5 text-left ${
+                  errors.username === "" && errors.password === ""
+                    ? ""
+                    : "hidden"
+                }`}
+              >
+                Login Successful
+              </div>
+              <div className="text-cyan-blue self-start mt-3 text-xs">
+                forgot your password ?
+              </div>
+              <button className="bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
+                Sign in
+              </button>
+              <Link to="/registration">
+                <div className="text-cyan-blue mt-3 font-semibold cursor-pointer hover:text-blue-300 hover:underline ">
+                  Create an account
+                </div>
+              </Link>
             </div>
-          </Link>
-          <Switch>
-            <Route path="/registration" component={FormRegister}></Route>
-          </Switch>
-        </Router>
+          </form>
+          <img src={tiles} alt="Tiles" className="rounded-b-xl w-full h-36" />
+        </div>
       </div>
-    </form>
+    </div>
   );
 };
 export default FormLogin;

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import BaseLogin from "./baselogin.js";
+import tiles from "../images/tiles.jpg";
 // const FormRegister = (props) => {
 //   const Title = (props) => {
 //     return (
@@ -187,21 +188,21 @@ const FormRegister = () => {
   const usernameFormat = new RegExp(
     /(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/
   );
-//   const [isLogin, setIsLogin] = useState(true);
+  //   const [isLogin, setIsLogin] = useState(true);
   // const [emailOrMobile, setEmailOrMobile] = useState("");
   // const inputEmailOrMobile = (event) => {
   //   setEmailOrMobile(event.target.value);
   // };
-//   const switchToRegis = () => {
-//     setValues({
-//       ...values,
-//       username: "",
-//       password: "",
-//       emailOrMobile: "",
-//       rePassword: "",
-//     });
-//     setErrors({});
-//   };
+  //   const switchToRegis = () => {
+  //     setValues({
+  //       ...values,
+  //       username: "",
+  //       password: "",
+  //       emailOrMobile: "",
+  //       rePassword: "",
+  //     });
+  //     setErrors({});
+  //   };
   const regisAccount = (event) => {
     event.preventDefault();
     //Username validation
@@ -309,80 +310,81 @@ const FormRegister = () => {
   // }
   // };
   return (
-    <form onSubmit={regisAccount}>
-      <div className="font-semibold">Create your account</div>
-      <div className="form-content w-full h-86 text-sm flex flex-col px-10 mt-4">
-        <input
-          className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none "
-          type="text"
-          placeholder="Username"
-          name="username"
-          onChange={handleChange}
-          value={values.username}
-        />
-        <div className="text-red-600 self-start text-xs mt-0.5 text-left">
-          {errors.username}
-        </div>
-        <input
-          className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
-          type="text"
-          name="emailOrMobile"
-          placeholder="Email or Mobile"
-          onChange={handleChange}
-          value={values.emailOrMobile}
-        />
-        <div
-          className="text-red-600 self-start text-xs mt-0.5 text-left"
-        >
-          {errors.emailOrMobile}
-        </div>
-        <input
-          className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-          value={values.password}
-        />
-        <div className="text-red-600 self-start text-xs mt-0.5 text-left">
-          {errors.password}
-        </div>
+    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-20 bg-black bg-opacity-50">
+      <div className="bg-snow w-72 h-108 shadow-xl rounded-xl flex items-end">
+        <div className="img-container w-full">
+          <form onSubmit={regisAccount}>
+            <div className="font-semibold">Create your account</div>
+            <div className="form-content w-full h-86 text-sm flex flex-col px-10 mt-4">
+              <input
+                className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none "
+                type="text"
+                placeholder="Username"
+                name="username"
+                onChange={handleChange}
+                value={values.username}
+              />
+              <div className="text-red-600 self-start text-xs mt-0.5 text-left">
+                {errors.username}
+              </div>
+              <input
+                className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
+                type="text"
+                name="emailOrMobile"
+                placeholder="Email or Mobile"
+                onChange={handleChange}
+                value={values.emailOrMobile}
+              />
+              <div className="text-red-600 self-start text-xs mt-0.5 text-left">
+                {errors.emailOrMobile}
+              </div>
+              <input
+                className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                value={values.password}
+              />
+              <div className="text-red-600 self-start text-xs mt-0.5 text-left">
+                {errors.password}
+              </div>
 
-        <input
-          className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
-          type="password"
-          name="rePassword"
-          placeholder="Re-type Password"
-          onChange={handleChange}
-          value={values.rePassword}
-        />
-        <div
-          className="text-red-600 self-start text-xs mt-0.5 text-left"
-        >
-          {errors.rePassword}
+              <input
+                className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
+                type="password"
+                name="rePassword"
+                placeholder="Re-type Password"
+                onChange={handleChange}
+                value={values.rePassword}
+              />
+              <div className="text-red-600 self-start text-xs mt-0.5 text-left">
+                {errors.rePassword}
+              </div>
+              <div
+                className={`text-green-600 self-start text-xs mt-0.5 text-left ${
+                  errors.username === "" &&
+                  errors.emailOrMobile === "" &&
+                  errors.password === "" &&
+                  errors.rePassword === ""
+                    ? ""
+                    : "hidden"
+                }`}
+              >
+                Login Successful
+              </div>
+              <div className="text-cyan-blue self-start mt-3 text-xs">
+                forgot your password ?
+              </div>
+              <button className="bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
+                Create your account now!
+              </button>
+            </div>
+          </form>
+          <img src={tiles} alt="Tiles" className="rounded-b-xl w-full h-36" />
         </div>
-        <div
-          className={`text-green-600 self-start text-xs mt-0.5 text-left ${
-            errors.username === "" &&
-            errors.emailOrMobile === "" &&
-            errors.password === "" &&
-            errors.rePassword === ""
-              ? ""
-              : "hidden"
-          }`}
-        >
-          Login Successful
-        </div>
-        <div
-          className="text-cyan-blue self-start mt-3 text-xs"
-        >
-          forgot your password ?
-        </div>
-        <button className="bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
-          Create your account now!
-        </button>
       </div>
-    </form>
+    </div>
   );
 };
 export default FormRegister;
