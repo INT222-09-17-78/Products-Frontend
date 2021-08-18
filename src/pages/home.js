@@ -1,8 +1,6 @@
 import Logo from "../components/logo.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import BaseLogin from "../components/baselogin.js";
 import FormLogin from "../components/formlogin.js";
-import { useState } from "react";
 import FormRegister from "../components/formregis.js";
 
 const Home = () => {
