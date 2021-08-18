@@ -65,7 +65,7 @@ const FormLogin = () => {
       <div className="bg-snow w-72 h-112 shadow-xl rounded-xl flex items-end">
         <div className="absolute self-start flex w-72 justify-end p-5">
         <Link to="/">
-            <i class="material-icons cursor-pointer">close</i>
+            <i className="material-icons cursor-pointer">close</i>
         </Link>
         </div>
         <div className="form-container w-full">
