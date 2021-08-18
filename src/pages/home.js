@@ -1,6 +1,7 @@
 import Logo from "../components/logo.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import BaseLogin from "../components/baselogin.js";
+import FormLogin from "../components/formlogin.js";
 const Home = () => {
   const Header = () => {
     const Search = () => {
@@ -28,7 +29,7 @@ const Home = () => {
       <div className="Home">
         <Router>
           <div className="Header w-screen py-5 flex space-x-6 items-center justify-center">
-            <Link to="/">
+            <Link exact to="/">
               <Logo />
             </Link>
             <Search />

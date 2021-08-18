@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import BaseLogin from "./baselogin.js";
-// const FormRegister = (props) => {
+import FormRegister from "./formregis";
+// const FormLogin = (props) => {
 //   const Title = (props) => {
 //     return (
 //       <div className="font-medium mt-14 sm:p-0  w-full h-5">
@@ -164,15 +164,13 @@ import BaseLogin from "./baselogin.js";
 //   );
 // };]
 
-const FormRegister = () => {
+const FormLogin = () => {
   // useEffect(() => {
   //   console.log("useEffect")
   // },[]);
   const [values, setValues] = useState({
     username: "",
     password: "",
-    emailOrMobile: "",
-    rePassword: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -183,92 +181,54 @@ const FormRegister = () => {
       [name]: value,
     });
   };
-  const mailFormat = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g);
-  const usernameFormat = new RegExp(
-    /(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/
-  );
-//   const [isLogin, setIsLogin] = useState(true);
+  // const mailFormat = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g);
+  // const usernameFormat = new RegExp(
+  //   /(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/
+  // );
+  // const [isLogin, setIsLogin] = useState(true);
   // const [emailOrMobile, setEmailOrMobile] = useState("");
   // const inputEmailOrMobile = (event) => {
   //   setEmailOrMobile(event.target.value);
   // };
-//   const switchToRegis = () => {
-//     setValues({
-//       ...values,
-//       username: "",
-//       password: "",
-//       emailOrMobile: "",
-//       rePassword: "",
-//     });
-//     setErrors({});
-//   };
+  // const switchToRegis = () => {
+  //   setIsLogin(false)
+  //   setValues({
+  //     ...values,
+  //     username: "",
+  //     password: "",
+  //     emailOrMobile: "",
+  //     rePassword: "",
+  //   });
+  //   setErrors({});
+  // };
   const regisAccount = (event) => {
     event.preventDefault();
-    //Username validation
+    //Username, Email and Phone validation
     if (!values.username.trim()) {
       errors.username = "This field is required";
-    } else if (values.username.trim().length > 25) {
-      errors.username = "Your username must be only 25 characters";
-    } else if (!usernameFormat.test(values.username)) {
-      errors.username = "Your username must contain only alphanumerics";
-    } else if (values.username.trim().length < 7) {
-      errors.username = "Your username must be at least 6 characters";
     } else {
       errors.username = "";
     }
     //Password validation
     if (!values.password.trim()) {
       errors.password = "This field is required";
-    } else if (values.password.trim().length < 8) {
-      errors.password = "Your password must be at least 8 characters";
-    } else if (values.rePassword !== values.password) {
-      errors.password = "Your password not the same";
     } else {
       errors.password = "";
-    }
-    //Re-type Password
-    if (!values.rePassword.trim()) {
-      errors.rePassword = "This field is required";
-    } else if (values.rePassword.trim().length < 8) {
-      errors.rePassword = "Your password must be at least 8 characters";
-    } else if (values.rePassword !== values.password) {
-      errors.rePassword = "Your password not the same";
-    } else {
-      errors.rePassword = "";
-    }
-    //Email and Phone
-    if (!values.emailOrMobile.trim()) {
-      errors.emailOrMobile = "This field is required";
-    } else if (!mailFormat.test(values.emailOrMobile)) {
-      errors.emailOrMobile = "Enter your moblie or email only";
-    } else {
-      errors.emailOrMobile = "";
     }
     setValues({
       ...values,
       username: values.username,
       password: values.password,
-      emailOrMobile: values.emailOrMobile,
-      rePassword: values.rePassword,
     });
-    if (
-      errors.username === "" &&
-      errors.emailOrMobile === "" &&
-      errors.password === "" &&
-      errors.rePassword === ""
-    ) {
+    if (errors.username === "" && errors.password === "") {
       setValues({
         ...values,
         username: "",
         password: "",
-        emailOrMobile: "",
-        rePassword: "",
       });
       Axios.post("http://localhost:5000/api/login", {
         username: values.username,
         password: values.password,
-        emailOrMobile: values.emailOrMobile,
-        rePassword: values.rePassword,
       }).then(() => {
         console.log("very good");
       });
@@ -310,31 +270,17 @@ const FormRegister = () => {
   // };
   return (
     <form onSubmit={regisAccount}>
-      <div className="font-semibold">Create your account</div>
-      <div className="form-content w-full h-86 text-sm flex flex-col px-10 mt-4">
+   <div className="form-content w-full h-86 text-sm flex flex-col px-10 mt-4">
         <input
           className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none "
           type="text"
-          placeholder="Username"
+          placeholder="Username, Email or Phone"
           name="username"
           onChange={handleChange}
           value={values.username}
         />
         <div className="text-red-600 self-start text-xs mt-0.5 text-left">
           {errors.username}
-        </div>
-        <input
-          className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
-          type="text"
-          name="emailOrMobile"
-          placeholder="Email or Mobile"
-          onChange={handleChange}
-          value={values.emailOrMobile}
-        />
-        <div
-          className="text-red-600 self-start text-xs mt-0.5 text-left"
-        >
-          {errors.emailOrMobile}
         </div>
         <input
           className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
@@ -347,42 +293,31 @@ const FormRegister = () => {
         <div className="text-red-600 self-start text-xs mt-0.5 text-left">
           {errors.password}
         </div>
-
-        <input
-          className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
-          type="password"
-          name="rePassword"
-          placeholder="Re-type Password"
-          onChange={handleChange}
-          value={values.rePassword}
-        />
-        <div
-          className="text-red-600 self-start text-xs mt-0.5 text-left"
-        >
-          {errors.rePassword}
-        </div>
         <div
           className={`text-green-600 self-start text-xs mt-0.5 text-left ${
-            errors.username === "" &&
-            errors.emailOrMobile === "" &&
-            errors.password === "" &&
-            errors.rePassword === ""
-              ? ""
-              : "hidden"
+            errors.username === "" && errors.password === "" ? "" : "hidden"
           }`}
         >
           Login Successful
         </div>
-        <div
-          className="text-cyan-blue self-start mt-3 text-xs"
-        >
+        <div className="text-cyan-blue self-start mt-3 text-xs">
           forgot your password ?
         </div>
         <button className="bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
-          Create your account now!
-        </button>
+          Sign in
+        </button>   
+        <Router>
+          <Link to="/registration">
+            <div className="text-cyan-blue mt-3 font-semibold cursor-pointer hover:text-blue-300 hover:underline ">
+              Create an account
+            </div>
+          </Link>
+          <Switch>
+            <Route path="/registration" component={FormRegister}></Route>
+          </Switch>
+        </Router>
       </div>
     </form>
   );
 };
-export default FormRegister;
+export default FormLogin;

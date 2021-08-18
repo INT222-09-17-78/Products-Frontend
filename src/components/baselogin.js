@@ -4,7 +4,7 @@
 // import iconGmail from "../images/Icongmail.png";
 // import iconTwitter from "../images/Icontwitter.png";
 import FormRegister from "./formregis";
-
+import FormLogin from "./formlogin";
 // const BaseLogin = () => {
 //   // const [usersList, setUserList] = useState([]);
 
@@ -56,7 +56,7 @@ const BaseLogin = () => {
     <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-20 bg-black bg-opacity-50">
       <div className="bg-snow w-72 h-108 shadow-xl rounded-xl flex items-end">
         <div className="img-container w-full">
-          <FormRegister />
+          <FormLogin/>
           <img src={tiles} alt="Tiles" className="rounded-b-xl w-full h-36" />
         </div>
       </div>
