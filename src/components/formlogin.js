@@ -3,6 +3,7 @@ import Axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import tiles from "../images/tiles.jpg";
 import FormRegister from "./formregis";
+import Logo from "./logo";
 
 const FormLogin = () => {
   const [values, setValues] = useState({
@@ -19,7 +20,7 @@ const FormLogin = () => {
     });
   };
 
-  const regisAccount = (event) => {
+  const loginAccount = (event) => {
     event.preventDefault();
     //Username, Email and Phone validation
     if (!values.username.trim()) {
@@ -53,11 +54,23 @@ const FormLogin = () => {
     }
   };
   return (
-    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-20 bg-black bg-opacity-50">
-      <div className="bg-snow w-72 h-108 shadow-xl rounded-xl flex items-end">
-        <div className="img-container w-full">
-          <form onSubmit={regisAccount}>
-            <div className="form-content w-full h-86 text-sm flex flex-col px-10 mt-4">
+    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-14 bg-black bg-opacity-50">
+      <Logo
+        width="w-24"
+        height="h-24"
+        display="absolute"
+        top="top-4"
+        text_size="text-xl"
+      />
+      <div className="bg-snow w-72 h-112 shadow-xl rounded-xl flex items-end">
+        <div className="absolute self-start flex w-72 justify-end p-5">
+        <Link to="/">
+            <i class="material-icons cursor-pointer">close</i>
+        </Link>
+        </div>
+        <div className="form-container w-full">
+          <form onSubmit={loginAccount}>
+            <div className="form-content w-full h-96 text-sm flex flex-col px-10 mt-4">
               <input
                 className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none "
                 type="text"

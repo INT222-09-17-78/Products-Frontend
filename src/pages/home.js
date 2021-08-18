@@ -33,7 +33,7 @@ const Home = () => {
         <Router>
           <div className="Header w-screen py-5 flex space-x-6 items-center justify-center">
             <Link to="/">
-              <Logo />
+              <Logo width="w-16" height="h-16"/>
             </Link>
             <Search />
             <Link to="/login">

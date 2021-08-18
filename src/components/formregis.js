@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Axios from "axios";
 import tiles from "../images/tiles.jpg";
-
+import Logo from "./logo";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect} from "react-router-dom";
 
 const FormRegister = () => {
-
   const [values, setValues] = useState({
     username: "",
     password: "",
@@ -24,7 +24,7 @@ const FormRegister = () => {
   const usernameFormat = new RegExp(
     /(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/
   );
- 
+  const moblieFormat = new RegExp(/^(0[689]{1})+([0-9]{8})+$/g);
   const regisAccount = (event) => {
     event.preventDefault();
     //Username validation
@@ -62,7 +62,10 @@ const FormRegister = () => {
     //Email and Phone
     if (!values.emailOrMobile.trim()) {
       errors.emailOrMobile = "This field is required";
-    } else if (!mailFormat.test(values.emailOrMobile)) {
+    } else if (
+      !mailFormat.test(values.emailOrMobile) &&
+      !moblieFormat.test(values.emailOrMobile)
+    ) {
       errors.emailOrMobile = "Enter your moblie or email only";
     } else {
       errors.emailOrMobile = "";
@@ -94,16 +97,29 @@ const FormRegister = () => {
         rePassword: values.rePassword,
       }).then(() => {
         console.log("very good");
+        <Redirect to="/login"/>
       });
     }
   };
   return (
-    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-20 bg-black bg-opacity-50">
-      <div className="bg-snow w-72 h-108 shadow-xl rounded-xl flex items-end">
-        <div className="img-container w-full">
+    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-14 bg-black bg-opacity-50">
+      <Logo
+        width="w-24"
+        height="h-24"
+        display="absolute"
+        top="top-4"
+        text_size="text-xl"
+      />
+      <div className="bg-snow w-72 h-112 shadow-xl rounded-xl flex items-end">
+        <div className="absolute self-start flex w-72 justify-end p-5">
+        <Link to="/">
+            <i className="material-icons cursor-pointer">close</i>
+        </Link>
+        </div>
+        <div className="form-container w-full">
           <form onSubmit={regisAccount}>
             <div className="font-semibold">Create your account</div>
-            <div className="form-content w-full h-86 text-sm flex flex-col px-10 mt-4">
+            <div className="form-content w-full h-96 text-sm flex flex-col px-10 mt-4">
               <input
                 className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none "
                 type="text"
