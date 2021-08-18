@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Axios from "axios";
-import { BrowserRouter as Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import tiles from "../images/tiles.jpg";
+import FormRegister from "./formregis";
 
 const FormLogin = () => {
   const [values, setValues] = useState({
@@ -99,6 +100,9 @@ const FormLogin = () => {
                   Create an account
                 </div>
               </Link>
+              <Switch>
+                <Route path="/registration" component={FormRegister}></Route>
+              </Switch>
             </div>
           </form>
           <img src={tiles} alt="Tiles" className="rounded-b-xl w-full h-36" />
