@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import Axios from "axios";
 import tiles from "../images/tiles.jpg";
 import Logo from "./logo";
-import { BrowserRouter as Router, Switch, Route, Link, Redirect} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory} from "react-router-dom";
+
 
 const FormRegister = () => {
+  const history = useHistory();
   const [values, setValues] = useState({
     username: "",
     password: "",
@@ -90,15 +92,16 @@ const FormRegister = () => {
         emailOrMobile: "",
         rePassword: "",
       });
-      Axios.post("http://localhost:5000/api/login", {
+      Axios.post("http://localhost:5000/api/uploadNone", {
         username: values.username,
         password: values.password,
-        emailOrMobile: values.emailOrMobile,
-        rePassword: values.rePassword,
-      }).then(() => {
-        console.log("very good");
-        <Redirect to="/login"/>
-      });
+      }).then((res) => {
+        console.log(res)
+        console.log(res.data)
+        history.push("/login")
+      }).catch((res) => {
+        console.log(res.json())
+      })
     }
   };
   return (

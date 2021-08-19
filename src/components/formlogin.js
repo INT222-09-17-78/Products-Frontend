@@ -1,11 +1,12 @@
 import { useState } from "react";
 import Axios from "axios";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link,useHistory} from "react-router-dom";
 import tiles from "../images/tiles.jpg";
 import FormRegister from "./formregis";
 import Logo from "./logo";
 
 const FormLogin = () => {
+  const history = useHistory();
   const [values, setValues] = useState({
     username: "",
     password: "",
@@ -48,9 +49,12 @@ const FormLogin = () => {
       Axios.post("http://localhost:5000/api/login", {
         username: values.username,
         password: values.password,
-      }).then(() => {
-        console.log("very good");
-      });
+      }).then((res) => {
+        console.log(res.data)
+        history.push("/")
+      }).catch((error) => {
+        console.log(error.data)
+      })
     }
   };
   return (
