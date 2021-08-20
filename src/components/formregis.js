@@ -2,8 +2,13 @@ import { useEffect, useState } from "react";
 import Axios from "axios";
 import tiles from "../images/tiles.jpg";
 import Logo from "./logo";
-import { BrowserRouter as Router, Switch, Route, Link, useHistory} from "react-router-dom";
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory,
+} from "react-router-dom";
 
 const FormRegister = () => {
   const history = useHistory();
@@ -14,7 +19,6 @@ const FormRegister = () => {
     rePassword: "",
   });
   const [errors, setErrors] = useState({});
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setValues({
@@ -72,40 +76,51 @@ const FormRegister = () => {
     } else {
       errors.emailOrMobile = "";
     }
-    setValues({
-      ...values,
-      username: values.username,
-      password: values.password,
-      emailOrMobile: values.emailOrMobile,
-      rePassword: values.rePassword,
-    });
+    if (
+      errors.message ||
+      errors.password ||
+      errors.username ||
+      errors.rePassword ||
+      errors.emailOrMobile
+    ) {
+      errors.message = "";
+      setValues({
+        ...values,
+        username: values.username,
+        password: values.password,
+        emailOrMobile: values.emailOrMobile,
+        rePassword: values.rePassword,
+      });
+    }
     if (
       errors.username === "" &&
       errors.emailOrMobile === "" &&
       errors.password === "" &&
       errors.rePassword === ""
     ) {
-      setValues({
-        ...values,
-        username: "",
-        password: "",
-        emailOrMobile: "",
-        rePassword: "",
-      });
       Axios.post("http://localhost:5000/api/uploadNone", {
         username: values.username,
         password: values.password,
-      }).then((res) => {
-        console.log(res)
-        console.log(res.data)
-        history.push("/login")
-      }).catch((res) => {
-        console.log(res.json())
       })
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+          history.push("/login");
+        })
+        .catch((error) => {
+          errors.message = error.response.data.message;
+          setValues({
+            ...values,
+            username: values.username,
+            password: values.password,
+            emailOrMobile: values.emailOrMobile,
+            rePassword: values.rePassword,
+          });
+        });
     }
   };
   return (
-    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-14 bg-black bg-opacity-50">
+    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-14 bg-black bg-opacity-50 z-10">
       <Logo
         width="w-24"
         height="h-24"
@@ -115,9 +130,9 @@ const FormRegister = () => {
       />
       <div className="bg-snow w-72 h-112 shadow-xl rounded-xl flex items-end">
         <div className="absolute self-start flex w-72 justify-end p-5">
-        <Link to="/">
+          <Link to="/">
             <i className="material-icons cursor-pointer">close</i>
-        </Link>
+          </Link>
         </div>
         <div className="form-container w-full">
           <form onSubmit={regisAccount}>
@@ -168,7 +183,10 @@ const FormRegister = () => {
               <div className="text-red-600 self-start text-xs mt-0.5 text-left">
                 {errors.rePassword}
               </div>
-              <div
+              <div className="text-red-600 self-start text-xs mt-0.5 text-left">
+                {errors.message}
+              </div>
+              {/* <div
                 className={`text-green-600 self-start text-xs mt-0.5 text-left ${
                   errors.username === "" &&
                   errors.emailOrMobile === "" &&
@@ -179,7 +197,7 @@ const FormRegister = () => {
                 }`}
               >
                 Login Successful
-              </div>
+              </div> */}
               <div className="text-cyan-blue self-start mt-3 text-xs">
                 forgot your password ?
               </div>

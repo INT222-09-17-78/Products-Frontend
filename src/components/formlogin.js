@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
-import { BrowserRouter as Router, Switch, Route, Link,useHistory} from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import tiles from "../images/tiles.jpg";
 import FormRegister from "./formregis";
 import Logo from "./logo";
 
 const FormLogin = () => {
+  console.log("render")
   const history = useHistory();
   const [values, setValues] = useState({
     username: "",
@@ -35,30 +42,41 @@ const FormLogin = () => {
     } else {
       errors.password = "";
     }
-    setValues({
-      ...values,
-      username: values.username,
-      password: values.password,
-    });
-    if (errors.username === "" && errors.password === "") {
+
+    if(errors.message || errors.password || errors.username){
+      errors.message = ""
       setValues({
         ...values,
-        username: "",
-        password: "",
+        username: values.username,
+        password: values.password,
       });
+    }
+    if (errors.username === "" && errors.password === "") {
       Axios.post("http://localhost:5000/api/login", {
         username: values.username,
         password: values.password,
-      }).then((res) => {
-        console.log(res.data)
-        history.push("/")
-      }).catch((error) => {
-        console.log(error.data)
       })
+        .then((res) => {
+          setValues({
+            ...values,
+            username: "",
+            password: "",
+          });
+          console.log(res.data);
+          history.push("/");
+        })
+        .catch((error) => {
+          errors.message = error.response.data.message;
+          setValues({
+            ...values,
+            username: values.username,
+            password: values.password,
+          });
+        });
     }
   };
   return (
-    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-14 bg-black bg-opacity-50">
+    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-14 bg-black bg-opacity-50 z-10">
       <Logo
         width="w-24"
         height="h-24"
@@ -68,9 +86,9 @@ const FormLogin = () => {
       />
       <div className="bg-snow w-72 h-112 shadow-xl rounded-xl flex items-end">
         <div className="absolute self-start flex w-72 justify-end p-5">
-        <Link to="/">
+          <Link to="/">
             <i className="material-icons cursor-pointer">close</i>
-        </Link>
+          </Link>
         </div>
         <div className="form-container w-full">
           <form onSubmit={loginAccount}>
@@ -97,7 +115,10 @@ const FormLogin = () => {
               <div className="text-red-600 self-start text-xs mt-0.5 text-left">
                 {errors.password}
               </div>
-              <div
+              <div className="text-red-600 self-start text-xs mt-0.5 text-left">
+                {errors.message}
+              </div>
+              {/* <div
                 className={`text-green-600 self-start text-xs mt-0.5 text-left ${
                   errors.username === "" && errors.password === ""
                     ? ""
@@ -105,7 +126,7 @@ const FormLogin = () => {
                 }`}
               >
                 Login Successful
-              </div>
+              </div> */}
               <div className="text-cyan-blue self-start mt-3 text-xs">
                 forgot your password ?
               </div>
