@@ -8,11 +8,10 @@ import {
   useHistory,
 } from "react-router-dom";
 import tiles from "../images/tiles.jpg";
-import FormRegister from "./formregis";
 import Logo from "./logo";
 
-const FormLogin = () => {
-  console.log("render")
+const FormLogin = (props) => {
+  console.log("render");
   const history = useHistory();
   const [values, setValues] = useState({
     username: "",
@@ -43,8 +42,8 @@ const FormLogin = () => {
       errors.password = "";
     }
 
-    if(errors.message || errors.password || errors.username){
-      errors.message = ""
+    if (errors.message || errors.password || errors.username) {
+      errors.message = "";
       setValues({
         ...values,
         username: values.username,
@@ -133,14 +132,11 @@ const FormLogin = () => {
               <button className="bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
                 Sign in
               </button>
-              <Link to="/registration">
+              <Link to={`${props.regisPath}/registration`}>
                 <div className="text-cyan-blue mt-3 font-semibold cursor-pointer hover:text-blue-300 hover:underline ">
                   Create an account
                 </div>
               </Link>
-              <Switch>
-                <Route path="/registration" component={FormRegister}></Route>
-              </Switch>
             </div>
           </form>
           <img src={tiles} alt="Tiles" className="rounded-b-xl w-full h-36" />
