@@ -9,8 +9,13 @@ import {
 } from "react-router-dom";
 import tiles from "../images/tiles.jpg";
 import Logo from "./logo";
-
+Axios.defaults.withCredentials = true;
 const FormLogin = (props) => {
+  useEffect(() => {
+    Axios.get("http://localhost:5000/api/login").then((response) =>
+      console.log(response)
+    );
+  }, []);
   console.log("render");
   const history = useHistory();
   const [values, setValues] = useState({
@@ -30,6 +35,7 @@ const FormLogin = (props) => {
   const loginAccount = (event) => {
     event.preventDefault();
     //Username, Email and Phone validation
+
     if (!values.username.trim()) {
       errors.username = "This field is required";
     } else {

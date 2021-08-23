@@ -3,7 +3,7 @@ import Brands from "../pages/brands";
 import Home from "../pages/home";
 const Navbar = () => {
     return (
-      <div className="Navbar w-full h-12 flex flex-row justify-center items-center space-x-7 text-sm font-medium text-gray-500">
+      <div className="Navbar w-full h-12 md:h-14 lg:h-16 relative flex flex-row shadow-xl z-10 justify-center items-center space-x-5 xs:space-x-8 xsm:space-x-10 text-xs md:text-base md:space-x-16 font-medium text-gray-500">
         <Link to="/">
           <div className="cursor-pointer">หน้าแรก</div>
         </Link>

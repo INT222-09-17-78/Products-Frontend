@@ -13,11 +13,11 @@ import { useState, useEffect } from "react";
 const Home = () => {
   const HomeBanner = () => {
     return (
-      <div className="HomeBanner w-full h-36 relative">
+      <div className="HomeBanner">
         <img
           src={homeBanner}
           alt="HomeBanner"
-          className="object-fill w-full h-full absolute"
+          className="object-fill w-full h-full"
         />
         {/* <button className="text-white bg-black text-xs w-24 h-7 rounded-3xl font-medium absolute right-12 bottom-2 uppercase tracking-wide">shop now</button> */}
       </div>
@@ -26,10 +26,10 @@ const Home = () => {
   const HomeBanner2 = () => {
     const adsCollection = [ads1, ads2, ads3, ads4];
     return (
-      <div className="HomeBanner2 grid grid-cols-2 justify-items-center px-4">
+      <div className="HomeBanner2 grid grid-cols-2 lg:grid-cols-4 justify-items-center px-4 md:px-28">
         {adsCollection.map((ads, index) => {
           return (
-            <img key={index} src={ads} alt={`${ads}`} className="w-40 h-40" />
+            <img key={index} src={ads} alt={`${ads}`} className="w-40 h-40 md:w-48 md:h-48" />
           );
         })}
       </div>

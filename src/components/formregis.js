@@ -98,9 +98,10 @@ const FormRegister = () => {
       errors.password === "" &&
       errors.rePassword === ""
     ) {
-      Axios.post("http://localhost:5000/api/uploadNone", {
+      Axios.post("http://localhost:5000/api/userAndUpload", {
         username: values.username,
         password: values.password,
+        emailOrMobile: values.emailOrMobile,
       })
         .then((res) => {
           console.log(res);
