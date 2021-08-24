@@ -1,16 +1,14 @@
-import Logo from "../components/logo.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import FormLogin from "../components/formlogin.js";
 import FormRegister from "../components/formregis.js";
-import Header from "../components/header.js";
-import Navbar from "../components/navbar.js";
 import homeBanner from "../images/homeBanner.jpg";
 import ads1 from "../images/ads1.jpg";
 import ads2 from "../images/ads2.jpg";
 import ads3 from "../images/ads3.jpg";
 import ads4 from "../images/ads4.jpg";
-import { useState, useEffect } from "react";
+
 const Home = () => {
+  console.log("Home render")
   const HomeBanner = () => {
     return (
       <div className="HomeBanner">
@@ -37,13 +35,11 @@ const Home = () => {
   };
   return (
     <div className="Home">
-      <Header path=""/>
-      <Navbar />
       <HomeBanner />
       <HomeBanner2 />
         <Switch>
           <Route path="/login">
-            <FormLogin regisPath=""/>
+            <FormLogin regisPath="" />
           </Route>
           <Route path="/registration" component={FormRegister} />
         </Switch>

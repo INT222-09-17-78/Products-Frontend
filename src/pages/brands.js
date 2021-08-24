@@ -1,10 +1,9 @@
 import { useState } from "react";
-import Header from "../components/header.js";
-import Navbar from "../components/navbar.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import FormLogin from "../components/formlogin.js";
 import FormRegister from "../components/formregis.js";
 const Brands = () => {
+  console.log("Brands render")
   const BrandsList = () => {
     const brands = [
       {
@@ -83,8 +82,6 @@ const Brands = () => {
   };
   return (
     <div className="Brands">
-      <Header path="brands" />
-      <Navbar />
       <BrandsList />
       <ProductsList />
       <Switch>

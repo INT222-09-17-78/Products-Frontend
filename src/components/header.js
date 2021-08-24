@@ -1,8 +1,14 @@
 import { BrowserRouter as Switch, Route, Link, Router } from "react-router-dom";
 import Logo from "../components/logo.js";
-import FormLogin from "../components/formlogin";
-import FormRegister from "../components/formregis";
+import Axios from "axios";
 const Header = (props) => {
+  console.log("Header render");
+  const logOut = () => {
+    if (window.confirm("Do you want to logout?") === true) {
+      Axios.get("http://localhost:5000/api/logout");
+      window.location.reload();
+    }
+  };
   // const [showResults, setShowResults] = useState(false)
   const Search = () => {
     return (
@@ -33,12 +39,34 @@ const Header = (props) => {
   return (
     // <Router>
     <>
-      <div className="Header w-screen md:h-24 py-5 lg:h-28 border-none flex space-x-4 xs:space-x-6 xsm:space-x-10 justify-center items-center overflow-auto">
+      <div className="Header w-screen md:h-24 py-5 lg:h-28 border-none flex space-x-3.5 xs:space-x-6 xsm:space-x-10 justify-center items-center overflow-auto">
         <Link to="/">
-          <Logo width="w-12" height="h-12" widthxms="w-14" heightxms="h-14" widthmd="w-16" heightmd="h-16" widthlg="w-20" heightlg="h-20"/>
+          <Logo
+            width="w-12"
+            height="h-12"
+            widthxms="w-14"
+            heightxms="h-14"
+            widthmd="w-16"
+            heightmd="h-16"
+            widthlg="w-20"
+            heightlg="h-20"
+          />
         </Link>
         <Search />
-        <LoginButton />
+        {props.isLogin ? (
+          <div className="loggedIn text-xs flex flex-col items-end break-all">
+            <div className="profile-pic rounded-full bg-gray-200 w-10 h-10"></div>
+            <div>{props.usernameInSession}</div>
+            <div
+              className="text-red-500 cursor-pointer hover:underline"
+              onClick={logOut}
+            >
+              Log out
+            </div>
+          </div>
+        ) : (
+          <LoginButton />
+        )}
       </div>
     </>
     // {/* </Router> */}

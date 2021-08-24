@@ -1,16 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Axios from "axios";
 import tiles from "../images/tiles.jpg";
 import Logo from "./logo";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useHistory,
-} from "react-router-dom";
-
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 const FormRegister = () => {
+  console.log("regis render")
   const history = useHistory();
   const [values, setValues] = useState({
     username: "",

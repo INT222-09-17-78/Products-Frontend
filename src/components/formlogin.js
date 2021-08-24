@@ -1,22 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import Axios from "axios";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 import tiles from "../images/tiles.jpg";
 import Logo from "./logo";
 Axios.defaults.withCredentials = true;
 const FormLogin = (props) => {
-  useEffect(() => {
-    Axios.get("http://localhost:5000/api/login").then((response) =>
-      console.log(response)
-    );
-  }, []);
-  console.log("render");
+  console.log("login render")
   const history = useHistory();
   const [values, setValues] = useState({
     username: "",
@@ -68,7 +57,7 @@ const FormLogin = (props) => {
             password: "",
           });
           console.log(res.data);
-          history.push("/");
+          window.location = "/"
         })
         .catch((error) => {
           errors.message = error.response.data.message;
@@ -123,15 +112,6 @@ const FormLogin = (props) => {
               <div className="text-red-600 self-start text-xs mt-0.5 text-left">
                 {errors.message}
               </div>
-              {/* <div
-                className={`text-green-600 self-start text-xs mt-0.5 text-left ${
-                  errors.username === "" && errors.password === ""
-                    ? ""
-                    : "hidden"
-                }`}
-              >
-                Login Successful
-              </div> */}
               <div className="text-cyan-blue self-start mt-3 text-xs">
                 forgot your password ?
               </div>
