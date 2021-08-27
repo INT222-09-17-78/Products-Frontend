@@ -39,7 +39,7 @@ const Header = (props) => {
   return (
     // <Router>
     <>
-      <div className="Header w-screen md:h-24 py-5 lg:h-28 border-none flex space-x-3.5 xs:space-x-6 xsm:space-x-10 justify-center items-center overflow-auto">
+      <div className="Header w-screen md:h-24 py-5 px-2 lg:h-28 border-none flex space-x-3.5 xs:space-x-6 xsm:space-x-10 justify-center items-center overflow-auto">
         <Link to="/">
           <Logo
             width="w-12"
@@ -54,7 +54,7 @@ const Header = (props) => {
         </Link>
         <Search />
         {props.isLogin ? (
-          <div className="loggedIn text-xs flex flex-col items-end break-all">
+          <div className="loggedIn text-xs flex flex-col items-end break-all text-right">
             <div className="profile-pic rounded-full bg-gray-200 w-10 h-10"></div>
             <div>{props.usernameInSession}</div>
             <div

@@ -17,7 +17,8 @@ const App = () => {
       setUsernameInSession(response.data.user);
       setIsLogin(response.data.loggedIn);
     }).catch((error) => {
-       console.log(error.response.data.loggedIn);
+      if(!error.response)
+      console.log(error.response)
     });
   }, []);
   return (
