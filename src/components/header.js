@@ -1,6 +1,7 @@
 import { BrowserRouter as Switch, Route, Link, Router } from "react-router-dom";
 import Logo from "../components/logo.js";
 import Axios from "axios";
+import SearchIcon from '@material-ui/icons/Search';
 const Header = (props) => {
   console.log("Header render");
   const logOut = () => {
@@ -13,9 +14,7 @@ const Header = (props) => {
   const Search = () => {
     return (
       <div className="Search flex items-center text-xs">
-        <i className="material-icons absolute pl-2 text-gray-400 text-base">
-          search
-        </i>
+        <SearchIcon className="material-icons absolute pl-2 text-gray-400"/>
         <input
           type="text"
           placeholder="ค้นหาสินค้า"
@@ -39,7 +38,7 @@ const Header = (props) => {
   return (
     // <Router>
     <>
-      <div className="Header w-screen md:h-24 py-5 px-2 lg:h-28 border-none flex space-x-3.5 xs:space-x-6 xsm:space-x-10 justify-center items-center overflow-auto">
+      <div className="Header overflow-hidden w-screen md:h-24 py-5 px-2 lg:h-28 border-none flex space-x-3.5 xs:space-x-6 xsm:space-x-10 justify-center items-center">
         <Link to="/">
           <Logo
             width="w-12"

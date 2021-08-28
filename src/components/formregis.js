@@ -2,6 +2,7 @@ import { useState } from "react";
 import Axios from "axios";
 import tiles from "../images/tiles.jpg";
 import Logo from "./logo";
+import CloseIcon from '@material-ui/icons/Close';
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 const FormRegister = () => {
   console.log("regis render")
@@ -126,7 +127,7 @@ const FormRegister = () => {
       <div className="bg-snow w-72 h-112 shadow-xl rounded-xl flex items-end">
         <div className="absolute self-start flex w-72 justify-end p-5">
           <Link to="/">
-            <i className="material-icons cursor-pointer">close</i>
+            <CloseIcon className="cursor-pointer"/>
           </Link>
         </div>
         <div className="form-container w-full">

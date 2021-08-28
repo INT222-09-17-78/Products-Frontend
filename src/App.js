@@ -8,27 +8,34 @@ import Navbar from "./components/navbar.js";
 import { useState, useEffect } from "react";
 import Axios from "axios";
 const App = () => {
-  console.log("App render")
+  console.log("App render");
   const [usernameInSession, setUsernameInSession] = useState("");
   const [isLogin, setIsLogin] = useState(false);
   useEffect(() => {
-    console.log("Home UseEffect")
-    Axios.get("http://localhost:5000/api/login").then((response) => {
-      setUsernameInSession(response.data.user);
-      setIsLogin(response.data.loggedIn);
-    }).catch((error) => {
-      if(!error.response)
-      console.log(error.response)
-    });
+    console.log("Home UseEffect");
+    Axios.get("http://localhost:5000/api/login")
+      .then((response) => {
+        setUsernameInSession(response.data.user);
+        setIsLogin(response.data.loggedIn);
+      })
+      .catch((error) => {
+        if (!error.response || error.response.status === 401) {
+          console.log(error.response); 
+        }
+      });
   }, []);
   return (
     <div className="App w-screen h-screen">
       <Router>
-        <Header path="" usernameInSession={usernameInSession} isLogin={isLogin}/>
+        <Header
+          path=""
+          usernameInSession={usernameInSession}
+          isLogin={isLogin}
+        />
         <Navbar />
         <Switch>
           <Route path="/brands" component={Brands} />
-          <Home/>
+          <Home />
         </Switch>
       </Router>
 
