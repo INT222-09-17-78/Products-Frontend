@@ -7,12 +7,14 @@ import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 const Brands = () => {
   console.log("Brands render");
-  const [brands, setBrands] = useState([{ name: "SCG" }, { name: "ABC" }]);
+  const [brands, setBrands] = useState([{ name: "asdasdasd" }, { name: "asdasdasd" }, { name: "asdasdasd" }, { name: "asdasdasd" }]);
   const [currentBrand, setCurrentBrand] = useState(0);
-  const [hasNextBrands,sethasNextBrands] = useState("");
+  const [hasNextBrands, sethasNextBrands] = useState("none");
+  const [hasBeforeBrands, sethasBeforeBrands] = useState("none");
+  const [hasOneBrands, sethasOneBrands] = useState("");
   const BrandsList = () => {
     useEffect(() => {
-      console.log("Home UseEffect");
+      console.log("Brands effecto");
       Axios.get("http://localhost:5000/api/show/brands")
         .then((response) => {
           console.log(response.data);
@@ -22,18 +24,42 @@ const Brands = () => {
         .catch((error) => {
           console.log(error);
         });
+      console.log(currentBrand + 'current effecto')
+      // if(brands.length > 1 && currentBrand > 0 ){
+      //   sethasNextBrands("")
+      // }
+      // if(currentBrand == 1){
+      //   sethasBeforeBrands("none");
+      //   }
+      //   if (currentBrand < brands.length - 1) {
+      //     sethasBeforeBrands("");   
+      //     // setCurrentBrand(currentBrand + 1);
+      //   }
+      //   if(currentBrand == brands.length - 2){
+      //     sethasNextBrands("none");
+      //   }
+
+      if (currentBrand == brands.length - 2) {
+        sethasNextBrands("none")
+      }
+      if (brands.length > 1 && currentBrand != brands.length - 2) {
+        sethasNextBrands("")
+      }
+      if (currentBrand == 0) {
+        sethasBeforeBrands("none")
+      }
+      if (currentBrand > 0) {
+        sethasBeforeBrands("")
+      }
     }, []);
     return (
-      <div className="BrandsList w-full h-60 bg-cyan-blue flex justify-center items-center">
+      <div className="BrandsList w-full h-60 bg-cyan-blue relative flex justify-center items-center">
         <NavigateBeforeIcon
-          className="mb-12 cursor-pointer "
+          className="absolute left-0  mb-12  z-10 cursor-pointer "
           htmlColor="white"
-          style={{ fontSize: "3rem" }}
+          style={{ fontSize: "3rem", display: hasBeforeBrands }}
           onClick={() => {
-            if (currentBrand > 0) {
-              setCurrentBrand(currentBrand - 1);
-              console.log(currentBrand)
-            }
+            setCurrentBrand(currentBrand - 1)
           }}
         />
         {/* <i
@@ -44,22 +70,23 @@ const Brands = () => {
         >
           arrow_back_ios
         </i> */}
-        <div className="carousel-warpper flex w-full mt-8 mb-20 flex-row justify-center items-center space-x-6">
-          <div className="carousel-warpper-content w-32 h-32 bg-white border-2 shadow-lg rounded-lg flex-shrink-0 overflow-auto">
-            {brands[currentBrand].name}
+        <div className="absolute carousel-warpper flex w-full h-full mt-8 mb-20 flex-row justify-center items-center space-x-6">
+
+          <div className={`carousel-warpper-content w-32 h-32 bg-white border-2 shadow-lg rounded-lg flex-shrink-0 overflow-auto ${hasOneBrands}`}>
+            {brands[currentBrand] == undefined ? sethasOneBrands("hidden") : brands[currentBrand].name}
+          </div>
+
+          <div className={`carousel-warpper-content w-32 h-32 bg-white border-2 shadow-lg rounded-lg flex-shrink-0 overflow-auto ${hasOneBrands}`}>
+            {brands[currentBrand + 1] == undefined ? sethasOneBrands("hidden") : brands[currentBrand + 1].name}
           </div>
         </div>
         <NavigateNextIcon
-          className="mb-12 cursor-pointer"
+          className="absolute right-0 mb-12  cursor-pointer z-10"
           htmlColor="white"
-          style={{ fontSize: "3rem",display: hasNextBrands }}
+          style={{ fontSize: "3rem", display: hasNextBrands }}
           onClick={() => {
-            if (currentBrand < brands.length - 1) {
-              setCurrentBrand(currentBrand + 1);
-              console.log(currentBrand)
-            }else if(currentBrand == brands.length - 1){
-              sethasNextBrands("none");
-            }
+            setCurrentBrand(currentBrand + 1)
+
           }}
         />
         {/* <i
