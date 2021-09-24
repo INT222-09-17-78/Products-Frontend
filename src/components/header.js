@@ -41,14 +41,9 @@ const Header = (props) => {
       <div className="Header overflow-hidden w-screen md:h-24 py-5 px-2 lg:h-28 border-none flex space-x-3.5 xs:space-x-6 xsm:space-x-10 justify-center items-center">
         <Link to="/">
           <Logo
-            width="w-12"
-            height="h-12"
-            widthxms="w-14"
-            heightxms="h-14"
-            widthmd="w-16"
-            heightmd="h-16"
-            widthlg="w-20"
-            heightlg="h-20"
+            position="static"
+            w="w-14"
+            h="h-14"
           />
         </Link>
         <Search />

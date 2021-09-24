@@ -1,7 +1,7 @@
 import { useState,useEffect } from "react";
 import Axios from "axios";
 import tiles from "../images/tiles.jpg";
-import Logo from "./Logo";
+import Logo from "./Logo.js";
 import CloseIcon from '@material-ui/icons/Close';
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 const FormRegister = () => {
