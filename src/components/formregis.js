@@ -1,9 +1,8 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
-import tiles from "../images/tiles.jpg";
-import Logo from "./Logo";
-import CloseIcon from '@material-ui/icons/Close';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+import { taggedTemplateExpression } from "@babel/types";
 const FormRegister = () => {
   console.log("regis render");
   const history = useHistory();
@@ -26,199 +25,104 @@ const FormRegister = () => {
         }
       });
   }, []);
-  const [errors, setErrors] = useState({});
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
-  const mailFormat = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g);
-  const usernameFormat = new RegExp(
-    /(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/
-  );
-  const moblieFormat = new RegExp(/^(0[689]{1})+([0-9]{8})+$/g);
-  const regisAccount = (event) => {
-    event.preventDefault();
-    //Username validation
-    if (!values.username.trim()) {
-      errors.username = "This field is required";
-    } else if (values.username.trim().length > 25) {
-      errors.username = "Your username must be only 25 characters";
-    } else if (!usernameFormat.test(values.username)) {
-      errors.username = "Your username must contain only alphanumerics";
-    } else if (values.username.trim().length < 7) {
-      errors.username = "Your username must be at least 6 characters";
-    } else {
-      errors.username = "";
-    }
-    //Password validation
-    if (!values.password.trim()) {
-      errors.password = "This field is required";
-    } else if (values.password.trim().length < 8) {
-      errors.password = "Your password must be at least 8 characters";
-    } else if (values.rePassword !== values.password) {
-      errors.password = "Your password not the same";
-    } else {
-      errors.password = "";
-    }
-    //Re-type Password
-    if (!values.rePassword.trim()) {
-      errors.rePassword = "This field is required";
-    } else if (values.rePassword.trim().length < 8) {
-      errors.rePassword = "Your password must be at least 8 characters";
-    } else if (values.rePassword !== values.password) {
-      errors.rePassword = "Your password not the same";
-    } else {
-      errors.rePassword = "";
-    }
-    //Email and Phone
-    if (!values.emailOrMobile.trim()) {
-      errors.emailOrMobile = "This field is required";
-    } else if (
-      !mailFormat.test(values.emailOrMobile) &&
-      !moblieFormat.test(values.emailOrMobile)
-    ) {
-      errors.emailOrMobile = "Enter your moblie or email only";
-    } else {
-      errors.emailOrMobile = "";
-    }
-    if (
-      errors.message ||
-      errors.password ||
-      errors.username ||
-      errors.rePassword ||
-      errors.emailOrMobile
-    ) {
-      errors.message = "";
-      setValues({
-        ...values,
-        username: values.username,
-        password: values.password,
-        emailOrMobile: values.emailOrMobile,
-        rePassword: values.rePassword,
-      });
-    }
-    if (
-      errors.username === "" &&
-      errors.emailOrMobile === "" &&
-      errors.password === "" &&
-      errors.rePassword === ""
-    ) {
-      Axios.post("http://localhost:5000/api/users/userAndUpload", {
-        username: values.username,
-        password: values.password,
-        emailOrMobile: values.emailOrMobile,
-      })
-        .then((res) => {
-          console.log(res);
-          console.log(res.data);
-          history.push("/login");
-        })
-        .catch((error) => {
-          errors.message = error.response.data.message;
-          setValues({
-            ...values,
-            username: values.username,
-            password: values.password,
-            emailOrMobile: values.emailOrMobile,
-            rePassword: values.rePassword,
-          });
-        });
-    }
-  };
-  return (
-    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-14 bg-black bg-opacity-50 z-10">
-      <Logo
-        width="w-24"
-        height="h-24"
-        display="absolute"
-        top="top-4"
-        text_size="text-xl"
-      />
-      <div className="bg-snow w-72 h-112 shadow-xl rounded-xl flex items-end">
-        <div className="absolute self-start flex w-72 justify-end p-5">
-          <Link to="/">
-            <CloseIcon className="cursor-pointer"/>
-          </Link>
-        </div>
-        <div className="form-container w-full">
-          <form onSubmit={regisAccount}>
-            <div className="font-semibold">Create your account</div>
-            <div className="form-content w-full h-96 text-sm flex flex-col px-10 mt-4">
-              <input
-                className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none "
-                type="text"
-                placeholder="Username"
-                name="username"
-                onChange={handleChange}
-                value={values.username}
-              />
-              <div className="text-red-600 self-start text-xs mt-0.5 text-left">
-                {errors.username}
-              </div>
-              <input
-                className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
-                type="text"
-                name="emailOrMobile"
-                placeholder="Email or Mobile"
-                onChange={handleChange}
-                value={values.emailOrMobile}
-              />
-              <div className="text-red-600 self-start text-xs mt-0.5 text-left">
-                {errors.emailOrMobile}
-              </div>
-              <input
-                className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
-                type="password"
-                name="password"
-                placeholder="Password"
-                onChange={handleChange}
-                value={values.password}
-              />
-              <div className="text-red-600 self-start text-xs mt-0.5 text-left">
-                {errors.password}
-              </div>
 
-              <input
-                className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
-                type="password"
-                name="rePassword"
-                placeholder="Re-type Password"
-                onChange={handleChange}
-                value={values.rePassword}
-              />
-              <div className="text-red-600 self-start text-xs mt-0.5 text-left">
-                {errors.rePassword}
-              </div>
-              <div className="text-red-600 self-start text-xs mt-0.5 text-left">
-                {errors.message}
-              </div>
-              {/* <div
-                className={`text-green-600 self-start text-xs mt-0.5 text-left ${
-                  errors.username === "" &&
-                  errors.emailOrMobile === "" &&
-                  errors.password === "" &&
-                  errors.rePassword === ""
-                    ? ""
-                    : "hidden"
-                }`}
-              >
-                Login Successful
-              </div> */}
-              <div className="text-cyan-blue self-start mt-3 text-xs">
-                forgot your password ?
-              </div>
-              <button className="bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
-                Create your account now!
-              </button>
-            </div>
-          </form>
-          <img src={tiles} alt="Tiles" className="rounded-b-xl w-full h-36" />
+
+  return (
+
+    // <table>
+    //     <thead>
+    //       <tr>
+    //         <th scope="col">id</th>
+    //         <th scope="col">username</th>
+    //         <th scope="col">moblie</th>
+    //         <th scope="col">email</th>
+    //         <th scope="col">role</th>
+    //         <th scope="col">action</th>
+    //       </tr>
+    //     </thead>
+    //     <tbody>
+    //       {userData.map((user, index) => {
+    //         return (
+    //           <tr key={index}>
+    //             <td>{user.id}</td>
+    //             <td>{user.username}</td>
+    //             <td>{user.moblie ? user.moblie : "-"}</td>
+    //             <td>{user.email ? user.email : "-"}</td>
+    //             <td>{user.role}</td>
+    //             <td>
+    //               <MoreVertIcon
+    //                 style={{ cursor: "pointer" }}
+    //               />
+    //             </td>
+    //           </tr>
+    //         );
+    //       })}
+    //     </tbody>
+    //   </table>
+
+    <>
+
+
+      <section class="container mx-auto p-6 font-mono">
+        <button className="flex items-start ml-6 mb-2 bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
+          Add User
+        </button>
+        <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+          <div class="w-full overflow-x-auto">
+
+            <table class="w-full">
+              <thead>
+                <tr class="text-center text-md font-semibold tracking-wide text-left text-gray-900 bg-red-600 uppercase border-gray-600 ">
+
+                </tr>
+                <tr class="text-center text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase  border-gray-600">
+                  <th class="px-4 py-3">id</th>
+                  <th class="px-4 py-3">username</th>
+                  <th class="px-4 py-3">mobile</th>
+                  <th class="px-4 py-3">email</th>
+                  <th class="px-4 py-3">role</th>
+                  <th class="px-4 py-3">action</th>
+                </tr>
+
+              </thead>
+              <tbody class="bg-white">
+                {userData.map((user, index) => {
+                  return (
+                    <tr key={index} class="text-gray-700">
+                      <td class="px-4 py-3 border">
+                        <div class="flex items-center text-sm">
+                          <div class="relative w-8 h-8 mr-3 rounded-full md:block">
+                            <img class="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
+                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                          </div>
+                          <div>
+                            <p class="font-semibold text-black">{user.id}</p>
+                            {/* <p class="text-xs text-gray-600">Developer</p> */}
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-ms font-semibold border">{user.username}</td>
+                      {/* <td class="px-4 py-3 text-xs border">
+              <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{user.moblie ? user.moblie : "-"}</span>
+            </td> */}
+                      <td class="px-4 py-3 text-sm border">{user.mobile ? user.mobile : "-"}</td>
+                      <td class="px-4 py-3 text-sm border">{user.email ? user.email : "-"}</td>
+                      <td class="px-4 py-3 text-sm border">{user.role}</td>
+                      <td class="py-4 px-6 border-b border-grey-light">
+                        <a href="#" class="font-semibold leading-tight text-green-700 bg-green-100 rounded-sm py-1 px-3 mx-2">Edit</a>
+                        <a href="#" class="font-semibold leading-tight text-red-700 bg-red-100 rounded-sm py-1 px-3 mx-2">Delete</a>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
+
+
   );
 };
 export default FormRegister;
