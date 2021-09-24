@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import FormLogin from "../components/Formlogin.js";
-import FormRegister from "../components/Formregis.js";
+import FormRegister from "./UsersManage.js";
 import homeBanner from "../images/homeBanner.jpg";
 import ads1 from "../images/ads1.jpg";
 import ads2 from "../images/ads2.jpg";

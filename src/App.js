@@ -7,7 +7,7 @@ import Header from "./components/Header.js";
 import Navbar from "./components/Navbar.js";
 import { useState, useEffect } from "react";
 import FormLogin from "./components/Formlogin.js";
-import FormRegister from "./components/Formregis.js";
+import UserManage from "./pages/UsersManage.js";
 import Axios from "axios";
 const App = () => {
   console.log("App render");
@@ -40,7 +40,7 @@ const App = () => {
           <Route exact path="/" component={Home} />
           <Route path="/brands" component={Brands} />
           <Route path="/login" component={FormLogin} />
-          <Route path="/registration" component={FormRegister} />
+          <Route path="/users" component={UserManage} />
         </Switch>
       </Router>
     </div>

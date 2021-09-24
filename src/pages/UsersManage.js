@@ -2,15 +2,18 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 import { taggedTemplateExpression } from "@babel/types";
-const FormRegister = () => {
-  console.log("regis render");
-  const history = useHistory();
-  const [values, setValues] = useState({
-    username: "",
-    password: "",
-    emailOrMobile: "",
-    rePassword: "",
-  });
+import FormEditUser from "../components/FormEditUser";
+const UsersManage = () => {
+  console.log("UsersManage render");
+  // const history = useHistory();
+  // const [values, setValues] = useState({
+  //   username: "",
+  //   password: "",
+  //   emailOrMobile: "",
+  //   rePassword: "",
+  // });
+  const [isAdd, setIsAdd] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const [userData, setUserData] = useState([]);
   useEffect(() => {
     Axios.get("http://localhost:5000/api/users")
@@ -24,8 +27,7 @@ const FormRegister = () => {
         }
       });
   }, []);
-
-
+  
   return (
 
     // <table>
@@ -60,12 +62,16 @@ const FormRegister = () => {
     //   </table>
 
     <>
+    
 
-
-      <section class="container mx-auto p-6 font-mono">
-        <button className="flex items-start ml-6 mb-2 bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
+    {isEdit === false ? null : <FormEditUser   setIsEdit={setIsEdit}></FormEditUser>}
+      <section class=" container mx-auto pr-14 pl-14 pt-14 font-mono ">
+      
+        <div class="flex justify-end ">
+      <button onClick={()=>{setIsAdd(true) }} className="w-32 mb-2 bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
           Add User
         </button>
+        </div>
         <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
           <div class="w-full overflow-x-auto">
 
@@ -108,8 +114,8 @@ const FormRegister = () => {
                       <td class="px-4 py-3 text-sm border">{user.email ? user.email : "-"}</td>
                       <td class="px-4 py-3 text-sm border">{user.role}</td>
                       <td class="py-4 px-6 border-b border-grey-light">
-                        <a href="#" class="font-semibold leading-tight text-green-700 bg-green-100 rounded-sm py-1 px-3 mx-2">Edit</a>
-                        <a href="#" class="font-semibold leading-tight text-red-700 bg-red-100 rounded-sm py-1 px-3 mx-2">Delete</a>
+                        <a onClick={()=>{setIsEdit(true) }} class="cursor-pointer font-semibold leading-tight text-green-700 bg-green-100 rounded-sm py-1 px-3 mx-2">Edit</a>
+                        <a class="font-semibold leading-tight text-red-700 bg-red-100 rounded-sm py-1 px-3 mx-2">Delete</a>
                       </td>
                     </tr>
                   );
@@ -119,9 +125,10 @@ const FormRegister = () => {
           </div>
         </div>
       </section>
+     
     </>
 
 
   );
 };
-export default FormRegister;
+export default UsersManage;

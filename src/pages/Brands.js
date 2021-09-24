@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import FormLogin from "../components/Formlogin.js";
-import FormRegister from "../components/Formregis.js";
+import FormRegister from "./UsersManage.js";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 const Brands = () => {
