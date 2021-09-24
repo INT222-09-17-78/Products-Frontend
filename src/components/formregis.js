@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 import { taggedTemplateExpression } from "@babel/types";
 const FormRegister = () => {
@@ -72,10 +71,10 @@ const FormRegister = () => {
 
             <table class="w-full">
               <thead>
-                <tr class="text-center text-md font-semibold tracking-wide text-left text-gray-900 bg-red-600 uppercase border-gray-600 ">
+                <tr class="text-center text-md font-semibold tracking-wide text-gray-900 bg-red-600 uppercase border-gray-600 ">
 
                 </tr>
-                <tr class="text-center text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase  border-gray-600">
+                <tr class="text-center text-md font-semibold tracking-wide text-gray-900 bg-gray-100 uppercase  border-gray-600">
                   <th class="px-4 py-3">id</th>
                   <th class="px-4 py-3">username</th>
                   <th class="px-4 py-3">mobile</th>

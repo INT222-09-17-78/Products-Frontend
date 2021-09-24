@@ -4,7 +4,14 @@ import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-
 import tiles from "../images/tiles.jpg";
 import Logo from "./Logo.js";
 import CloseIcon from '@material-ui/icons/Close';
+import styled from "styled-components"
 Axios.defaults.withCredentials = true;
+const ModalLogin = styled.div`
+    height: fit-content;
+    @media (min-width: 767px) {
+      height: 20rem;
+    }
+`;
 const FormLogin = (props) => {
   console.log("login render")
   const history = useHistory();
@@ -72,22 +79,19 @@ const FormLogin = (props) => {
   };
   return (
     <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-14 bg-cyan-blue z-10">
+      <ModalLogin className="Login-modal bg-snow w-64 md:w-104 shadow-xl rounded-xl relative pb-52">
       <Logo
-        width="w-24"
-        height="h-24"
-        display="absolute"
-        top="top-4"
-        text_size="text-xl"
+        position="absolute"
+        w="w-24"
+        h="h-24"
       />
-      <div className="bg-snow w-72 h-112 shadow-xl rounded-xl flex items-end">
-        <div className="absolute self-start flex w-72 justify-end p-5">
+        <div className="absolute right-5 top-5">
           <Link to="/">
             <CloseIcon className="cursor-pointer"/>
           </Link>
         </div>
-        <div className="form-container w-full">
-          <form onSubmit={loginAccount}>
-            <div className="form-content w-full h-96 text-sm flex flex-col px-10 mt-4">
+          <form onSubmit={loginAccount} className="w-full h-full">
+            <div className="form-content w-full md:w-64 md:ml-52 md:mt-28 text-sm flex flex-col mt-20 px-4">
               <input
                 className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none "
                 type="text"
@@ -113,22 +117,15 @@ const FormLogin = (props) => {
               <div className="text-red-600 self-start text-xs mt-0.5 text-left">
                 {errors.message}
               </div>
-              {/* <div className="text-cyan-blue self-start mt-3 text-xs">
-                forgot your password ?
-              </div> */}
               <button className="bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
                 Sign in
               </button>
-              {/* <Link to={`${props.regisPath}/registration`}>
-                <div className="text-cyan-blue mt-3 font-semibold cursor-pointer hover:text-blue-300 hover:underline ">
-                  Create an account
-                </div>
-              </Link> */}
             </div>
           </form>
-          <img src={tiles} alt="Tiles" className="rounded-b-xl w-full h-36" />
-        </div>
-      </div>
+          <div className="md:float-left">
+           <img src={tiles} alt="Tiles" className="object-cover rounded-b-xl md:rounded-l-xl md:rounded-br-none md:h-full md:w-2/6 absolute bottom-0" />
+          </div>
+        </ModalLogin> 
     </div>
   );
 };
