@@ -1,5 +1,5 @@
 import { BrowserRouter as Switch, Route, Link, Router } from "react-router-dom";
-import Logo from "../components/logo.js";
+import Logo from "./Logo.js";
 import Axios from "axios";
 import SearchIcon from '@material-ui/icons/Search';
 const Header = (props) => {

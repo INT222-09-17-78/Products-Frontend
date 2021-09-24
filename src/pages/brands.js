@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import FormLogin from "../components/formlogin.js";
-import FormRegister from "../components/formregis.js";
+import FormLogin from "../components/Formlogin.js";
+import FormRegister from "../components/Formregis.js";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 const Brands = () => {
   console.log("Brands render");
-  const [brands, setBrands] = useState([{ name: "asdasdasd" }, { name: "asdasdasd" }, { name: "asdasdasd" }, { name: "asdasdasd" }]);
+  const [brands, setBrands] = useState([{ name: "a" }, { name: "b" }, { name: "c" }, { name: "d" }]);
   const [currentBrand, setCurrentBrand] = useState(0);
   const [hasNextBrands, sethasNextBrands] = useState("none");
   const [hasBeforeBrands, sethasBeforeBrands] = useState("none");
@@ -25,20 +25,6 @@ const Brands = () => {
           console.log(error);
         });
       console.log(currentBrand + 'current effecto')
-      // if(brands.length > 1 && currentBrand > 0 ){
-      //   sethasNextBrands("")
-      // }
-      // if(currentBrand == 1){
-      //   sethasBeforeBrands("none");
-      //   }
-      //   if (currentBrand < brands.length - 1) {
-      //     sethasBeforeBrands("");   
-      //     // setCurrentBrand(currentBrand + 1);
-      //   }
-      //   if(currentBrand == brands.length - 2){
-      //     sethasNextBrands("none");
-      //   }
-
       if (currentBrand == brands.length - 2) {
         sethasNextBrands("none")
       }
@@ -57,33 +43,25 @@ const Brands = () => {
         <NavigateBeforeIcon
           className="absolute left-0  mb-12  z-10 cursor-pointer "
           htmlColor="white"
-          style={{ fontSize: "3rem", display: hasBeforeBrands }}
+          style={{ fontSize: "2rem", display: hasBeforeBrands }}
           onClick={() => {
             setCurrentBrand(currentBrand - 1)
           }}
         />
-        {/* <i
-          className="left-arrow material-icons cursor-pointer text-white text-4xl"
-          onClick={() => {
-            currentBrand > 0 && setCurrentBrand(currentBrand - 2);
-          }}
-        >
-          arrow_back_ios
-        </i> */}
         <div className="absolute carousel-warpper flex w-full h-full mt-8 mb-20 flex-row justify-center items-center space-x-6">
 
-          <div className={`carousel-warpper-content w-32 h-32 bg-white border-2 shadow-lg rounded-lg flex-shrink-0 overflow-auto ${hasOneBrands}`}>
+          <div className={`carousel-warpper-content w-28 h-28 xs:w-32 xs:h-32 bg-white border-2 shadow-lg rounded-lg flex-shrink-0 overflow-auto ${hasOneBrands}`}>
             {brands[currentBrand] == undefined ? sethasOneBrands("hidden") : brands[currentBrand].name}
           </div>
 
-          <div className={`carousel-warpper-content w-32 h-32 bg-white border-2 shadow-lg rounded-lg flex-shrink-0 overflow-auto ${hasOneBrands}`}>
+          <div className={`carousel-warpper-content w-28 h-28 xs:w-32 xs:h-32 bg-white border-2 shadow-lg rounded-lg flex-shrink-0 overflow-auto ${hasOneBrands}`}>
             {brands[currentBrand + 1] == undefined ? sethasOneBrands("hidden") : brands[currentBrand + 1].name}
           </div>
         </div>
         <NavigateNextIcon
-          className="absolute right-0 mb-12  cursor-pointer z-10"
+          className="absolute right-0 mb-12 cursor-pointer z-10"
           htmlColor="white"
-          style={{ fontSize: "3rem", display: hasNextBrands }}
+          style={{ fontSize: "2rem", display: hasNextBrands }}
           onClick={() => {
             setCurrentBrand(currentBrand + 1)
 
@@ -122,7 +100,7 @@ const Brands = () => {
         <div className="grid grid-cols-2 gap-y-10 gap-x-6 p-8 justify-items-center">
           {products.map((product, i) => (
             <div
-              className="bg-gray-400 w-36 h-48 rounded-xl flex items-end shadow-xl"
+              className="bg-gray-400 w-32 h-44 xs:w-36 xs:h-48 rounded-xl flex items-end shadow-xl"
               key={i}
             >
               <div className="bg-white w-full h-14 rounded-b-xl"></div>

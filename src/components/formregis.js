@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Axios from "axios";
 import tiles from "../images/tiles.jpg";
-import Logo from "./logo";
+import Logo from "./Logo";
 import CloseIcon from '@material-ui/icons/Close';
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 const FormRegister = () => {
-  console.log("regis render")
+  console.log("regis render");
   const history = useHistory();
   const [values, setValues] = useState({
     username: "",
@@ -13,6 +13,19 @@ const FormRegister = () => {
     emailOrMobile: "",
     rePassword: "",
   });
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+    Axios.get("http://localhost:5000/api/users")
+      .then((response) => {
+        console.log(response.data);
+        setUserData(response.data);
+      })
+      .catch((error) => {
+        if (!error.response || error.response.status === 401) {
+          console.log(error.response);
+        }
+      });
+  }, []);
   const [errors, setErrors] = useState({});
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -93,7 +106,7 @@ const FormRegister = () => {
       errors.password === "" &&
       errors.rePassword === ""
     ) {
-      Axios.post("http://localhost:5000/api/userAndUpload", {
+      Axios.post("http://localhost:5000/api/users/userAndUpload", {
         username: values.username,
         password: values.password,
         emailOrMobile: values.emailOrMobile,

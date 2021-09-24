@@ -2,7 +2,7 @@ import { useState} from "react";
 import Axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 import tiles from "../images/tiles.jpg";
-import Logo from "./logo";
+import Logo from "./Logo.js";
 import CloseIcon from '@material-ui/icons/Close';
 Axios.defaults.withCredentials = true;
 const FormLogin = (props) => {
@@ -71,7 +71,7 @@ const FormLogin = (props) => {
     }
   };
   return (
-    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-14 bg-black bg-opacity-50 z-10">
+    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-14 bg-cyan-blue z-10">
       <Logo
         width="w-24"
         height="h-24"
@@ -113,17 +113,17 @@ const FormLogin = (props) => {
               <div className="text-red-600 self-start text-xs mt-0.5 text-left">
                 {errors.message}
               </div>
-              <div className="text-cyan-blue self-start mt-3 text-xs">
+              {/* <div className="text-cyan-blue self-start mt-3 text-xs">
                 forgot your password ?
-              </div>
+              </div> */}
               <button className="bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
                 Sign in
               </button>
-              <Link to={`${props.regisPath}/registration`}>
+              {/* <Link to={`${props.regisPath}/registration`}>
                 <div className="text-cyan-blue mt-3 font-semibold cursor-pointer hover:text-blue-300 hover:underline ">
                   Create an account
                 </div>
-              </Link>
+              </Link> */}
             </div>
           </form>
           <img src={tiles} alt="Tiles" className="rounded-b-xl w-full h-36" />

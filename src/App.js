@@ -1,49 +1,48 @@
 import "./App.css";
 import "./styles/output.css";
-import Home from "./pages/home";
+import Home from "./pages/Home";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Brands from "./pages/brands";
-import Header from "./components/header.js";
-import Navbar from "./components/navbar.js";
+import Brands from "./pages/Brands";
+import Header from "./components/Header.js";
+import Navbar from "./components/Navbar.js";
 import { useState, useEffect } from "react";
+import FormLogin from "./components/Formlogin.js";
+import FormRegister from "./components/Formregis.js";
 import Axios from "axios";
 const App = () => {
   console.log("App render");
+  const [location, setLocation] = useState("");
+  console.log(location + " APP");
   const [usernameInSession, setUsernameInSession] = useState("");
   const [isLogin, setIsLogin] = useState(false);
   useEffect(() => {
-    console.log("Home UseEffect");
-    Axios.get("http://localhost:5000/api/login")
+    Axios.get("http://localhost:5000/api/users/login")
       .then((response) => {
         setUsernameInSession(response.data.user);
         setIsLogin(response.data.loggedIn);
       })
       .catch((error) => {
         if (!error.response || error.response.status === 401) {
-          console.log(error.response); 
+          console.log(error.response);
         }
       });
   }, []);
   return (
     <div className="App w-screen h-screen">
-      <Router>
+       <Router>
         <Header
           path=""
           usernameInSession={usernameInSession}
           isLogin={isLogin}
         />
-        <Navbar />
-        <Switch>
-          <Route path="/brands" component={Brands} />
-          <Home />
-        </Switch>
-      </Router>
-
-      {/* <Router>
+        <Navbar setLocaiton={setLocation} />
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route path="/brands" component={Brands} />
+          <Route path="/login" component={FormLogin} />
+          <Route path="/registration" component={FormRegister} />
         </Switch>
-      </Router> */}
+      </Router>
     </div>
   );
 };
