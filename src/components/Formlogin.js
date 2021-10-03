@@ -8,9 +8,6 @@ import styled from "styled-components"
 Axios.defaults.withCredentials = true;
 const ModalLogin = styled.div`
     height: fit-content;
-    @media (min-width: 767px) {
-      height: 20rem;
-    }
 `;
 const FormLogin = (props) => {
   console.log("login render")
@@ -54,7 +51,7 @@ const FormLogin = (props) => {
       });
     }
     if (errors.username === "" && errors.password === "") {
-      Axios.post("http://localhost:5000/api/login", {
+      Axios.post("http://localhost:5000/api/users/login", {
         username: values.username,
         password: values.password,
       })
@@ -65,7 +62,6 @@ const FormLogin = (props) => {
             password: "",
           });
           console.log(res.data);
-          window.location = "/"
         })
         .catch((error) => {
           errors.message = error.response.data.message;
@@ -79,7 +75,7 @@ const FormLogin = (props) => {
   };
   return (
     <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-14 bg-cyan-blue z-10">
-      <ModalLogin className="Login-modal bg-snow w-64 md:w-104 shadow-xl rounded-xl relative pb-52">
+      <ModalLogin className="Login-modal bg-snow w-64 md:w-104 shadow-xl rounded-xl relative pb-52 md:pb-32">
       <Logo
         position="absolute"
         w="w-24"

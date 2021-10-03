@@ -6,7 +6,7 @@ const Header = (props) => {
   console.log("Header render");
   const logOut = () => {
     if (window.confirm("Do you want to logout?") === true) {
-      Axios.get("http://localhost:5000/api/logout");
+      Axios.get("http://localhost:5000/api/users/logout");
       window.location.reload();
     }
   };

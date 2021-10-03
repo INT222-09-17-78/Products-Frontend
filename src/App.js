@@ -18,6 +18,7 @@ const App = () => {
   useEffect(() => {
     Axios.get("http://localhost:5000/api/users/login")
       .then((response) => {
+        console.log(response.data)
         setUsernameInSession(response.data.user);
         setIsLogin(response.data.loggedIn);
       })

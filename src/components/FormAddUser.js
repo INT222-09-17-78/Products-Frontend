@@ -1,23 +1,28 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
-import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import tiles from "../images/tiles.jpg";
 import Logo from "./Logo.js";
-import CloseIcon from '@material-ui/icons/Close';
-import styled from "styled-components"
+import CloseIcon from "@material-ui/icons/Close";
+import styled from "styled-components";
 Axios.defaults.withCredentials = true;
 const ModalLogin = styled.div`
-    height: fit-content;
-   
+  height: fit-content;
 `;
-const FormEditUser = (props) => {
+const FormAddUser = (props) => {
   console.log("regis render");
   const history = useHistory();
   const [values, setValues] = useState({
     username: "",
-    email: "",
-    mobile: "",
-    role: ""
+    password: "",
+    emailOrMobile: "",
+    role: "",
   });
   const [errors, setErrors] = useState({});
   const handleChange = (event) => {
@@ -32,15 +37,14 @@ const FormEditUser = (props) => {
     /(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/
   );
   const moblieFormat = new RegExp(/^(0[689]{1})+([0-9]{8})+$/g);
-  const editUser = (event) => {
-    console.log(values.role)
-    console.log(values.username)
+  const addUser = (event) => {
+    console.log(values.role);
+    console.log(values.username);
     event.preventDefault();
     //Username validation
-    // if (!values.username.trim()) {
-    //   errors.username = "This field is required";
-    // } else 
-    if (values.username.trim().length > 25) {
+    if (!values.username.trim()) {
+      errors.username = "This field is required";
+    } else if (values.username.trim().length > 25) {
       errors.username = "Your username must be only 25 characters";
     } else if (!usernameFormat.test(values.username)) {
       errors.username = "Your username must contain only alphanumerics";
@@ -49,64 +53,78 @@ const FormEditUser = (props) => {
     } else {
       errors.username = "";
     }
-
-
-    // //Email and Phone
-    // if (!values.emailOrMobile.trim()) {
-    //   errors.emailOrMobile = "This field is required";
-    // } else if (
-    //   !mailFormat.test(values.emailOrMobile) &&
-    //   !moblieFormat.test(values.emailOrMobile)
-    // ) {
-    //   errors.emailOrMobile = "Enter your moblie or email only";
+    //Password validation
+    if (!values.password.trim()) {
+      errors.password = "This field is required";
+    } else if (values.password.trim().length < 8) {
+      errors.password = "Your password must be at least 8 characters";
+    } 
+    // else if (values.rePassword !== values.password) {
+    //   errors.password = "Your password not the same";
+    // } 
+    else {
+      errors.password = "";
+    }
+    // //Re-type Password
+    // if (!values.rePassword.trim()) {
+    //   errors.rePassword = "This field is required";
+    // } else if (values.rePassword.trim().length < 8) {
+    //   errors.rePassword = "Your password must be at least 8 characters";
+    // } else if (values.rePassword !== values.password) {
+    //   errors.rePassword = "Your password not the same";
     // } else {
-    //   errors.emailOrMobile = "";
+    //   errors.rePassword = "";
     // }
-    // if(!mailFormat.test(values.emailOrMobile)){
-    //   errors.email = "Enter your email only";
-    // }
+    //Email and Phone
+    if (!values.emailOrMobile.trim()) {
+      errors.emailOrMobile = "This field is required";
+    } else if (
+      !mailFormat.test(values.emailOrMobile) &&
+      !moblieFormat.test(values.emailOrMobile)
+    ) {
+      errors.emailOrMobile = "Enter your moblie or email only";
+    } else {
+      errors.emailOrMobile = "";
+    }
     if (
       errors.message ||
-
+      errors.password ||
       errors.username ||
-
-      errors.email ||
-
-      errors.mobile
+    //   errors.rePassword ||
+      errors.emailOrMobile
     ) {
       errors.message = "";
       setValues({
         ...values,
         username: values.username,
-        email: values.email,
-        mobile: values.mobile,
-        role: values.role,
+        password: values.password,
+        emailOrMobile: values.emailOrMobile,
+        // rePassword: values.rePassword,
       });
     }
     if (
-      errors.username === ""
+      errors.username === "" &&
+      errors.emailOrMobile === "" &&
+      errors.password === "" 
+    //   errors.rePassword === ""
     ) {
-      console.log(values.role)
-      Axios.put("http://localhost:5000/api/users/userAndUpload", {
-        id: 1,
+      Axios.post("http://localhost:5000/api/users/userAndUpload", {
         username: values.username,
-        email: values.email,
-        mobile: values.mobile,
-        role: values.role
+        password: values.password,
+        emailOrMobile: values.emailOrMobile,
       })
         .then((res) => {
           console.log(res);
           console.log(res.data);
-          history.push("/login");
         })
         .catch((error) => {
           errors.message = error.response.data.message;
           setValues({
             ...values,
             username: values.username,
-            email: values.email,
-            mobile: values.mobile,
-            role: values.role
+            password: values.password,
+            emailOrMobile: values.emailOrMobile,
+            // rePassword: values.rePassword,
           });
         });
     }
@@ -115,17 +133,16 @@ const FormEditUser = (props) => {
   return (
     <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute bg-black bg-opacity-50 top-0 pt-14 z-10">
       <ModalLogin className="Login-modal bg-snow w-64 md:w-104 shadow-xl rounded-xl relative pb-52 md:pb-32">
-        <Logo
-          position="absolute"
-          w="w-24"
-          h="h-24"
-        />
+        <Logo position="absolute" w="w-24" h="h-24" />
         <div className="absolute right-5 top-5">
-
-          <CloseIcon onClick={() => { props.setIsEdit(false) }} className="cursor-pointer" />
-
+          <CloseIcon
+            onClick={() => {
+              props.setIsAdd(false);
+            }}
+            className="cursor-pointer"
+          />
         </div>
-        <form onSubmit={editUser} className="w-full h-full">
+        <form onSubmit={addUser} className="w-full h-full">
           <div className="form-content w-full md:w-64 md:ml-52 md:mt-28 text-sm flex flex-col mt-20 px-4">
             <input
               className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none "
@@ -140,37 +157,40 @@ const FormEditUser = (props) => {
             </div>
             <input
               className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
-              type="email"
-              name="email"
-              placeholder="Email"
+              type="text"
+              name="emailOrMobile"
+              placeholder="Email or Mobile"
               onChange={handleChange}
-              value={values.email}
+              value={values.emailOrMobile}
             />
             <div className="text-red-600 self-start text-xs mt-0.5 text-left">
-              {errors.email}
+              {errors.emailOrMobile}
             </div>
             <input
               className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
-              type="mobile"
-              name="mobile"
-              placeholder="Mobile"
+              type="password"
+              name="password"
+              placeholder="Password"
               onChange={handleChange}
-              value={values.mobile}
+              value={values.password}
             />
             <div className="text-red-600 self-start text-xs mt-0.5 text-left">
-              {errors.mobile}
+              {errors.password}
             </div>
-            {/* <input
-              className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
-              type="role"
+
+            <select
               name="role"
-              placeholder="role"
-              onChange={handleChange}
+              type="role"
               value={values.role}
-            /> */}
-            <select name="role" type="role" value={values.role} onChange={handleChange} class="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none">
-              <option value="Staff" className="py-1">Staff</option>
-              <option value="Admin" className="py-1">Admin</option>
+              onChange={handleChange}
+              className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
+            >
+              <option value="Staff" className="py-1">
+                Staff
+              </option>
+              <option value="Admin" className="py-1">
+                Admin
+              </option>
             </select>
             <div className="text-red-600 self-start text-xs mt-0.5 text-left">
               {errors.role}
@@ -184,10 +204,14 @@ const FormEditUser = (props) => {
           </div>
         </form>
         <div className="md:float-left">
-          <img src={tiles} alt="Tiles" className="object-cover rounded-b-xl md:rounded-l-xl md:rounded-br-none md:h-full md:w-2/6 absolute bottom-0" />
+          <img
+            src={tiles}
+            alt="Tiles"
+            className="object-cover rounded-b-xl md:rounded-l-xl md:rounded-br-none md:h-full md:w-2/6 absolute bottom-0"
+          />
         </div>
       </ModalLogin>
     </div>
   );
 };
-export default FormEditUser;
+export default FormAddUser;
