@@ -7,18 +7,18 @@ const Header = (props) => {
   const logOut = () => {
     if (window.confirm("Do you want to logout?") === true) {
       Axios.get("http://localhost:5000/api/users/logout");
-      window.location.reload();
+      window.location = "/login";
     }
   };
   // const [showResults, setShowResults] = useState(false)
   const Search = () => {
     return (
-      <div className="Search flex items-center text-xs">
+      <div className="Search flex items-center text-xs flex-grow relative">
         <SearchIcon className="material-icons absolute pl-2 text-gray-400"/>
         <input
           type="text"
           placeholder="ค้นหาสินค้า"
-          className="bg-transparent w-40 h-6 pl-7 md:w-56 xsm:h-8 xsm:w-44 md:text-base border-2 border-gray-300 rounded-3xl focus:outline-none lg:w-100 lg:h-9"
+          className="bg-transparent flex flex-grow h-8 pl-7 border-2 border-gray-300 rounded-3xl focus:outline-none"
         />
       </div>
     );
@@ -38,7 +38,7 @@ const Header = (props) => {
   return (
     // <Router>
     <>
-      <div className="Header overflow-hidden w-screen md:h-24 py-5 px-2 lg:h-28 border-none flex space-x-3.5 xs:space-x-6 xsm:space-x-10 justify-center items-center">
+      <div className="Header overflow-hidden w-screen border-none py-5 px-5 space-x-3 flex justify-center items-center">
         <Link to="/">
           <Logo
             position="static"

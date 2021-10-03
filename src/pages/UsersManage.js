@@ -16,6 +16,7 @@ const UsersManage = () => {
   const [isAdd, setIsAdd] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [userData, setUserData] = useState([]);
+  const [editUser, setEditUser] =useState({})
   useEffect(() => {
     getUser()
   }, []);
@@ -79,8 +80,8 @@ const UsersManage = () => {
     <>
     
 
-    {isEdit === false ? null : <FormEditUser   setIsEdit={setIsEdit}></FormEditUser>}
-    {isAdd === false ? null : <FormAddUser   setIsAdd={setIsAdd}></FormAddUser>}
+    {isEdit === false ? null : <FormEditUser setUserData={setUserData} userData={editUser} setIsEdit={setIsEdit}></FormEditUser>}
+    {isAdd === false ? null : <FormAddUser setUserData={setUserData} userData={userData} setIsAdd={setIsAdd}></FormAddUser>}
       <section className=" container mx-auto pr-14 pl-14 pt-14 font-mono ">
       
         <div className="flex justify-end ">
@@ -130,7 +131,7 @@ const UsersManage = () => {
                       <td className="px-4 py-3 text-sm border">{user.email ? user.email : "-"}</td>
                       <td className="px-4 py-3 text-sm border">{user.role}</td>
                       <td className="py-4 px-6 border-b border-grey-light">
-                        <button onClick={()=>{setIsEdit(true) }} className="cursor-pointer font-semibold leading-tight text-green-700 bg-green-100 rounded-sm py-1 px-3 mx-2">Edit</button>
+                        <button onClick={()=>{setIsEdit(true);setEditUser(user)}} className="cursor-pointer font-semibold leading-tight text-green-700 bg-green-100 rounded-sm py-1 px-3 mx-2">Edit</button>
                         <button onClick={()=>{deleteUser(user.id)}} className="font-semibold leading-tight text-red-700 bg-red-100 rounded-sm py-1 px-3 mx-2">Delete</button>
                       </td>
                     </tr>

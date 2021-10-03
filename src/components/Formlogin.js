@@ -11,7 +11,6 @@ const ModalLogin = styled.div`
 `;
 const FormLogin = (props) => {
   console.log("login render")
-  const history = useHistory();
   const [values, setValues] = useState({
     username: "",
     password: "",
@@ -62,6 +61,7 @@ const FormLogin = (props) => {
             password: "",
           });
           console.log(res.data);
+          window.location = "/";
         })
         .catch((error) => {
           errors.message = error.response.data.message;

@@ -29,7 +29,7 @@ const App = () => {
       });
   }, []);
   return (
-    <div className="App w-screen h-screen">
+    <div className="App w-screen h-screen overflow-x-hidden">
        <Router>
         <Header
           path=""

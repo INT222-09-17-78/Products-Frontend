@@ -17,12 +17,17 @@ const ModalLogin = styled.div`
 `;
 const FormAddUser = (props) => {
   console.log("regis render");
-  const history = useHistory();
+  const setUserData = (data) =>{
+    props.setUserData([...props.userData,data])
+  }
+  const closeAddUser = () =>{
+    props.setIsAdd(false)
+  }
   const [values, setValues] = useState({
     username: "",
     password: "",
     emailOrMobile: "",
-    role: "",
+    role: "Staff",
   });
   const [errors, setErrors] = useState({});
   const handleChange = (event) => {
@@ -48,7 +53,7 @@ const FormAddUser = (props) => {
       errors.username = "Your username must be only 25 characters";
     } else if (!usernameFormat.test(values.username)) {
       errors.username = "Your username must contain only alphanumerics";
-    } else if (values.username.trim().length < 7) {
+    } else if (values.username.trim().length < 6) {
       errors.username = "Your username must be at least 6 characters";
     } else {
       errors.username = "";
@@ -58,10 +63,10 @@ const FormAddUser = (props) => {
       errors.password = "This field is required";
     } else if (values.password.trim().length < 8) {
       errors.password = "Your password must be at least 8 characters";
-    } 
+    }
     // else if (values.rePassword !== values.password) {
     //   errors.password = "Your password not the same";
-    // } 
+    // }
     else {
       errors.password = "";
     }
@@ -90,7 +95,7 @@ const FormAddUser = (props) => {
       errors.message ||
       errors.password ||
       errors.username ||
-    //   errors.rePassword ||
+      //   errors.rePassword ||
       errors.emailOrMobile
     ) {
       errors.message = "";
@@ -105,25 +110,28 @@ const FormAddUser = (props) => {
     if (
       errors.username === "" &&
       errors.emailOrMobile === "" &&
-      errors.password === "" 
-    //   errors.rePassword === ""
+      errors.password === ""
+      //   errors.rePassword === ""
     ) {
       Axios.post("http://localhost:5000/api/users/userAndUpload", {
         username: values.username,
         password: values.password,
         emailOrMobile: values.emailOrMobile,
+        role: values.role
       })
         .then((res) => {
-          console.log(res);
           console.log(res.data);
+          setUserData(res.data)
+          closeAddUser();
         })
         .catch((error) => {
-          errors.message = error.response.data.message;
+          //   errors.message = error.response.data.message;
           setValues({
             ...values,
             username: values.username,
             password: values.password,
             emailOrMobile: values.emailOrMobile,
+            role: values.role
             // rePassword: values.rePassword,
           });
         });
@@ -136,9 +144,7 @@ const FormAddUser = (props) => {
         <Logo position="absolute" w="w-24" h="h-24" />
         <div className="absolute right-5 top-5">
           <CloseIcon
-            onClick={() => {
-              props.setIsAdd(false);
-            }}
+            onClick={closeAddUser}
             className="cursor-pointer"
           />
         </div>
