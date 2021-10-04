@@ -105,7 +105,7 @@ const FormAddUser = (props) => {
       errors.password === ""
       //   errors.rePassword === ""
     ) {
-      Axios.post("http://172.24.0.11:5000/api/users/userAndUpload", {
+      Axios.post("/api/users/userAndUpload", {
         username: values.username,
         password: values.password,
         emailOrMobile: values.emailOrMobile,

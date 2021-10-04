@@ -13,7 +13,7 @@ const Brands = () => {
   const [hasOneBrands, sethasOneBrands] = useState("");
   const BrandsList = () => {
     useEffect(() => {
-      Axios.get("http://172.24.0.11:5000/api/show/brands")
+      Axios.get("/api/show/brands")
         .then((response) => {
           // setUsernameInSession(response.data.user);
           // setIsLogin(response.data.loggedIn);

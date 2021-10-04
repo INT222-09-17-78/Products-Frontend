@@ -50,7 +50,7 @@ const FormLogin = (props) => {
       });
     }
     if (errors.username === "" && errors.password === "") {
-      Axios.post("http://172.24.0.11:5000/api/users/login", {
+      Axios.post("/api/users/login", {
         username: values.username,
         password: values.password,
       })
