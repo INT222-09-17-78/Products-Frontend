@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 const Header = (props) => {
   const logOut = () => {
     if (window.confirm("Do you want to logout?") === true) {
-      Axios.get("http://localhost:5000/api/users/logout");
+      Axios.get("http://backend/api/users/logout");
       localStorage.removeItem('isLoggedIn')
       window.location = "/login";
     }

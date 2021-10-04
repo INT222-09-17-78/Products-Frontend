@@ -35,7 +35,7 @@ const FormEditUser = (props) => {
   );
   // const moblieFormat = new RegExp(/^(0[689]{1})+([0-9]{8})+$/g);
   const getUser = () => {
-    Axios.get("http://localhost:5000/api/users")
+    Axios.get("http://backend/api/users")
       .then((response) => {
         props.setUserData(response.data);
       })
@@ -46,7 +46,7 @@ const FormEditUser = (props) => {
       });
   };
   const getLoginUser = () => {
-    Axios.get("http://localhost:5000/api/users/login")
+    Axios.get("http://backend/api/users/login")
       .then((response) => {
         props.setUsername(response.data.user);
       })
@@ -94,7 +94,7 @@ const FormEditUser = (props) => {
       });
     }
     if (errors.username === "") {
-      Axios.put("http://localhost:5000/api/users/userAndUpload", {
+      Axios.put("http://backend/api/users/userAndUpload", {
         id: values.id,
         username: values.username,
         email: values.email,
