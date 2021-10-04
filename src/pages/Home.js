@@ -1,4 +1,4 @@
-import { BrowserRouter as Switch, Route} from "react-router-dom";
+import { BrowserRouter as Route} from "react-router-dom";
 import FormLogin from "../components/FormLogin.js";
 import FormRegister from "./UsersManage.js";
 import homeBanner from "../images/homeBanner.jpg";
@@ -36,12 +36,9 @@ const Home = () => {
     <div className="Home">
       <HomeBanner />
       <HomeBanner2 />
-        <Switch>
-          <Route path="/login">
-            <FormLogin regisPath="" />
-          </Route>
-          <Route path="/registration" component={FormRegister} />
-        </Switch>
+        {/* <Switch> */}
+          <Route path="/login" component={FormLogin}/>
+        {/* </Switch> */}
     </div>
   );
 };

@@ -32,6 +32,7 @@ const UsersManage = (props) => {
     Axios.delete(`http://localhost:5000/api/users/delete/${id}`).
       then((response)=>{
         getUser()
+        localStorage.removeItem('isLoggedIn')
       })
       .catch((error) => {
         if (!error.response) {

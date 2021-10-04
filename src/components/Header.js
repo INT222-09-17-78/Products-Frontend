@@ -7,6 +7,7 @@ const Header = (props) => {
   const logOut = () => {
     if (window.confirm("Do you want to logout?") === true) {
       Axios.get("http://localhost:5000/api/users/logout");
+      localStorage.removeItem('isLoggedIn')
       window.location = "/login";
     }
   };
@@ -47,7 +48,7 @@ const Header = (props) => {
           />
         </Link>
         <Search />
-        {props.isLogin ? (
+        {localStorage.getItem('isLoggedIn') ? (
           <div className="loggedIn text-xs flex flex-col items-end break-all text-right">
             <div className="profile-pic rounded-full bg-gray-200 w-10 h-10"></div>
             <div>{props.username}</div>
