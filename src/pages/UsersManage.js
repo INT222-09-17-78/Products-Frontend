@@ -18,7 +18,7 @@ const UsersManage = (props) => {
   const [userData, setUserData] = useState([]);
   const [editUser, setEditUser] =useState({})
   const getUser = () =>{
-    Axios.get("http://172.24.0.11:5000/api/users")
+    Axios.get("/api/users")
     .then((response) => {
       setUserData(response.data);
     })
@@ -29,7 +29,7 @@ const UsersManage = (props) => {
     });
   }
   const deleteUser = (id) =>{
-    Axios.delete(`http://172.24.0.11:5000/api/users/delete/${id}`).
+    Axios.delete(`/api/users/delete/${id}`).
       then((response)=>{
         getUser()
         localStorage.removeItem('isLoggedIn')
