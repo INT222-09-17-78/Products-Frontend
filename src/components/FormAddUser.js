@@ -133,7 +133,8 @@ const FormAddUser = (props) => {
   return (
     <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute bg-black bg-opacity-50 top-0 pt-14 z-10">
       <ModalLogin className="Login-modal bg-snow w-64 md:w-104 shadow-xl rounded-xl relative pb-52 md:pb-32">
-        <Logo position="absolute" w="w-24" h="h-24" />
+        {/* <Logo position="absolute" w="w-24" h="h-24" /> */}
+        <div className="font-semibold text-base md:text-lg absolute left-24 top-8 md:left-74 md:top-10 z-10">Add User</div>
         <div className="absolute right-5 top-5">
           <CloseIcon
             onClick={closeAddUser}
@@ -141,7 +142,7 @@ const FormAddUser = (props) => {
           />
         </div>
         <form onSubmit={addUser} className="w-full h-full">
-          <div className="form-content w-full md:w-64 md:ml-52 md:mt-28 text-sm flex flex-col mt-20 px-4">
+          <div className="form-content w-full md:w-64 md:ml-52 md:mt-28 text-sm flex flex-col mt-20 px-4 space-y-1.5">
             <input
               className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none "
               type="text"
@@ -154,7 +155,7 @@ const FormAddUser = (props) => {
               {errors.username}
             </div>
             <input
-              className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
+              className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none"
               type="text"
               name="emailOrMobile"
               placeholder="Email or Mobile"
@@ -165,7 +166,7 @@ const FormAddUser = (props) => {
               {errors.emailOrMobile}
             </div>
             <input
-              className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
+              className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none"
               type="password"
               name="password"
               placeholder="Password"
@@ -181,7 +182,7 @@ const FormAddUser = (props) => {
               type="role"
               value={values.role}
               onChange={handleChange}
-              className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
+              className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none"
             >
               <option value="Staff" className="py-1">
                 Staff
@@ -190,13 +191,13 @@ const FormAddUser = (props) => {
                 Admin
               </option>
             </select>
-            <div className="text-red-600 self-start text-xs mt-0.5 text-left">
+            <div className="text-red-600 self-start text-xs text-left">
               {errors.role}
             </div>
-            <div className="text-red-600 self-start text-xs mt-0.5 text-left">
+            <div className="text-red-600 self-start text- text-left">
               {errors.message}
             </div>
-            <button className="bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
+            <button className="bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center hover:bg-blue-200 hover:text-cyan-blue">
               Submit
             </button>
           </div>

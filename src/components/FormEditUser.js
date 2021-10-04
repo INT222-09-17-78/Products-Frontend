@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import Axios from "axios";
 import tiles from "../images/tiles.jpg";
 import Logo from "./Logo.js";
@@ -13,7 +13,7 @@ const FormEditUser = (props) => {
   const closeEditUser = () => {
     props.setIsEdit(false);
   };
-  
+
   const [values, setValues] = useState({
     id: props.editUser.id,
     username: props.editUser.username,
@@ -34,28 +34,28 @@ const FormEditUser = (props) => {
     /(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/
   );
   // const moblieFormat = new RegExp(/^(0[689]{1})+([0-9]{8})+$/g);
-  const getUser = () =>{
+  const getUser = () => {
     Axios.get("http://localhost:5000/api/users")
-    .then((response) => {
-      props.setUserData(response.data);
-    })
-    .catch((error) => {
-      if (!error.response || error.response.status === 401) {
-        console.log(error.response);
-      }
-    });
-  }
-  const getLoginUser = () =>{
+      .then((response) => {
+        props.setUserData(response.data);
+      })
+      .catch((error) => {
+        if (!error.response || error.response.status === 401) {
+          console.log(error.response);
+        }
+      });
+  };
+  const getLoginUser = () => {
     Axios.get("http://localhost:5000/api/users/login")
-    .then((response) => {
-      props.setUsername(response.data.user);
-    })
-    .catch((error) => {
-      if (!error.response || error.response.status === 401) {
-        console.log(error.response);
-      }
-    });
-  }
+      .then((response) => {
+        props.setUsername(response.data.user);
+      })
+      .catch((error) => {
+        if (!error.response || error.response.status === 401) {
+          console.log(error.response);
+        }
+      });
+  };
   const editUser = (event) => {
     console.log(values.role);
     console.log(values.username);
@@ -102,8 +102,8 @@ const FormEditUser = (props) => {
         role: values.role,
       })
         .then(() => {
-          getLoginUser()
-          getUser()
+          getLoginUser();
+          getUser();
           closeEditUser();
         })
         .catch((error) => {
@@ -122,12 +122,13 @@ const FormEditUser = (props) => {
   return (
     <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute bg-black bg-opacity-50 top-0 pt-14 z-10">
       <ModalLogin className="Login-modal bg-snow w-64 md:w-104 shadow-xl rounded-xl relative pb-52 md:pb-32">
-        <Logo position="absolute" w="w-24" h="h-24" />
+        {/* <Logo position="absolute" w="w-24" h="h-24" /> */}
+        <div className="font-semibold text-base md:text-lg absolute left-24 top-8 md:left-74 md:top-10 z-10">Edit User</div>
         <div className="absolute right-5 top-5">
           <CloseIcon onClick={closeEditUser} className="cursor-pointer" />
         </div>
         <form onSubmit={editUser} className="w-full h-full">
-          <div className="form-content w-full md:w-64 md:ml-52 md:mt-28 text-sm flex flex-col mt-20 px-4">
+          <div className="form-content w-full md:w-64 md:ml-52 md:mt-28 text-sm flex flex-col mt-20 px-4 space-y-1.5">
             <input
               className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none "
               type="text"
@@ -140,7 +141,7 @@ const FormEditUser = (props) => {
               {errors.username}
             </div>
             <input
-              className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
+              className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none"
               type="email"
               name="email"
               placeholder="Email"
@@ -151,7 +152,7 @@ const FormEditUser = (props) => {
               {errors.email}
             </div>
             <input
-              className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
+              className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none"
               type="mobile"
               name="mobile"
               placeholder="Mobile"
@@ -174,7 +175,7 @@ const FormEditUser = (props) => {
               type="role"
               value={values.role}
               onChange={handleChange}
-              className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
+              className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none"
             >
               <option value="Staff" className="py-1">
                 Staff
