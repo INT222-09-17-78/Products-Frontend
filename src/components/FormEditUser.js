@@ -17,18 +17,16 @@ const ModalLogin = styled.div`
 `;
 const FormEditUser = (props) => {
   console.log("regis render");
-  const setUserData = (data) => {
-    props.setUserData([data]);
-  };
   const closeEditUser = () => {
     props.setIsEdit(false);
   };
 
   const [values, setValues] = useState({
-    username: props.userData.username,
-    email: props.userData.email,
-    mobile: props.userData.mobile,
-    role: props.userData.role,
+    id: props.editUser.id,
+    username: props.editUser.username,
+    email: props.editUser.email,
+    mobile: props.editUser.mobile,
+    role: props.editUser.role,
   });
   const [errors, setErrors] = useState({});
   const handleChange = (event) => {
@@ -60,16 +58,16 @@ const FormEditUser = (props) => {
     } else {
       errors.username = "";
     }
-    if (!mailFormat.test(values.email)) {
-      errors.email = "Enter your email only";
-    } else {
-      errors.email = "";
-    }
-    if (!moblieFormat.test(values.mobile)) {
-      errors.mobile = "Enter your mobile only";
-    } else {
-      errors.mobile = "";
-    }
+    // if (!mailFormat.test(values.email)) {
+    //   errors.email = "Enter your email only";
+    // } else {
+    //   errors.email = "";
+    // }
+    // if (!moblieFormat.test(values.mobile)) {
+    //   errors.mobile = "Enter your mobile only";
+    // } else {
+    //   errors.mobile = "";
+    // }
     if (errors.message || errors.username || errors.email || errors.mobile) {
       errors.message = "";
       setValues({
@@ -81,9 +79,8 @@ const FormEditUser = (props) => {
       });
     }
     if (errors.username === "") {
-      console.log(values.role);
       Axios.put("http://localhost:5000/api/users/userAndUpload", {
-        id: 1,
+        id: values.id,
         username: values.username,
         email: values.email,
         mobile: values.mobile,
@@ -91,7 +88,6 @@ const FormEditUser = (props) => {
       })
         .then((res) => {
           console.log(res.data);
-          setUserData(res.data);
           closeEditUser();
         })
         .catch((error) => {
@@ -133,7 +129,7 @@ const FormEditUser = (props) => {
               name="email"
               placeholder="Email"
               onChange={handleChange}
-              value={values.email}
+              value={values.email ? values.email : ""}
             />
             <div className="text-red-600 self-start text-xs mt-0.5 text-left">
               {errors.email}
@@ -144,7 +140,7 @@ const FormEditUser = (props) => {
               name="mobile"
               placeholder="Mobile"
               onChange={handleChange}
-              value={values.mobile}
+              value={values.mobile ? values.mobile : ""}
             />
             <div className="text-red-600 self-start text-xs mt-0.5 text-left">
               {errors.mobile}
