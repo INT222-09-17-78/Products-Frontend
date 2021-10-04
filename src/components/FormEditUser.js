@@ -1,12 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import Axios from "axios";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useHistory,
-} from "react-router-dom";
 import tiles from "../images/tiles.jpg";
 import Logo from "./Logo.js";
 import CloseIcon from "@material-ui/icons/Close";
@@ -15,12 +8,12 @@ Axios.defaults.withCredentials = true;
 const ModalLogin = styled.div`
   height: fit-content;
 `;
+
 const FormEditUser = (props) => {
-  console.log("regis render");
   const closeEditUser = () => {
     props.setIsEdit(false);
   };
-
+  
   const [values, setValues] = useState({
     id: props.editUser.id,
     username: props.editUser.username,
@@ -28,7 +21,7 @@ const FormEditUser = (props) => {
     mobile: props.editUser.mobile,
     role: props.editUser.role,
   });
-  const [errors, setErrors] = useState({});
+  const [errors] = useState({});
   const handleChange = (event) => {
     const { name, value } = event.target;
     setValues({
@@ -36,11 +29,33 @@ const FormEditUser = (props) => {
       [name]: value,
     });
   };
-  const mailFormat = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g);
+  // const mailFormat = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g);
   const usernameFormat = new RegExp(
     /(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/
   );
-  const moblieFormat = new RegExp(/^(0[689]{1})+([0-9]{8})+$/g);
+  // const moblieFormat = new RegExp(/^(0[689]{1})+([0-9]{8})+$/g);
+  const getUser = () =>{
+    Axios.get("http://localhost:5000/api/users")
+    .then((response) => {
+      props.setUserData(response.data);
+    })
+    .catch((error) => {
+      if (!error.response || error.response.status === 401) {
+        console.log(error.response);
+      }
+    });
+  }
+  const getLoginUser = () =>{
+    Axios.get("http://localhost:5000/api/users/login")
+    .then((response) => {
+      props.setUsername(response.data.user);
+    })
+    .catch((error) => {
+      if (!error.response || error.response.status === 401) {
+        console.log(error.response);
+      }
+    });
+  }
   const editUser = (event) => {
     console.log(values.role);
     console.log(values.username);
@@ -86,8 +101,9 @@ const FormEditUser = (props) => {
         mobile: values.mobile,
         role: values.role,
       })
-        .then((res) => {
-          console.log(res.data);
+        .then(() => {
+          getLoginUser()
+          getUser()
           closeEditUser();
         })
         .catch((error) => {

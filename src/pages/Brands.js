@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import FormLogin from "../components/Formlogin.js";
+import { BrowserRouter as Switch, Route} from "react-router-dom";
+import FormLogin from "../components/FormLogin.js";
 import FormRegister from "./UsersManage.js";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 const Brands = () => {
-  console.log("Brands render");
   const [brands, setBrands] = useState([{ name: "a" }, { name: "b" }, { name: "c" }, { name: "d" }]);
   const [currentBrand, setCurrentBrand] = useState(0);
   const [hasNextBrands, sethasNextBrands] = useState("none");
@@ -14,24 +13,21 @@ const Brands = () => {
   const [hasOneBrands, sethasOneBrands] = useState("");
   const BrandsList = () => {
     useEffect(() => {
-      console.log("Brands effecto");
       Axios.get("http://localhost:5000/api/show/brands")
         .then((response) => {
-          console.log(response.data);
           // setUsernameInSession(response.data.user);
           // setIsLogin(response.data.loggedIn);
         })
         .catch((error) => {
           console.log(error);
         });
-      console.log(currentBrand + 'current effecto')
-      if (currentBrand == brands.length - 2) {
+      if (currentBrand === brands.length - 2) {
         sethasNextBrands("none")
       }
-      if (brands.length > 1 && currentBrand != brands.length - 2) {
+      if (brands.length > 1 && currentBrand !== brands.length - 2) {
         sethasNextBrands("")
       }
-      if (currentBrand == 0) {
+      if (currentBrand === 0) {
         sethasBeforeBrands("none")
       }
       if (currentBrand > 0) {
@@ -51,11 +47,11 @@ const Brands = () => {
         <div className="absolute carousel-warpper flex w-full h-full mt-8 mb-20 flex-row justify-center items-center space-x-6">
 
           <div className={`carousel-warpper-content w-28 h-28 xs:w-32 xs:h-32 bg-white border-2 shadow-lg rounded-lg flex-shrink-0 overflow-auto ${hasOneBrands}`}>
-            {brands[currentBrand] == undefined ? sethasOneBrands("hidden") : brands[currentBrand].name}
+            {brands[currentBrand] === undefined ? sethasOneBrands("hidden") : brands[currentBrand].name}
           </div>
 
           <div className={`carousel-warpper-content w-28 h-28 xs:w-32 xs:h-32 bg-white border-2 shadow-lg rounded-lg flex-shrink-0 overflow-auto ${hasOneBrands}`}>
-            {brands[currentBrand + 1] == undefined ? sethasOneBrands("hidden") : brands[currentBrand + 1].name}
+            {brands[currentBrand + 1] === undefined ? sethasOneBrands("hidden") : brands[currentBrand + 1].name}
           </div>
         </div>
         <NavigateNextIcon

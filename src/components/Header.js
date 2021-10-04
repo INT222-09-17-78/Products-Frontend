@@ -1,9 +1,9 @@
-import { BrowserRouter as Switch, Route, Link, Router } from "react-router-dom";
+import { BrowserRouter as Switch, Link} from "react-router-dom";
 import Logo from "./Logo.js";
 import Axios from "axios";
 import SearchIcon from '@material-ui/icons/Search';
+import { useState, useEffect } from "react";
 const Header = (props) => {
-  console.log("Header render");
   const logOut = () => {
     if (window.confirm("Do you want to logout?") === true) {
       Axios.get("http://localhost:5000/api/users/logout");
@@ -27,7 +27,7 @@ const Header = (props) => {
   const LoginButton = () => {
     // const onClickForLogin = () => setShowResults(true)
     return (
-      <Link to={`${props.path}/login`}>
+      <Link to={`/login`}>
         <button className="LoginButton text-xs border-2 mb-1 border-gray-400 md:w-16 md:h-8 w-14 h-6 text-gray-400 rounded-md font-semibold flex-shrink-0 md:text-base">
           Log in
         </button>
@@ -50,7 +50,7 @@ const Header = (props) => {
         {props.isLogin ? (
           <div className="loggedIn text-xs flex flex-col items-end break-all text-right">
             <div className="profile-pic rounded-full bg-gray-200 w-10 h-10"></div>
-            <div>{props.usernameInSession}</div>
+            <div>{props.username}</div>
             <div
               className="text-red-500 cursor-pointer hover:underline"
               onClick={logOut}

@@ -1,12 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import Axios from "axios";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useHistory,
-} from "react-router-dom";
 import tiles from "../images/tiles.jpg";
 import Logo from "./Logo.js";
 import CloseIcon from "@material-ui/icons/Close";
@@ -16,7 +9,6 @@ const ModalLogin = styled.div`
   height: fit-content;
 `;
 const FormAddUser = (props) => {
-  console.log("regis render");
   const setUserData = (data) =>{
     props.setUserData([...props.userData,data])
   }
@@ -29,7 +21,7 @@ const FormAddUser = (props) => {
     emailOrMobile: "",
     role: "Staff",
   });
-  const [errors, setErrors] = useState({});
+  const [errors] = useState({});
   const handleChange = (event) => {
     const { name, value } = event.target;
     setValues({

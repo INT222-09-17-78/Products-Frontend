@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
-import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
-import { taggedTemplateExpression } from "@babel/types";
 import FormEditUser from "../components/FormEditUser";
 import FormAddUser from "../components/FormAddUser";
-const UsersManage = () => {
-  console.log("UsersManage render");
+const UsersManage = (props) => {
+  useEffect(() => {
+    getUser()
+  }, []);
   // const history = useHistory();
   // const [values, setValues] = useState({
   //   username: "",
@@ -17,13 +17,9 @@ const UsersManage = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [userData, setUserData] = useState([]);
   const [editUser, setEditUser] =useState({})
-  useEffect(() => {
-    getUser()
-  }, []);
   const getUser = () =>{
     Axios.get("http://localhost:5000/api/users")
     .then((response) => {
-      console.log(response.data);
       setUserData(response.data);
     })
     .catch((error) => {
@@ -35,7 +31,6 @@ const UsersManage = () => {
   const deleteUser = (id) =>{
     Axios.delete(`http://localhost:5000/api/users/delete/${id}`).
       then((response)=>{
-        console.log(response.data)
         getUser()
       })
       .catch((error) => {
@@ -80,7 +75,7 @@ const UsersManage = () => {
     <>
     
 
-    {isEdit === false ? null : <FormEditUser editUser={editUser} userData={userData} setIsEdit={setIsEdit}></FormEditUser>}
+    {isEdit === false ? null : <FormEditUser setUsername={props.setUsername} editUser={editUser} setUserData={setUserData} userData={userData} setIsEdit={setIsEdit}></FormEditUser>}
     {isAdd === false ? null : <FormAddUser setUserData={setUserData} userData={userData} setIsAdd={setIsAdd}></FormAddUser>}
       <section className=" container mx-auto pr-14 pl-14 pt-14 font-mono ">
       
@@ -108,9 +103,9 @@ const UsersManage = () => {
 
               </thead>
               <tbody className="bg-white">
-                {userData.map((user, index) => {
+                {userData.map((user) => {
                   return (
-                    <tr key={index} className="text-gray-700">
+                    <tr key={user.id} className="text-gray-700">
                       {/* <td className="px-4 py-3 border">
                         <div className="flex items-center text-sm">
                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">

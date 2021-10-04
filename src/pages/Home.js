@@ -1,5 +1,5 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import FormLogin from "../components/Formlogin.js";
+import { BrowserRouter as Switch, Route} from "react-router-dom";
+import FormLogin from "../components/FormLogin.js";
 import FormRegister from "./UsersManage.js";
 import homeBanner from "../images/homeBanner.jpg";
 import ads1 from "../images/ads1.jpg";
@@ -8,7 +8,6 @@ import ads3 from "../images/ads3.jpg";
 import ads4 from "../images/ads4.jpg";
 
 const Home = () => {
-  console.log("Home render")
   const HomeBanner = () => {
     return (
       <div className="HomeBanner">

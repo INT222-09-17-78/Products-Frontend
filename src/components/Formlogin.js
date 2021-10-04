@@ -1,6 +1,6 @@
 import { useState} from "react";
 import Axios from "axios";
-import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+import { BrowserRouter as  Switch, Link} from "react-router-dom";
 import tiles from "../images/tiles.jpg";
 import Logo from "./Logo.js";
 import CloseIcon from '@material-ui/icons/Close';
@@ -10,12 +10,11 @@ const ModalLogin = styled.div`
     height: fit-content;
 `;
 const FormLogin = (props) => {
-  console.log("login render")
   const [values, setValues] = useState({
     username: "",
     password: "",
   });
-  const [errors, setErrors] = useState({});
+  const [errors] = useState({});
 
   const handleChange = (event) => {
     const { name, value } = event.target;
