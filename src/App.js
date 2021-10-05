@@ -14,7 +14,7 @@ const App = () => {
 
   const [username, setUsername] = useState("");
   useEffect(() => {
-    Axios.get("http://172.24.0.11:5000/api/users/login")
+    Axios.get("/api/users/login")
     .then((response) => {
       setUsername(response.data.user);
     })
