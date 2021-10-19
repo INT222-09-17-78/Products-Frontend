@@ -1,56 +1,51 @@
-import { BrowserRouter as Switch, Link} from "react-router-dom";
+import { BrowserRouter as Switch, Link } from "react-router-dom";
 import Logo from "./Logo.js";
 import Axios from "axios";
-import SearchIcon from '@material-ui/icons/Search';
 import { useState, useEffect } from "react";
+import SquareLogo from "../images/SquareLogo.png";
 const Header = (props) => {
+  // const [show, setShow] = useState(false);
   const logOut = () => {
     if (window.confirm("Do you want to logout?") === true) {
-      Axios.get("/api/users/logout");
-      localStorage.removeItem('isLoggedIn')
+      Axios.get(`${process.env.REACT_APP_API_URL}/api/users/logout`);
+      localStorage.removeItem("isLoggedIn");
       window.location = "/login";
     }
   };
-  // const [showResults, setShowResults] = useState(false)
-  const Search = () => {
-    return (
-      <div className="Search flex items-center text-xs flex-grow relative">
-        <SearchIcon className="material-icons absolute pl-2 text-gray-400"/>
-        <input
-          type="text"
-          placeholder="ค้นหาสินค้า"
-          className="bg-transparent flex flex-grow h-8 pl-7 border-2 border-gray-300 rounded-3xl focus:outline-none"
-        />
-      </div>
-    );
-  };
-
-  const LoginButton = () => {
-    // const onClickForLogin = () => setShowResults(true)
-    return (
-      <Link to={`/login`}>
-        <button className="LoginButton text-xs border-2 mb-1 border-gray-400 md:w-16 md:h-8 w-14 h-6 text-gray-400 rounded-md font-semibold flex-shrink-0 md:text-base">
-          Log in
-        </button>
-      </Link>
-    );
-  };
-
   return (
     // <Router>
     <>
-      <div className="Header overflow-hidden w-screen border-none py-5 px-5 space-x-3 flex justify-center items-center">
-        <Link to="/">
-          <Logo
-            position="static"
-            w="w-14"
-            h="h-14"
+      <div className="Header overflow-hidden w-screen border-none p-5 lg:px-16 space-x-6 flex justify-center items-center bg-blue-cyan">
+        <img
+          src={SquareLogo}
+          alt="logo"
+          hidden
+          className="lg:block lg:w-28 lg:h-28"
+        />
+        <i
+          className="lg:hidden material-icons cursor-pointer text-white"
+          onClick={() => {
+            props.setShowSidebar("-translate-x-0");
+          }}
+        >
+          menu
+        </i>
+        <div className="Search flex items-center font-kanit text-xs lg:text-sm flex-grow relative">
+          <i className="material-icons absolute font-semibold text-sm lg:text-base pl-3 text-gray-400 cursor-pointer">
+            search
+          </i>
+          <input
+            type="text"
+            placeholder="ค้นหาสินค้า"
+            className="bg-transparent flex flex-grow h-7 lg:h-9 lg:pl-10 pl-8 bg-white rounded-3xl focus:outline-none"
           />
-        </Link>
-        <Search />
-        {localStorage.getItem('isLoggedIn') ? (
-          <div className="loggedIn text-xs flex flex-col items-end break-all text-right">
-            <div className="profile-pic rounded-full bg-gray-200 w-10 h-10"></div>
+        </div>
+        {localStorage.getItem("isLoggedIn") ? (
+          <div
+            hidden
+            className="hidden loggedIn text-xs ml-5 lg:flex flex-col items-end break-all text-right"
+          >
+            <div className="profile-pic rounded-full bg-white w-10 h-10"></div>
             <div>{props.username}</div>
             <div
               className="text-red-500 cursor-pointer hover:underline"
@@ -60,7 +55,13 @@ const Header = (props) => {
             </div>
           </div>
         ) : (
-          <LoginButton />
+          <Link
+            hidden
+            className="LoginButton ml-8 text-sm font-kanit justify-center items-center lg:flex bg-white lg:w-20 lg:h-8 text-black rounded-md flex-shrink-0"
+            to={`/login`}
+          >
+            <button>เข้าสู่ระบบ</button>
+          </Link>
         )}
       </div>
     </>

@@ -3,8 +3,6 @@ import Axios from "axios";
 import { BrowserRouter as Switch, Route} from "react-router-dom";
 import FormLogin from "../components/FormLogin.js";
 import FormRegister from "./UsersManage.js";
-import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 const Brands = () => {
   const [brands, setBrands] = useState([{ name: "a" }, { name: "b" }, { name: "c" }, { name: "d" }]);
   const [currentBrand, setCurrentBrand] = useState(0);
@@ -13,7 +11,7 @@ const Brands = () => {
   const [hasOneBrands, sethasOneBrands] = useState("");
   const BrandsList = () => {
     useEffect(() => {
-      Axios.get("/api/show/brands")
+      Axios.get(`${process.env.REACT_APP_API_URL}/api/show/brands`)
         .then((response) => {
           // setUsernameInSession(response.data.user);
           // setIsLogin(response.data.loggedIn);
@@ -36,7 +34,7 @@ const Brands = () => {
     }, []);
     return (
       <div className="BrandsList w-full h-60 bg-cyan-blue relative flex justify-center items-center">
-        <NavigateBeforeIcon
+        <div
           className="absolute left-0  mb-12  z-10 cursor-pointer "
           htmlColor="white"
           style={{ fontSize: "2rem", display: hasBeforeBrands }}
@@ -54,7 +52,7 @@ const Brands = () => {
             {brands[currentBrand + 1] === undefined ? sethasOneBrands("hidden") : brands[currentBrand + 1].name}
           </div>
         </div>
-        <NavigateNextIcon
+        <div
           className="absolute right-0 mb-12 cursor-pointer z-10"
           htmlColor="white"
           style={{ fontSize: "2rem", display: hasNextBrands }}

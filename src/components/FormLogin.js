@@ -3,8 +3,8 @@ import Axios from "axios";
 import { BrowserRouter as  Switch, Link, useHistory} from "react-router-dom";
 import tiles from "../images/tiles.jpg";
 import Logo from "./Logo.js";
-import CloseIcon from '@material-ui/icons/Close';
 import styled from "styled-components"
+import SquareLogoBlack from "../images/SquareLogoBlack.png";
 Axios.defaults.withCredentials = true;
 const ModalLogin = styled.div`
     height: fit-content;
@@ -50,7 +50,7 @@ const FormLogin = (props) => {
       });
     }
     if (errors.username === "" && errors.password === "") {
-      Axios.post("/api/users/login", {
+      Axios.post(`${process.env.REACT_APP_API_URL}/api/users/login`, {
         username: values.username,
         password: values.password,
       })
@@ -74,16 +74,16 @@ const FormLogin = (props) => {
     }
   };
   return (
-    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-14 bg-cyan-blue z-10">
-      <ModalLogin className="Login-modal bg-snow w-64 md:w-104 shadow-xl rounded-xl relative pb-52 md:pb-32">
-      <Logo
-        position="absolute"
-        w="w-24"
-        h="h-24"
-      />
+    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-14 bg-blue-cyan z-10">
+      <ModalLogin className="Login-modal bg-white w-64 md:w-2/6 shadow-xl rounded-xl relative pb-52 md:pb-32">
+      {/* <img
+          src={SquareLogoBlack}
+          alt="logo"
+          className=""
+        /> */}
         <div className="absolute right-5 top-5">
           <Link to="/">
-            <CloseIcon className="cursor-pointer"/>
+            <i className="material-icons">close</i>
           </Link>
         </div>
           <form onSubmit={loginAccount} className="w-full h-full">
@@ -113,7 +113,7 @@ const FormLogin = (props) => {
               <div className="text-red-600 self-start text-xs mt-0.5 text-left">
                 {errors.message}
               </div>
-              <button className="bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
+              <button className="bg-blue-cyan text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-400 hover:text-cyan-blue">
                 Sign in
               </button>
             </div>

@@ -2,7 +2,6 @@ import { useState } from "react";
 import Axios from "axios";
 import tiles from "../images/tiles.jpg";
 import Logo from "./Logo.js";
-import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 Axios.defaults.withCredentials = true;
 const ModalLogin = styled.div`
@@ -35,7 +34,7 @@ const FormEditUser = (props) => {
   );
   // const moblieFormat = new RegExp(/^(0[689]{1})+([0-9]{8})+$/g);
   const getUser = () => {
-    Axios.get("/api/users")
+    Axios.get(`${process.env.REACT_APP_API_URL}/api/users`)
       .then((response) => {
         props.setUserData(response.data);
       })
@@ -46,7 +45,7 @@ const FormEditUser = (props) => {
       });
   };
   const getLoginUser = () => {
-    Axios.get("/api/users/login")
+    Axios.get(`${process.env.REACT_APP_API_URL}/api/users/login`)
       .then((response) => {
         props.setUsername(response.data.user);
       })
@@ -94,7 +93,7 @@ const FormEditUser = (props) => {
       });
     }
     if (errors.username === "") {
-      Axios.put("/api/users/userAndUpload", {
+      Axios.put(`${process.env.REACT_APP_API_URL}/api/users/userAndUpload`, {
         id: values.id,
         username: values.username,
         email: values.email,
@@ -123,9 +122,13 @@ const FormEditUser = (props) => {
     <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute bg-black bg-opacity-50 top-0 pt-14 z-10">
       <ModalLogin className="Login-modal bg-snow w-64 md:w-104 shadow-xl rounded-xl relative pb-52 md:pb-32">
         {/* <Logo position="absolute" w="w-24" h="h-24" /> */}
-        <div className="font-semibold text-base md:text-lg absolute left-24 top-8 md:left-74 md:top-10 z-10">Edit User</div>
+        <div className="font-semibold text-base md:text-lg absolute left-24 top-8 md:left-74 md:top-10 z-10">
+          Edit User
+        </div>
         <div className="absolute right-5 top-5">
-          <CloseIcon onClick={closeEditUser} className="cursor-pointer" />
+          <i className="material-icons cursor-pointer" onClick={closeEditUser}>
+            close
+          </i>
         </div>
         <form onSubmit={editUser} className="w-full h-full">
           <div className="form-content w-full md:w-64 md:ml-52 md:mt-28 text-sm flex flex-col mt-20 px-4 space-y-1.5">

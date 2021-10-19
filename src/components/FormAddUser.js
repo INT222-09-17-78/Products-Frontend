@@ -1,20 +1,19 @@
-import { useState} from "react";
+import { useState } from "react";
 import Axios from "axios";
 import tiles from "../images/tiles.jpg";
 import Logo from "./Logo.js";
-import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 Axios.defaults.withCredentials = true;
 const ModalLogin = styled.div`
   height: fit-content;
 `;
 const FormAddUser = (props) => {
-  const setUserData = (data) =>{
-    props.setUserData([...props.userData,data])
-  }
-  const closeAddUser = () =>{
-    props.setIsAdd(false)
-  }
+  const setUserData = (data) => {
+    props.setUserData([...props.userData, data]);
+  };
+  const closeAddUser = () => {
+    props.setIsAdd(false);
+  };
   const [values, setValues] = useState({
     username: "",
     password: "",
@@ -105,15 +104,15 @@ const FormAddUser = (props) => {
       errors.password === ""
       //   errors.rePassword === ""
     ) {
-      Axios.post("/api/users/userAndUpload", {
+      Axios.post(`${process.env.REACT_APP_API_URL}/api/users/userAndUpload`, {
         username: values.username,
         password: values.password,
         emailOrMobile: values.emailOrMobile,
-        role: values.role
+        role: values.role,
       })
         .then((res) => {
           console.log(res.data);
-          setUserData(res.data)
+          setUserData(res.data);
           closeAddUser();
         })
         .catch((error) => {
@@ -123,7 +122,7 @@ const FormAddUser = (props) => {
             username: values.username,
             password: values.password,
             emailOrMobile: values.emailOrMobile,
-            role: values.role
+            role: values.role,
             // rePassword: values.rePassword,
           });
         });
@@ -134,12 +133,13 @@ const FormAddUser = (props) => {
     <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute bg-black bg-opacity-50 top-0 pt-14 z-10">
       <ModalLogin className="Login-modal bg-snow w-64 md:w-104 shadow-xl rounded-xl relative pb-52 md:pb-32">
         {/* <Logo position="absolute" w="w-24" h="h-24" /> */}
-        <div className="font-semibold text-base md:text-lg absolute left-24 top-8 md:left-74 md:top-10 z-10">Add User</div>
+        <div className="font-semibold text-base md:text-lg absolute left-24 top-8 md:left-74 md:top-10 z-10">
+          Add User
+        </div>
         <div className="absolute right-5 top-5">
-          <CloseIcon
-            onClick={closeAddUser}
-            className="cursor-pointer"
-          />
+          <i className="material-icons cursor-pointer" onClick={closeAddUser}>
+            close
+          </i>
         </div>
         <form onSubmit={addUser} className="w-full h-full">
           <div className="form-content w-full md:w-64 md:ml-52 md:mt-28 text-sm flex flex-col mt-20 px-4 space-y-1.5">

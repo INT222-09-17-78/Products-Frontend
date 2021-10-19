@@ -18,7 +18,7 @@ const UsersManage = (props) => {
   const [userData, setUserData] = useState([]);
   const [editUser, setEditUser] =useState({})
   const getUser = () =>{
-    Axios.get("/api/users")
+    Axios.get(`${process.env.REACT_APP_API_URL}/api/users`)
     .then((response) => {
       setUserData(response.data);
     })
@@ -29,7 +29,7 @@ const UsersManage = (props) => {
     });
   }
   const deleteUser = (id) =>{
-    Axios.delete(`/api/users/delete/${id}`).
+    Axios.delete(`${process.env.REACT_APP_API_URL}/api/users/delete/${id}`).
       then((response)=>{
         getUser()
         localStorage.removeItem('isLoggedIn')
@@ -81,7 +81,7 @@ const UsersManage = (props) => {
       <section className=" container mx-auto pr-14 pl-14 pt-14 font-mono ">
       
         <div className="flex justify-end ">
-      <button onClick={()=>{setIsAdd(true) }} className="w-32 mb-2 bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
+      <button onClick={()=>{setIsAdd(true) }} className="w-32 mb-2 bg-blue-cyan text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
           Add User
         </button>
         </div>
