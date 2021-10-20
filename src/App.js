@@ -11,17 +11,27 @@ import UserManage from "./pages/UsersManage.js";
 import PrivateRoute from "./components/PrivateRoute";
 import Axios from "axios";
 import Sidebar from "./components/Sidebar";
+import FormAddProduct from "./components/FormAddProduct";
 const App = () => {
   const [username, setUsername] = useState("");
   const [showSidebar, setShowSidebar] = useState("-translate-x-full");
+  const logOut = () => {
+    if (window.confirm("Do you want to logout?") === true) {
+      Axios.get(`${process.env.REACT_APP_API_URL}/api/users/logout`);
+      localStorage.removeItem("isLoggedIn");
+      window.location = "/login";
+    }
+  };
   useEffect(() => {
     Axios.get(`${process.env.REACT_APP_API_URL}/api/users/login`)
       .then((response) => {
         setUsername(response.data.user);
       })
       .catch((error) => {
-        if (!error.response || error.response.status === 401) {
-          console.log(error.response);
+        if (error.response.status === 401) {
+          localStorage.removeItem("isLoggedIn");
+        }else{
+          console.log(error)
         }
       });
   }, []);
@@ -30,10 +40,11 @@ const App = () => {
       <Router>
         <Header
           username={username}
-          setShowSidebar={setShowSidebar}>
+          setShowSidebar={setShowSidebar} 
+          logOut={logOut}>
         </Header>
         <Navbar/>
-        <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar}/>
+        <Sidebar username={username} showSidebar={showSidebar} setShowSidebar={setShowSidebar} logOut={logOut}/>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/brands" component={Brands} />
@@ -42,6 +53,7 @@ const App = () => {
             path="/users"
             component={() => <UserManage setUsername={setUsername} />}
           />
+          <Route path="/products" component={() => <FormAddProduct />} />
         </Switch>
       </Router>
     </div>

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Axios from "axios";
 import tiles from "../images/tiles.jpg";
-import Logo from "./Logo.js";
 import styled from "styled-components";
 Axios.defaults.withCredentials = true;
 const ModalLogin = styled.div`

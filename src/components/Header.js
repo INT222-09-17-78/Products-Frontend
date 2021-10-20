@@ -1,17 +1,9 @@
 import { BrowserRouter as Switch, Link } from "react-router-dom";
-import Logo from "./Logo.js";
 import Axios from "axios";
 import { useState, useEffect } from "react";
 import SquareLogo from "../images/SquareLogo.png";
 const Header = (props) => {
   // const [show, setShow] = useState(false);
-  const logOut = () => {
-    if (window.confirm("Do you want to logout?") === true) {
-      Axios.get(`${process.env.REACT_APP_API_URL}/api/users/logout`);
-      localStorage.removeItem("isLoggedIn");
-      window.location = "/login";
-    }
-  };
   return (
     // <Router>
     <>
@@ -36,22 +28,24 @@ const Header = (props) => {
           </i>
           <input
             type="text"
-            placeholder="ค้นหาสินค้า"
+            placeholder="search"
             className="bg-transparent flex flex-grow h-7 lg:h-9 lg:pl-10 pl-8 bg-white rounded-3xl focus:outline-none"
           />
         </div>
-        {localStorage.getItem("isLoggedIn") ? (
+        {localStorage.getItem("isLoggedIn") === "true" ? (
           <div
             hidden
-            className="hidden loggedIn text-xs ml-5 lg:flex flex-col items-end break-all text-right"
+            className="hidden loggedIn ml-5 lg:flex flex-col break-all items-end text-right font-kanit"
           >
-            <div className="profile-pic rounded-full bg-white w-10 h-10"></div>
-            <div>{props.username}</div>
+            <i className="material-icons cursor-pointer text-white text-5xl">
+              account_circle
+            </i>
+            <div className="text-white">{props.username}</div>
             <div
-              className="text-red-500 cursor-pointer hover:underline"
-              onClick={logOut}
+              className="flex items-center text-red-500 cursor-pointer"
+              onClick={props.logOut}
             >
-              Log out
+              Logout
             </div>
           </div>
         ) : (
@@ -60,7 +54,7 @@ const Header = (props) => {
             className="LoginButton ml-8 text-sm font-kanit justify-center items-center lg:flex bg-white lg:w-20 lg:h-8 text-black rounded-md flex-shrink-0"
             to={`/login`}
           >
-            <button>เข้าสู่ระบบ</button>
+            <button>Login</button>
           </Link>
         )}
       </div>
