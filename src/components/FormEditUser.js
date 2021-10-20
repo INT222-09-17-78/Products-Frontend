@@ -119,8 +119,7 @@ const FormEditUser = (props) => {
 
   return (
     <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute bg-black bg-opacity-50 top-0 pt-14 z-10">
-      <ModalLogin className="Login-modal bg-snow w-64 md:w-104 shadow-xl rounded-xl relative pb-52 md:pb-32">
-        {/* <Logo position="absolute" w="w-24" h="h-24" /> */}
+      <ModalLogin className="Login-modal bg-white w-64 md:w-104 shadow-xl rounded-xl relative pb-52 md:pb-32">
         <div className="font-semibold text-base md:text-lg absolute left-24 top-8 md:left-74 md:top-10 z-10">
           Edit User
         </div>
