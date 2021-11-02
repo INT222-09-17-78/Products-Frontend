@@ -87,14 +87,18 @@ const Brands = () => {
         });
     }, []);
     return (
-      <div className="ProductsList w-screen h-screen">
-        <div className="grid grid-cols-2 gap-y-10 gap-x-6 p-8 justify-items-center md:grid-cols-4">
+      <div className="ProductsList w-screen h-screen font-kanit">
+      <div className="p-5">All Product</div>
+        <div className="grid grid-cols-2 gap-y-5 gap-x-6 px-8 justify-items-center md:grid-cols-4">
           {products.map((product, i) => (
             <div
               className="bg-gray-400 w-32 h-44 rounded-xl flex items-end shadow-xl md:w-40 md:h-52"
               key={i}
             >
-              <div className="bg-white w-full h-14 rounded-b-xl">{product.ProdName}</div>
+              <ul className="bg-white w-full h-14 rounded-b-xl flex flex-col items-start px-3.5 text-sm pt-2 shadow-sm">
+                <li>{product.ProdName}</li>
+                <li>{product.Price} THB</li>
+              </ul>
             </div>
           ))}
         </div>

@@ -54,23 +54,9 @@ const FormAddUser = (props) => {
     } else if (values.password.trim().length < 8) {
       errors.password = "Your password must be at least 8 characters";
     }
-    // else if (values.rePassword !== values.password) {
-    //   errors.password = "Your password not the same";
-    // }
     else {
       errors.password = "";
     }
-    // //Re-type Password
-    // if (!values.rePassword.trim()) {
-    //   errors.rePassword = "This field is required";
-    // } else if (values.rePassword.trim().length < 8) {
-    //   errors.rePassword = "Your password must be at least 8 characters";
-    // } else if (values.rePassword !== values.password) {
-    //   errors.rePassword = "Your password not the same";
-    // } else {
-    //   errors.rePassword = "";
-    // }
-    //Email and Phone
     if (!values.emailOrMobile.trim()) {
       errors.emailOrMobile = "This field is required";
     } else if (
