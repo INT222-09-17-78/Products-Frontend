@@ -5,7 +5,10 @@ Axios.defaults.withCredentials = true;
 const FormAddProduct = (props) => {
   const [brands, setBrands] = useState([]);
   const [colors, setColors] = useState([]);
-  const [patterns, setPatterns] = useState([{patternsId: 1},{patternsId: 2}]);
+  const [patterns, setPatterns] = useState([
+    { patternsId: "pattern1" },
+    { patternsId: "pattern2" },
+  ]);
   useEffect(() => {
     Axios.get(`${process.env.REACT_APP_API_URL}/api/show/brands`)
       .then((response) => {
@@ -152,41 +155,50 @@ const FormAddProduct = (props) => {
                 name="Description"
                 onChange={handleChange}
                 value={values.Description}
-                className="border-2 border-black focus:outline-none  w-full h-40"
+                className="border-2 border-black focus:outline-none  w-full h-32"
               />
+            </div>
+            <div className="flex flex-col items-start">
+              <label>Size</label>
+              
             </div>
           </div>
         </div>
-        <div className="second-container rounded-xl border-2 border-gray-400 pt-8 pb-16 mt-5 flex flex-col items-center">
-          <span className="flex">Patterns</span>
-{patterns.map((i) => (
-          <div className="container-input flex flex-col">
-            {/* <div className="img-container bg-gray-400 w-48 h-48 rounded-lg"></div> */}
-            
-            <div className="flex">
-              <select
-                name={"color" + i}
-                onChange={handleChange}
-                value={values.Colors}
-                className="border-b-2 border-black focus:outline-none w-full"
-              >
-                <option disabled value="">
-                  Choose a Color
-                </option>
-                {colors.map((color, i) => (
-                  <option key={i} value={i}>
-                    {color.ColorName}
+        <div className="second-container rounded-xl border-2 border-gray-400 pb-16 mt-5 flex flex-col items-center">
+          <span className="flex py-6">Patterns</span>
+          {patterns.map((pattern, i) => (
+            <div
+              key={pattern.patternsId}
+              className="container-input flex flex-col"
+            >
+              <div className="img-container bg-gray-400 w-48 h-48 rounded-lg"></div>
+
+              <div className="flex">
+                <select
+                  name="color"
+                  onChange={handleChange}
+                  value={values.Colors[i]}
+                  className="border-b-2 border-black focus:outline-none w-full my-5"
+                >
+                  <option disabled value="">
+                    Choose a Color
                   </option>
-                ))}
-              </select>
+                  {colors.map((color, i) => (
+                    <option key={i} value={i}>
+                      {color.ColorName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <button className="border-red-700 border-4  text-red-700 rounded-2xl mb-10 px-7">
+                  delete
+                </button>
+              </div>
             </div>
-            
-            <div>
-              <button className="border-red-700 border-4  text-red-700 rounded-2xl mt-5 px-7">
-                delete
-              </button>
-            </div>
-          </div>))}
+          ))}
+          <div className="img-container bg-gray-200 w-48 h-48 rounded-lg flex items-center justify-center"><span className="text-gray-400 material-icons text-7xl">add_circle</span></div>
         </div>
         <button className="border-gray-400 border-4 text-gray-700 rounded-2xl px-7 mt-8">
           add product
