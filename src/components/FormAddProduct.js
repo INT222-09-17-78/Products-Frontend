@@ -4,11 +4,9 @@ import noimg from "../images/no-img.png";
 Axios.defaults.withCredentials = true;
 const FormAddProduct = (props) => {
   const [brands, setBrands] = useState([]);
-  const [colors, setColors] = useState([]);
-  const [patterns, setPatterns] = useState([
-    { patternsId: "pattern1" },
-    { patternsId: "pattern2" },
-  ]);
+  // const [colors, setColors] = useState([]);
+  const [sizes, setSizes] = useState([]);
+  const [patterns, setPatterns] = useState([]);
   useEffect(() => {
     Axios.get(`${process.env.REACT_APP_API_URL}/api/show/brands`)
       .then((response) => {
@@ -17,9 +15,16 @@ const FormAddProduct = (props) => {
       .catch((error) => {
         console.log(error);
       });
-    Axios.get(`${process.env.REACT_APP_API_URL}/api/show/colors`)
+    // Axios.get(`${process.env.REACT_APP_API_URL}/api/show/colors`)
+    //   .then((response) => {
+    //     setColors(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    Axios.get(`${process.env.REACT_APP_API_URL}/api/show/sizes`)
       .then((response) => {
-        setColors(response.data);
+        setSizes(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -31,19 +36,29 @@ const FormAddProduct = (props) => {
     Description: "",
     ProduceDate: "",
     BrandID: 0,
-    Image: "",
-    Colors: [],
+    Sizes: [],
+    Images: [],
   });
   const [errors] = useState({});
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(value);
-    console.log(colors[value]);
-    setValues({
-      ...values,
-      [name]: values.Colors.push(colors[value]),
-    });
-    console.log(values);
+    if (name === "Sizes") {
+      if (event.target.checked) {
+        setValues({
+          ...values,
+          [name]: [...values.Sizes, { SizeName: value }],
+        });
+      } else {
+        const index = values.Sizes.findIndex((size) => size.SizeName === value);
+        values.Sizes.splice(index, 1);
+        setValues({ ...values, [name]: [...values.Sizes] });
+      }
+    } else {
+      setValues({
+        ...values,
+        [name]: value,
+      });
+    }
   };
 
   const addProduct = (event) => {
@@ -55,7 +70,6 @@ const FormAddProduct = (props) => {
       Description: values.Description,
       ProduceDate: values.ProduceDate,
       BrandID: values.BrandID,
-      image: values.Image,
     })
       .then((res) => {
         console.log(res.data);
@@ -65,17 +79,16 @@ const FormAddProduct = (props) => {
         // errors.message = error.response.data.message;
       });
   };
-  const [imgData, setImgData] = useState(null);
+  const [imgData, setImgData] = useState([]);
   const onChangePicture = (e) => {
     if (e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = () => {
-        setImgData(reader.result);
       };
       reader.readAsDataURL(e.target.files[0]);
       setValues({
         ...values,
-        Image: e.target.files[0].name,
+        Images: [...values.Images,e.target.files[0].name],
       });
     }
   };
@@ -85,7 +98,7 @@ const FormAddProduct = (props) => {
       <span className="flex mb-8 justify-center">Add Product</span>
       <form className="px-5">
         <div className="first-container rounded-xl border-2 border-gray-400 flex flex-col items-center w-full h-full p-10">
-          <div className="previewProfilePic flex justify-center flex-col items-center w-48">
+          {/* <div className="previewProfilePic flex justify-center flex-col items-center w-48">
             <img
               src={imgData ? imgData : noimg}
               className="bg-gray-500 w-full h-48 rounded-xl"
@@ -98,9 +111,9 @@ const FormAddProduct = (props) => {
               onChange={onChangePicture}
               className="text-sm w-full mt-7"
             />
-          </div>
+          </div> */}
 
-          <div className="container-input space-y-4 mt-7 flex flex-col w-full">
+          <div className="container-input space-y-4 flex flex-col w-full">
             <div className="flex">
               <label className="pr-2">name</label>
               <input
@@ -150,7 +163,7 @@ const FormAddProduct = (props) => {
               />
             </div>
             <div className="flex flex-col items-start">
-              <label>Description</label>
+              <label className="mb-2">Description</label>
               <textarea
                 name="Description"
                 onChange={handleChange}
@@ -160,7 +173,19 @@ const FormAddProduct = (props) => {
             </div>
             <div className="flex flex-col items-start">
               <label>Size</label>
-              
+              {sizes.map((size, i) => (
+                <div key={i}>
+                  <input
+                    className="mr-2"
+                    key={i}
+                    name="Sizes"
+                    onChange={handleChange}
+                    value={size.SizeName}
+                    type="checkbox"
+                  />
+                  {size.SizeName}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -168,37 +193,62 @@ const FormAddProduct = (props) => {
           <span className="flex py-6">Patterns</span>
           {patterns.map((pattern, i) => (
             <div
-              key={pattern.patternsId}
+              key={i}
               className="container-input flex flex-col"
             >
-              <div className="img-container bg-gray-400 w-48 h-48 rounded-lg"></div>
+              <div className="previewProfilePic flex justify-center flex-col items-center w-48">
+            <img
+              src={imgData ? imgData : noimg}
+              className="bg-gray-500 w-full h-48 rounded-xl"
+              alt="200 X 200"
+            />
+            <input
+              id="profilePic"
+              type="file"
+              name="Image"
+              onChange={onChangePicture}
+              className="text-sm w-full mt-7"
+            />
+          </div>
 
               <div className="flex">
-                <select
-                  name="color"
+                <input
+                  type="text"
+                  name="Colors"
                   onChange={handleChange}
-                  value={values.Colors[i]}
-                  className="border-b-2 border-black focus:outline-none w-full my-5"
-                >
-                  <option disabled value="">
-                    Choose a Color
-                  </option>
-                  {colors.map((color, i) => (
-                    <option key={i} value={i}>
-                      {color.ColorName}
-                    </option>
-                  ))}
-                </select>
+                  value={values.Colors}
+                  className="border-b-2 border-black focus:outline-none w-full mt-5 text-center"
+                  placeholder="Type your tile color"
+                />
               </div>
 
               <div>
-                <button className="border-red-700 border-4  text-red-700 rounded-2xl mb-10 px-7">
+                <button
+                  id={pattern.patternId}
+                  className="border-red-700 border-4 text-red-700 rounded-2xl mb-10 px-7 mt-5"
+                  onClick={(event) => {
+                    event.preventDefault()
+                    const id = event.target.id;
+                    setPatterns(
+                      patterns.filter((item) => item.patternId !== id)
+                    );
+                  }}
+                >
                   delete
                 </button>
               </div>
             </div>
           ))}
-          <div className="img-container bg-gray-200 w-48 h-48 rounded-lg flex items-center justify-center"><span className="text-gray-400 material-icons text-7xl">add_circle</span></div>
+          <div
+            className="img-container bg-gray-200 w-48 h-48 rounded-lg flex items-center justify-center cursor-pointer"
+            onClick={() => {
+              setPatterns([...patterns,{patternId:`pattern${patterns.length}`,color:""}]);
+            }}
+          >
+            <span className="text-gray-400 material-icons text-7xl">
+              add_circle
+            </span>
+          </div>
         </div>
         <button className="border-gray-400 border-4 text-gray-700 rounded-2xl px-7 mt-8">
           add product
