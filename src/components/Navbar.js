@@ -6,13 +6,13 @@ const Navbar = () => {
         <i className="material-icons cursor-pointer mr-2">home</i>
         <div className="cursor-pointer ">home</div>
       </Link>
-      <Link to="/brands" className="flex flex-row items-center">
+      <Link to="/products" className="flex flex-row items-center">
         <i className="material-icons cursor-pointer mr-2">
           category
         </i>
-        <div className="cursor-pointer ">all brand</div>
+        <div className="cursor-pointer ">all product</div>
       </Link>
-      <Link to="/products" className="flex flex-row items-center">
+      <Link to="/addProduct" className="flex flex-row items-center">
         <i className="material-icons cursor-pointer mr-2">
           inventory
         </i>

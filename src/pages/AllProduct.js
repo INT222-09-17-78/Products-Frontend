@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
-import { BrowserRouter as Switch, Route } from "react-router-dom";
-import FormLogin from "../components/FormLogin.js";
-import FormRegister from "./UsersManage.js";
-const Brands = () => {
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import styled from "styled-components";
+const Card = styled.ul`
+height: fit-content;
+`;
+const AllProduct = () => {
   // const [brands, setBrands] = useState([{ name: "a" }, { name: "b" }, { name: "c" }, { name: "d" }]);
   // const [currentBrand, setCurrentBrand] = useState(0);
   // const [hasNextBrands, sethasNextBrands] = useState("none");
@@ -75,10 +77,12 @@ const Brands = () => {
   // };
   const ProductsList = () => {
     const [products, setProducts] = useState([]);
+    const [images, setImages] = useState([]);
     useEffect(() => {
       Axios.get(`${process.env.REACT_APP_API_URL}/api/show/products`)
         .then((response) => {
-          setProducts(response.data)
+          setProducts(response.data);
+          // console.log(response.data);
           // setUsernameInSession(response.data.user);
           // setIsLogin(response.data.loggedIn);
         })
@@ -86,30 +90,55 @@ const Brands = () => {
           console.log(error);
         });
     }, []);
+    useEffect(() => {
+      const getImages = () => {
+        const Images = [];
+        products.forEach((product) => {
+          Axios.get(
+            `${process.env.REACT_APP_API_URL}/api/download/upload/${product.Image}`
+          )
+            .then((response) => {
+              // console.log(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
+      };
+      getImages();
+    }, [products]);
     return (
       <div className="ProductsList w-screen h-screen font-kanit">
-      <div className="p-5">All Product</div>
+        <div className="p-5">All Product</div>
         <div className="grid grid-cols-2 gap-y-5 gap-x-6 px-8 justify-items-center md:grid-cols-4">
           {products.map((product, i) => (
-            <div
-              className="bg-gray-400 w-32 h-44 rounded-xl flex items-end shadow-xl md:w-40 md:h-52"
-              key={i}
-            >
-              <ul className="bg-white w-full h-14 rounded-b-xl flex flex-col items-start px-3.5 text-sm pt-2 shadow-sm">
-                <li>{product.ProdName}</li>
-                <li>{product.Price} THB</li>
-              </ul>
-            </div>
+              <Link to={`/products/editProduct/${product.ProdID}`}>
+                <div
+                  className="w-32 h-44 rounded-xl flex items-end shadow-xl md:w-40 md:h-52"
+                  style={{
+                    backgroundImage: `url(${product.Image})`,
+                  }}
+                  key={i}
+                >
+                  <Card className="bg-white w-full h-14 rounded-b-xl text-left px-3.5 text-sm p-2 shadow-sm">
+                    <li className="truncate text-left">{product.ProdName}</li>
+                    <li className="truncate text-left">
+                      {product.Brands.BrandName}
+                    </li>
+                    <li className="truncate text-left">{product.Price} ฿</li>
+                  </Card>
+                </div>
+              </Link>
           ))}
         </div>
       </div>
     );
   };
   return (
-    <div className="Brands">
+    <div className="AllProduct">
       {/* <BrandsList /> */}
       <ProductsList />
     </div>
   );
 };
-export default Brands;
+export default AllProduct;

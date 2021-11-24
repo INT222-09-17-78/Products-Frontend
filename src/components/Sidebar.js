@@ -51,7 +51,7 @@ const Sidebar = (props) => {
             home
           </div>
         </Link>
-        <Link to="/brands">
+        <Link to="/products">
         <div
             className="flex items-center cursor-pointer"
             onClick={() => {
@@ -61,10 +61,10 @@ const Sidebar = (props) => {
           <i className="material-icons cursor-pointer text-gray-400 mr-2">
             category
           </i>
-          all brnad
+          all product
         </div>
         </Link>
-        <Link to="/products">
+        <Link to="/addProduct">
           <div
             className="flex items-center cursor-pointer"
             onClick={() => {

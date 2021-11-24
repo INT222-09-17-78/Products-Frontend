@@ -58,7 +58,7 @@ const UsersManage = (props) => {
           setIsAdd={setIsAdd}
         ></FormAddUser>
       )}
-      <section className=" container mx-auto pr-14 pl-14 pt-14 font-kanit ">
+      <section className="container mx-auto pr-14 pl-14 pt-14 font-kanit">
         <div className="flex justify-end ">
           <button
             onClick={() => {

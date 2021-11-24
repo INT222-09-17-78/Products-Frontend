@@ -82,7 +82,7 @@ const FormLogin = (props) => {
         <img
           src={SquareLogoBlack}
           alt="logo"
-          className="absolute w-40 h-40 left-32 z-10 md:-top-12 md:ml-52"
+          className="absolute w-40 h-40 -top-14 left-12 z-10 md:-top-12 md:ml-72"
         />
         <div className="absolute right-5 top-5">
           <Link to="/">
