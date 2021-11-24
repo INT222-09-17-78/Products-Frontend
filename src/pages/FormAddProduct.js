@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 import noimg from "../images/no-img.png";
 import styled from "styled-components";
-import { products } from "../../../Products-Backend/models";
 
 Axios.defaults.withCredentials = true;
 const PriceInput = styled.input`
