@@ -87,23 +87,6 @@ const AllProduct = () => {
           console.log(error);
         });
     }, []);
-    useEffect(() => {
-      const getImages = () => {
-        const Images = [];
-        products.forEach((product) => {
-          Axios.get(
-            `${process.env.REACT_APP_API_URL}/api/download/upload/${product.Image}`
-          )
-            .then((response) => {
-              // console.log(response);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        });
-      };
-      getImages();
-    }, [products]);
     return (
       <div className="ProductsList w-screen h-screen font-kanit">
         <div className="p-5">All Product</div>
@@ -111,18 +94,17 @@ const AllProduct = () => {
           {products.map((product, i) => (
               <Link to={`/products/editProduct/${product.ProdID}`} key={i}>
                 <div
-                  className="w-32 h-44 rounded-xl flex items-end shadow-xl md:w-40 md:h-52"
+                  className="w-32 h-44 rounded-xl flex items-end shadow-xl md:w-40 md:h-52 bg-contain"
                   style={{
-                    backgroundImage: `url(${product.Image})`,
+                    backgroundImage: `url(${process.env.REACT_APP_API_URL}/api/download/image/${product.Image})`,
                   }}
-                  key={i}
                 >
-                  <Card className="bg-white w-full h-14 rounded-b-xl text-left px-3.5 text-sm p-2 shadow-sm">
-                    <li className="truncate text-left">{product.ProdName}</li>
+                  <Card className="bg-white w-full h-14 rounded-b-xl text-left px-3 text-sm p-2 shadow-sm">
+                    <li className="truncate text-left">Name: {product.ProdName}</li>
                     <li className="truncate text-left">
-                      {product.Brands.BrandName}
+                      Brand: {product.Brands.BrandName}
                     </li>
-                    <li className="truncate text-left">{product.Price} ฿</li>
+                    <li className="truncate text-left">Price: {product.Price} ฿</li>
                   </Card>
                 </div>
               </Link>
