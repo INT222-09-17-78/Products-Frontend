@@ -87,11 +87,13 @@ const FormAddProduct = (props) => {
     }
   };
   const [img, setImg] = useState(null);
+  const [selectedImage,setSelectedImage] = useState(null);
   const onChangePicture = (e) => {
     if (e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = () => {
         setImg(reader.result);
+        setSelectedImage(e.target.files[0]);
       };
       reader.readAsDataURL(e.target.files[0]);
       setValues({
@@ -123,32 +125,22 @@ const FormAddProduct = (props) => {
     //   .catch((error) => {
     //     console.log(error.response.data.message);
     //   });
-    // const formData = new FormData();
-    const product = {
-        ProdName: values.ProdName,
-        Price: values.Price,
-        Description: values.Description,
-        ProduceDate: values.ProduceDate,
-        BrandId: values.BrandId,
-        Image: values.Image,
-        Sizes: values.Sizes,
-        Patterns: values.Patterns,
-        file: img
-    }
-    // const jsonProduct = JSON.stringify({
-    //   ProdName: values.ProdName,
-    //   Price: values.Price,
-    //   Description: values.Description,
-    //   ProduceDate: values.ProduceDate,
-    //   BrandId: values.BrandId,
-    //   Image: values.Image,
-    //   Sizes: values.Sizes,
-    //   Patterns: values.Patterns,
-    // });
+    const formData = new FormData();
+    
+    const jsonProduct = JSON.stringify({
+      ProdName: values.ProdName,
+      Price: values.Price,
+      Description: values.Description,
+      ProduceDate: values.ProduceDate,
+      BrandId: values.BrandId,
+      Image: values.Image,
+      Sizes: values.Sizes,
+      Patterns: values.Patterns,
+    });
     // const blob = new Blob([jsonProduct], {
     //   type: "application/json",
     // });
-    
+    formData.append("product",jsonProduct)
     // formData.append("ProdName", values.ProdName);
     // formData.append("Price", values.Price);
     // formData.append("Description",values.Description)
@@ -157,8 +149,8 @@ const FormAddProduct = (props) => {
     // formData.append("Image",values.Image)
     // formData.append("Sizes",values.Sizes)
     // formData.append("Patterns",values.Patterns)
-    // formData.append("file",img)
-    Axios.post(`${process.env.REACT_APP_API_URL}/api/create/product`, product)
+    formData.append("image",selectedImage)
+    Axios.post(`${process.env.REACT_APP_API_URL}/api/create/product`, formData)
       .then((res) => {
         console.log(res.data);
       })

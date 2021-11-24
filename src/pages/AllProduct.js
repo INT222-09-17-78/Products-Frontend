@@ -82,9 +82,6 @@ const AllProduct = () => {
       Axios.get(`${process.env.REACT_APP_API_URL}/api/show/products`)
         .then((response) => {
           setProducts(response.data);
-          // console.log(response.data);
-          // setUsernameInSession(response.data.user);
-          // setIsLogin(response.data.loggedIn);
         })
         .catch((error) => {
           console.log(error);
@@ -112,7 +109,7 @@ const AllProduct = () => {
         <div className="p-5">All Product</div>
         <div className="grid grid-cols-2 gap-y-5 gap-x-6 px-8 justify-items-center md:grid-cols-4">
           {products.map((product, i) => (
-              <Link to={`/products/editProduct/${product.ProdID}`}>
+              <Link to={`/products/editProduct/${product.ProdID}`} key={i}>
                 <div
                   className="w-32 h-44 rounded-xl flex items-end shadow-xl md:w-40 md:h-52"
                   style={{
