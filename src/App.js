@@ -23,6 +23,7 @@ const App = () => {
       window.location = "/login";
     }
   };
+  const [searchInput, setSearchInput] = useState("");
   useEffect(() => {
     Axios.get(`${process.env.REACT_APP_API_URL}/api/users/login`)
       .then((response) => {
@@ -35,7 +36,7 @@ const App = () => {
           console.log(error);
         }
       });
-  }, []);
+  }, [username]);
   return (
     <div className="App w-screen h-screen overflow-x-hidden">
       <Router>
@@ -43,6 +44,8 @@ const App = () => {
           username={username}
           setShowSidebar={setShowSidebar}
           logOut={logOut}
+          setSearchInput={setSearchInput}
+          searchInput={searchInput}
         ></Header>
         <Navbar />
         <Sidebar
@@ -53,7 +56,11 @@ const App = () => {
         />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/products" component={AllProduct} exact />
+          <Route
+            path="/products"
+            component={() => <AllProduct searchInput={searchInput} />}
+            exact
+          />
           <Route path="/login" component={FormLogin} />
           <PrivateRoute
             path="/users"

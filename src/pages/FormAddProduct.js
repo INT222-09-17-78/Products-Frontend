@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
-import noimg from "../images/no-img.png";
+import noimg from "../images/no-img.jpg";
 import styled from "styled-components";
 
 Axios.defaults.withCredentials = true;
@@ -20,7 +20,7 @@ const FormAddProduct = (props) => {
   // const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [patterns, setPatterns] = useState([]);
-  const [images, setImage] = useState([]);
+  const [, setImage] = useState([]);
   useEffect(() => {
     Axios.get(`${process.env.REACT_APP_API_URL}/api/show/brands`)
       .then((response) => {
@@ -108,6 +108,13 @@ const FormAddProduct = (props) => {
     event.preventDefault();
     if (!values.ProdName) {
       setErrors({ ...errors, ProdName: "This field is required" });
+    }else{
+      setErrors({ ...errors, ProdName: "" })
+    }
+    if (!values.Image) {
+      setErrors({ ...errors, Image: "This field is required" });
+    }else{
+      setErrors({ ...errors, Image: "" })
     }
     // Axios.post(`${process.env.REACT_APP_API_URL}/api/create/product`, {
     //   ProdName: values.ProdName,
@@ -208,7 +215,7 @@ const FormAddProduct = (props) => {
           <div className="previewProfilePic flex justify-center flex-col items-center w-48">
             <img
               src={img ? img : noimg}
-              className="bg-gray-500 w-full h-48 rounded-xl"
+              className="bg-white w-full h-48 rounded-xl"
               alt="200 X 200"
             />
             <input
@@ -231,9 +238,10 @@ const FormAddProduct = (props) => {
                 className="border-b-2 border-black focus:outline-none w-full"
               />
             </div>
-            {/* <div className="text-red-600 self-start text-xs text-left">
+            {errors.ProdName?
+            <span className="text-red-600 text-left text-xs">
               {errors.ProdName}
-            </div> */}
+            </span>:null}
             <div className="flex">
               <label className="pr-2">brand</label>
               <select
@@ -281,11 +289,12 @@ const FormAddProduct = (props) => {
                 onChange={handleChange}
                 value={values.Description}
                 className="border-2 border-black focus:outline-none  w-full h-32 px-1 pt-1"
+                maxLength="300"
               />
             </div>
             <div className="flex flex-col items-start">
               <label>Size</label>
-              {sizes.map((size, i) => (
+              {sizes ? sizes.map((size, i) => (
                 <div key={i}>
                   <input
                     className="mr-2"
@@ -297,7 +306,7 @@ const FormAddProduct = (props) => {
                   />
                   {size.SizeName}
                 </div>
-              ))}
+              )):null}
             </div>
           </div>
         </Container1>

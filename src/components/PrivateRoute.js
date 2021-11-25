@@ -4,9 +4,7 @@
 // If they are: they proceed to the page
 // If not: they are redirected to the login page.
 import React from "react";
-import { useState, useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
-import Axios from "axios";
 
 const PrivateRoute = ({ component: Component ,  ...rest }) => {
   // Add your own authentication on the below line.

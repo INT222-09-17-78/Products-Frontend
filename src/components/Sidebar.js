@@ -1,5 +1,4 @@
 import { BrowserRouter as Route, Link } from "react-router-dom";
-import Axios from "axios";
 const Sidebar = (props) => {
   return (
     <div

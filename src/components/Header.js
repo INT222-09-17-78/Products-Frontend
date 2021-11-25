@@ -1,9 +1,9 @@
 import { BrowserRouter as Switch, Link } from "react-router-dom";
-import Axios from "axios";
-import { useState, useEffect } from "react";
 import SquareLogo from "../images/SquareLogo.png";
 const Header = (props) => {
-  // const [show, setShow] = useState(false);
+  const handleChange = event => {
+    props.setSearchInput(event.target.value)
+  };
   return (
     // <Router>
     <>
@@ -30,6 +30,8 @@ const Header = (props) => {
             type="text"
             placeholder="search"
             className="bg-transparent flex flex-grow h-7 lg:h-9 lg:pl-10 pl-8 bg-white rounded-3xl focus:outline-none"
+            value={props.searchInput}
+            onChange={handleChange}
           />
         </div>
         {localStorage.getItem("isLoggedIn") === "true" ? (

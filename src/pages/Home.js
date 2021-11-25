@@ -1,6 +1,5 @@
 import { BrowserRouter as Route } from "react-router-dom";
 import FormLogin from "../components/FormLogin.js";
-import FormRegister from "./UsersManage.js";
 import homeBanner from "../images/homeBanner.jpg";
 import ads1 from "../images/ads1.jpg";
 import ads2 from "../images/ads2.jpg";
