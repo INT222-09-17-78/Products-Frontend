@@ -58,7 +58,7 @@ const App = () => {
           <Route exact path="/" component={Home} />
           <Route
             path="/products"
-            component={() => <AllProduct searchInput={searchInput} />}
+            component={() => <AllProduct searchInput={searchInput}/>}
             exact
           />
           <Route path="/login" component={FormLogin} />

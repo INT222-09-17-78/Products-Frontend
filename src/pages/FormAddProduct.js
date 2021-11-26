@@ -17,7 +17,7 @@ const Container1 = styled.div`
 `;
 const FormAddProduct = (props) => {
   const [brands, setBrands] = useState([]);
-  // const [colors, setColors] = useState([]);
+  // const [colors, setcolors] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [patterns, setPatterns] = useState([]);
   const [, setImage] = useState([]);
@@ -47,7 +47,6 @@ const FormAddProduct = (props) => {
     Sizes: [],
     Patterns: [],
   });
-  const [errors, setErrors] = useState({});
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "Sizes") {
@@ -63,7 +62,7 @@ const FormAddProduct = (props) => {
       }
     } else if (name === "Patterns") {
       let newImgData = [...values.Patterns];
-      newImgData[event.target.id].Color = value;
+      newImgData[event.target.id].color = value;
       setImage(newImgData);
     } else if (name === "Price") {
       if (parseInt(value) !== 0) {
@@ -87,7 +86,7 @@ const FormAddProduct = (props) => {
     }
   };
   const [img, setImg] = useState(null);
-  const [selectedImage,setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const onChangePicture = (e) => {
     if (e.target.files[0]) {
       const reader = new FileReader();
@@ -101,69 +100,6 @@ const FormAddProduct = (props) => {
         Image: e.target.files[0].name,
       });
     }
-  };
-
-  const addProduct = (event) => {
-    console.log(values);
-    event.preventDefault();
-    if (!values.ProdName) {
-      setErrors({ ...errors, ProdName: "This field is required" });
-    }else{
-      setErrors({ ...errors, ProdName: "" })
-    }
-    if (!values.Image) {
-      setErrors({ ...errors, Image: "This field is required" });
-    }else{
-      setErrors({ ...errors, Image: "" })
-    }
-    // Axios.post(`${process.env.REACT_APP_API_URL}/api/create/product`, {
-    //   ProdName: values.ProdName,
-    //   Price: values.Price,
-    //   Description: values.Description,
-    //   ProduceDate: values.ProduceDate,
-    //   BrandId: values.BrandId,
-    //   Image: values.Image,
-    //   Sizes: values.Sizes,
-    //   Patterns: values.Patterns,
-    // })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.response.data.message);
-    //   });
-    const formData = new FormData();
-    
-    const jsonProduct = JSON.stringify({
-      ProdName: values.ProdName,
-      Price: values.Price,
-      Description: values.Description,
-      ProduceDate: values.ProduceDate,
-      BrandId: values.BrandId,
-      Image: values.Image,
-      Sizes: values.Sizes,
-      Patterns: values.Patterns,
-    });
-    // const blob = new Blob([jsonProduct], {
-    //   type: "application/json",
-    // });
-    formData.append("product",jsonProduct)
-    // formData.append("ProdName", values.ProdName);
-    // formData.append("Price", values.Price);
-    // formData.append("Description",values.Description)
-    // formData.append("ProduceDate",values.ProduceDate)
-    // formData.append("BrandId",values.BrandId)
-    // formData.append("Image",values.Image)
-    // formData.append("Sizes",values.Sizes)
-    // formData.append("Patterns",values.Patterns)
-    formData.append("image",selectedImage)
-    Axios.post(`${process.env.REACT_APP_API_URL}/api/create/product`, formData)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log(error.response.data.message);
-      });
   };
   const [selectedImages, setSelectedImages] = useState([]);
   const onChangePictures = (e) => {
@@ -206,6 +142,93 @@ const FormAddProduct = (props) => {
       reader.readAsDataURL(e.target.files[0]);
     }
   };
+  const [errors] = useState({});
+  const addProduct = (event) => {
+    console.log(values);
+    event.preventDefault();
+    if (!values.ProdName) {
+      errors.ProdName = "This field is required";
+    } else {
+      errors.ProdName = "";
+    }
+    if (!values.Image) {
+      errors.Image = "Image is required";
+    } else {
+      errors.Image = "";
+    }
+    if (!values.BrandId) {
+      errors.BrandId = "This field is required";
+    } else {
+      errors.BrandId = "";
+    }
+    if (!values.Price) {
+      errors.Price = "This field is required";
+    } else {
+      errors.Price = "";
+    }
+    if (!values.Description) {
+      errors.Description = "This field is required";
+    } else {
+      errors.Description = "";
+    }
+    if (!values.ProduceDate) {
+      errors.ProduceDate = "This field is required";
+    } else {
+      errors.ProduceDate = "";
+    }
+    if (values.Sizes.length === 0) {
+      errors.Sizes = "This field is required";
+    } else {
+      errors.Sizes = "";
+    }
+    if (
+      errors.ProdName ||
+      errors.Image ||
+      errors.BrandId ||
+      errors.Price ||
+      errors.Description ||
+      errors.ProduceDate ||
+      errors.Sizes
+    ) {
+      setValues({
+        ...values,
+        ProdName: values.ProdName,
+        Image: values.Image,
+        BrandId: values.BrandId,
+        Price: values.Price,
+        Description: values.Description,
+        ProduceDate: values.ProduceDate,
+        Sizes: values.Sizes,
+      });
+    }
+    const formData = new FormData();
+
+    const jsonProduct = JSON.stringify({
+      ProdName: values.ProdName,
+      Price: values.Price,
+      Description: values.Description,
+      ProduceDate: values.ProduceDate,
+      BrandId: values.BrandId,
+      Image: values.Image,
+      Sizes: values.Sizes,
+      Patterns: values.Patterns,
+    });
+    formData.append("product", jsonProduct);
+    formData.append("image", selectedImage);
+    Axios.post(`${process.env.REACT_APP_API_URL}/api/create/product`, formData)
+      .then((res) => {
+        values.Patterns.forEach((pattern) => {
+          pattern.ProdID = res.data.product.ProdID;
+        });
+        const formData = new FormData();
+        formData.append("patterns",JSON.stringify(values.Patterns))
+        formData.append("images", selectedImages);
+        Axios.post(`${process.env.REACT_APP_API_URL}/api/create/pattern`,formData)
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+  };
 
   return (
     <div onSubmit={addProduct} className="font-kanit w-screen py-8">
@@ -226,7 +249,11 @@ const FormAddProduct = (props) => {
               className="text-sm w-full mt-7"
             />
           </div>
-
+          {errors.Image ? (
+            <span className="text-red-600 text-xs w-full text-left pt-5">
+              {errors.Image}
+            </span>
+          ) : null}
           <div className="container-input space-y-4 flex flex-col w-full mt-5">
             <div className="flex">
               <label className="pr-2">name</label>
@@ -238,10 +265,11 @@ const FormAddProduct = (props) => {
                 className="border-b-2 border-black focus:outline-none w-full"
               />
             </div>
-            {errors.ProdName?
-            <span className="text-red-600 text-left text-xs">
-              {errors.ProdName}
-            </span>:null}
+            {errors.ProdName ? (
+              <span className="text-red-600 text-left text-xs">
+                {errors.ProdName}
+              </span>
+            ) : null}
             <div className="flex">
               <label className="pr-2">brand</label>
               <select
@@ -260,6 +288,11 @@ const FormAddProduct = (props) => {
                 ))}
               </select>
             </div>
+            {errors.BrandId ? (
+              <span className="text-red-600 text-left text-xs">
+                {errors.BrandId}
+              </span>
+            ) : null}
             <div className="flex">
               <label className="pr-2">price</label>
               <PriceInput
@@ -270,8 +303,15 @@ const FormAddProduct = (props) => {
                 className="border-b-2 border-black focus:outline-none w-full"
                 onWheel={(e) => e.target.blur()}
                 max="999999"
+                onKeyDown={ (e) => (e.key === 'e' || e.key === '+' || e.key === '-')  && e.preventDefault() }
+                onPaste={(e) => (e.preventDefault())}
               />
             </div>
+            {errors.Price ? (
+              <span className="text-red-600 text-left text-xs">
+                {errors.Price}
+              </span>
+            ) : null}
             <div className="flex">
               <label className="pr-2">date</label>
               <input
@@ -282,6 +322,11 @@ const FormAddProduct = (props) => {
                 className="border-b-2 border-black focus:outline-none  w-full"
               />
             </div>
+            {errors.ProduceDate ? (
+              <span className="text-red-600 text-left text-xs">
+                {errors.ProduceDate}
+              </span>
+            ) : null}
             <div className="flex flex-col items-start">
               <label className="mb-2">Description</label>
               <textarea
@@ -292,22 +337,34 @@ const FormAddProduct = (props) => {
                 maxLength="300"
               />
             </div>
+            {errors.Description ? (
+              <span className="text-red-600 text-left text-xs">
+                {errors.Description}
+              </span>
+            ) : null}
             <div className="flex flex-col items-start">
               <label>Size</label>
-              {sizes ? sizes.map((size, i) => (
-                <div key={i}>
-                  <input
-                    className="mr-2"
-                    key={i}
-                    name="Sizes"
-                    onChange={handleChange}
-                    value={size.SizeName}
-                    type="checkbox"
-                  />
-                  {size.SizeName}
-                </div>
-              )):null}
+              {sizes
+                ? sizes.map((size, i) => (
+                    <div key={i}>
+                      <input
+                        className="mr-2"
+                        key={i}
+                        name="Sizes"
+                        onChange={handleChange}
+                        value={size.SizeName}
+                        type="checkbox"
+                      />
+                      {size.SizeName}
+                    </div>
+                  ))
+                : null}
             </div>
+            {errors.Sizes ? (
+              <span className="text-red-600 text-left text-xs">
+                {errors.Sizes}
+              </span>
+            ) : null}
           </div>
         </Container1>
         <div className="second-container rounded-xl border-2 border-gray-400 pb-16 mt-5 flex flex-col items-center">
@@ -335,7 +392,7 @@ const FormAddProduct = (props) => {
                     type="text"
                     name="Patterns"
                     onChange={handleChange}
-                    value={values.Patterns.Color}
+                    value={values.Patterns.color}
                     className="border-b-2 border-black focus:outline-none w-full mt-5 text-center"
                     placeholder="Type your tile color"
                   />
@@ -346,7 +403,7 @@ const FormAddProduct = (props) => {
                 <button
                   id={pattern.patternId}
                   name={i}
-                  className="border-red-700 border-4 text-red-700 rounded-2xl mb-10 px-7 mt-5"
+                  className="border-red-700 border-4 bg-red-700 rounded-2xl mb-10 px-7 mt-8 text-white"
                   onClick={(event) => {
                     event.preventDefault();
                     const id = event.target.id;
