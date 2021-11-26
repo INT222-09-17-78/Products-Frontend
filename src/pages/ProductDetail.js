@@ -42,7 +42,7 @@ const ProductDetail = (props) => {
             />
           ) : null}
           <ul className="text-left p-4 space-y-2 rounded-b-lg relative">
-            <i className="absolute material-icons border-2 border-black rounded-md right-5 mt-1 cursor-pointer">
+            <i className="absolute material-icons border-2 border-gray-700 text-gray-700 rounded-md right-5 mt-1 cursor-pointer">
               edit
             </i>
             <li className="text-xl">{product.ProdName}</li>
