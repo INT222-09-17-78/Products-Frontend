@@ -1,4 +1,4 @@
-import { Link, useLocation, useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Axios from "axios";
 import styled from "styled-components";
@@ -7,44 +7,37 @@ const Description = styled.li`
 `;
 const ProductDetail = (props) => {
   const history = useHistory();
-  // const { state } = useLocation();
   const { productId } = useParams();
   const [product, setProduct] = useState({});
-  // useEffect(() => {
-  //   setProduct(state);
-  // }, [state]);
   useEffect(() => {
     Axios.get(`${process.env.REACT_APP_API_URL}/api/show/product/${productId}`)
       .then((response) => {
-        console.log(response.data);
         setProduct(response.data);
       })
       .catch(() => {
         history.push("/products");
       });
-  }, [productId]);
+  }, [productId,history]);
   const deleteThisProduct = (id) => {
     Axios.delete(`${process.env.REACT_APP_API_URL}/api/delete/product/${id}`);
   };
   return (
-    <div className="font-kanit">
+    <div className="font-kanit md:text-lg lg:text-xl xl:text-2xl xl:flex xl:flex-col xl:justify-center xl:items-center lg:pb-20">
       {product.Brands ? (
-        <div className="text-2xl p-8 p">{product.Brands.BrandName}</div>
+        <div className="text-2xl p-8">{product.Brands.BrandName}</div>
       ) : null}
-      <div className="container w-full px-8">
+      <div className="container px-8 md:px-60 2xl:px-96">
         <div className="card shadow-xl rounded-lg">
           {product.Image ? (
-            <div
-              className="container h-64 bg-cover rounded-t-lg "
-              style={{
-                backgroundImage: `url(${process.env.REACT_APP_API_URL}/api/download/image/${product.Image})`,
-              }}
-            />
+            <img className="rounded-t-lg" src={`${process.env.REACT_APP_API_URL}/api/download/image/${product.Image}`}/>
           ) : null}
           <ul className="text-left p-4 space-y-2 rounded-b-lg relative">
-            <i className="absolute material-icons border-2 border-gray-700 text-gray-700 rounded-md right-5 mt-1 cursor-pointer">
+           <Link to={`/products/productDetail/${productId}/editProduct`}>
+            <i className="absolute material-icons border-2 border-gray-700 text-gray-700 rounded-md right-5 mt-1 cursor-pointer"
+            >
               edit
             </i>
+            </Link>
             <li className="text-xl">{product.ProdName}</li>
             <li>Price: {product.Price} ฿</li>
             <li>Description</li>
@@ -53,14 +46,14 @@ const ProductDetail = (props) => {
             </Description>
           </ul>
           {product.Patterns ? (
-            <div className="grid grid-cols-3 w-full justify-items-center pb-5">
+            <div className="grid grid-cols-2 w-full justify-items-center pb-5">
               {product.Patterns.map((pattern, i) => {
                 return pattern.PatternName ? (
                   <div key={i}>
                     <img
                       src={`${process.env.REACT_APP_API_URL}/api/download/image/${pattern.PatternName}`}
                       alt="NOT LOADED"
-                      className="w-16 h-16 rounded-md"
+                      className="w-28 h-28 rounded-md"
                     />
                     <span className="text-sm">{pattern.color}</span>
                   </div>

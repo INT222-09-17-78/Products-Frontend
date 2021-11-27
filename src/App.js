@@ -12,6 +12,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Axios from "axios";
 import Sidebar from "./components/Sidebar";
 import FormAddProduct from "./pages/FormAddProduct";
+import FormEditProduct from "./pages/FormEditProduct";
 import ProductDetail from "./pages/ProductDetail";
 const App = () => {
   const [username, setUsername] = useState("");
@@ -68,8 +69,13 @@ const App = () => {
           />
           <Route path="/addProduct" component={FormAddProduct} />
           <Route
-            path="/products/editProduct/:productId"
+            path="/products/productDetail/:productId"
             component={() => <ProductDetail />}
+            exact
+          />
+          <Route
+            path="/products/productDetail/:productId/editProduct"
+            component={() => <FormEditProduct />}
             exact
           />
         </Switch>

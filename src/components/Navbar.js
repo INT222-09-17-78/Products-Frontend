@@ -1,7 +1,7 @@
 import { BrowserRouter as Route, Link } from "react-router-dom";
 const Navbar = () => {
   return (
-    <div className="Navbar px-20 font-kanit border-none w-full text-sm capitalize font-light bg-blue-cyan text-white h-16 relative lg:flex flex-row shadow-xl z-10 space-x-10 hidden items-center">
+    <div className="Navbar px-20 font-kanit border-none w-full text-sm capitalize font-light bg-blue-cyan text-white h-16 relative lg:flex flex-row shadow-xl z-10 space-x-10 hidden items-center xl:text-lg">
       <Link to="/" className="flex flex-row items-center">
         <i className="material-icons cursor-pointer mr-2">home</i>
         <div className="cursor-pointer ">home</div>

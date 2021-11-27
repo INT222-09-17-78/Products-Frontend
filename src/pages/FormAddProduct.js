@@ -79,6 +79,13 @@ const FormAddProduct = (props) => {
         }
       }
     } else {
+      // if (name === "ProdName") {
+      //   if (!value) {
+      //     errors.ProdName = "This field is required";
+      //   }else{
+      //     errors.ProdName = "";
+      //   }
+      // }
       setValues({
         ...values,
         [name]: value,
@@ -200,45 +207,66 @@ const FormAddProduct = (props) => {
         ProduceDate: values.ProduceDate,
         Sizes: values.Sizes,
       });
-    }
-    const formData = new FormData();
-
-    const jsonProduct = JSON.stringify({
-      ProdName: values.ProdName,
-      Price: values.Price,
-      Description: values.Description,
-      ProduceDate: values.ProduceDate,
-      BrandId: values.BrandId,
-      Image: values.Image,
-      Sizes: values.Sizes,
-      Patterns: values.Patterns,
-    });
-    formData.append("product", jsonProduct);
-    formData.append("image", selectedImage);
-    Axios.post(`${process.env.REACT_APP_API_URL}/api/create/product`, formData)
-      .then((res) => {
-        values.Patterns.forEach((pattern) => {
-          pattern.ProdID = res.data.product.ProdID;
-        });
-        const formData = new FormData();
-        formData.append("patterns",JSON.stringify(values.Patterns))
-        formData.append("images", selectedImages);
-        Axios.post(`${process.env.REACT_APP_API_URL}/api/create/pattern`,formData)
-      })
-      .catch((error) => {
-        console.log(error)
+    } else {
+      setValues({
+        ...values,
+        ProdName: values.ProdName,
+        Image: values.Image,
+        BrandId: values.BrandId,
+        Price: values.Price,
+        Description: values.Description,
+        ProduceDate: values.ProduceDate,
+        Sizes: values.Sizes,
       });
+      const formData = new FormData();
+
+      const jsonProduct = JSON.stringify({
+        ProdName: values.ProdName,
+        Price: values.Price,
+        Description: values.Description,
+        ProduceDate: values.ProduceDate,
+        BrandId: values.BrandId,
+        Image: values.Image,
+        Sizes: values.Sizes,
+        Patterns: values.Patterns,
+      });
+      formData.append("product", jsonProduct);
+      formData.append("image", selectedImage);
+
+      Axios.post(
+        `${process.env.REACT_APP_API_URL}/api/create/product`,
+        formData
+      )
+        .then((res) => {
+          values.Patterns.forEach((pattern) => {
+            pattern.ProdID = res.data.product.ProdID;
+          });
+          const formData = new FormData();
+          formData.append("patterns", JSON.stringify(values.Patterns));
+          formData.append("images", selectedImages);
+          Axios.post(
+            `${process.env.REACT_APP_API_URL}/api/create/pattern`,
+            formData
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
-    <div onSubmit={addProduct} className="font-kanit w-screen py-8">
+    <div
+      onSubmit={addProduct}
+      className="font-kanit w-screen py-8 md:text-lg lg:text-xl xl:text-2xl"
+    >
       <span className="flex mb-8 justify-center">Add Product</span>
-      <form className="px-5">
-        <Container1 className="first-container rounded-xl border-2 border-gray-400 flex flex-col items-center w-full h-full p-10">
-          <div className="previewProfilePic flex justify-center flex-col items-center w-48">
+      <form className="px-5 md:px-16 2xl:px-60">
+        <Container1 className="first-container rounded-xl border-2 border-gray-400 flex flex-col w-full h-full p-10 md:flex-row md:space-x-10 2xl:p-40">
+          <div className="previewImg flex justify-center flex-col items-center w-full">
             <img
               src={img ? img : noimg}
-              className="bg-white w-full h-48 rounded-xl"
+              className="bg-white w-full h-full rounded-xl"
               alt="200 X 200"
             />
             <input
@@ -246,7 +274,7 @@ const FormAddProduct = (props) => {
               type="file"
               name="Image"
               onChange={onChangePicture}
-              className="text-sm w-full mt-7"
+              className="text-sm w-full h-full mt-7 md:text-lg lg:text-xl xl:text-2xl"
             />
           </div>
           {errors.Image ? (
@@ -254,7 +282,7 @@ const FormAddProduct = (props) => {
               {errors.Image}
             </span>
           ) : null}
-          <div className="container-input space-y-4 flex flex-col w-full mt-5">
+          <div className="container-input space-y-4 flex flex-col w-full mt-5 md:mt-0 lg:space-y-7 xl:space-y-12">
             <div className="flex">
               <label className="pr-2">name</label>
               <input
@@ -303,8 +331,11 @@ const FormAddProduct = (props) => {
                 className="border-b-2 border-black focus:outline-none w-full"
                 onWheel={(e) => e.target.blur()}
                 max="999999"
-                onKeyDown={ (e) => (e.key === 'e' || e.key === '+' || e.key === '-')  && e.preventDefault() }
-                onPaste={(e) => (e.preventDefault())}
+                onKeyDown={(e) =>
+                  (e.key === "e" || e.key === "+" || e.key === "-") &&
+                  e.preventDefault()
+                }
+                onPaste={(e) => e.preventDefault()}
               />
             </div>
             {errors.Price ? (
@@ -367,72 +398,76 @@ const FormAddProduct = (props) => {
             ) : null}
           </div>
         </Container1>
-        <div className="second-container rounded-xl border-2 border-gray-400 pb-16 mt-5 flex flex-col items-center">
-          <span className="flex py-6">Patterns</span>
-          {patterns.map((pattern, i) => (
-            <div key={i} className="container-input flex flex-col">
-              <div className="previewProfilePic flex justify-center flex-col items-center w-48">
-                <img
-                  src={selectedImages[i] ? selectedImages[i] : noimg}
-                  className="bg-gray-500 w-full h-48 rounded-xl"
-                  alt="200 X 200"
-                />
-                <input
-                  id={i}
-                  type="file"
-                  name="Image"
-                  onChange={onChangePictures}
-                  className="text-sm w-full mt-7"
-                />
-              </div>
-              {selectedImages[i] ? (
-                <div className="flex">
+        <div className="second-container rounded-xl border-2 border-gray-400 pb-16 mt-5 flex flex-col">
+          <span className="flex py-6 justify-center md:justify-start lg:justify-start md:pl-8 xl:pl-12">
+            Patterns
+          </span>
+          <div className="md:grid md:grid-cols-3 md:gap-x-5 md:justify-items-center lg:grid-cols-4 lg:gap-x-10 xl:grid-cols-5 flex flex-col justify-center px-5 items-center md:items-start">
+            {patterns.map((pattern, i) => (
+              <div key={i} className="container-input flex flex-col items-center">
+                <div className="previewImage flex justify-center flex-col items-center w-48">
+                  <img
+                    src={selectedImages[i] ? selectedImages[i] : noimg}
+                    className="bg-gray-500 w-full h-48 rounded-xl"
+                    alt="200 X 200"
+                  />
                   <input
                     id={i}
-                    type="text"
-                    name="Patterns"
-                    onChange={handleChange}
-                    value={values.Patterns.color}
-                    className="border-b-2 border-black focus:outline-none w-full mt-5 text-center"
-                    placeholder="Type your tile color"
+                    type="file"
+                    name="Image"
+                    onChange={onChangePictures}
+                    className="text-sm w-full mt-7"
                   />
                 </div>
-              ) : null}
+                {selectedImages[i] ? (
+                  <div className="flex">
+                    <input
+                      id={i}
+                      type="text"
+                      name="Patterns"
+                      onChange={handleChange}
+                      value={values.Patterns.color}
+                      className="border-b-2 border-black focus:outline-none w-full mt-5 text-center"
+                      placeholder="Type your tile color"
+                    />
+                  </div>
+                ) : null}
 
-              <div>
-                <button
-                  id={pattern.patternId}
-                  name={i}
-                  className="border-red-700 border-4 bg-red-700 rounded-2xl mb-10 px-7 mt-8 text-white"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    const id = event.target.id;
-                    setPatterns(
-                      patterns.filter((item) => item.patternId !== id)
-                    );
-                    selectedImages.splice(i, 1);
-                  }}
-                >
-                  delete
-                </button>
+                <div>
+                  <button
+                    id={pattern.patternId}
+                    name={i}
+                    className="border-red-700 border-4 bg-red-700 rounded-2xl mb-10 px-7 mt-8 text-white"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      const id = event.target.id;
+                      setPatterns(
+                        patterns.filter((item) => item.patternId !== id)
+                      );
+                      selectedImages.splice(i, 1);
+                    }}
+                  >
+                    delete
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-          {patterns.length === selectedImages.length || !patterns.length ? (
-            <div
-              className="img-container bg-gray-200 w-48 h-48 rounded-lg flex items-center justify-center cursor-pointer"
-              onClick={() => {
-                setPatterns([
-                  ...patterns,
-                  { patternId: `pattern${patterns.length}` },
-                ]);
-              }}
-            >
-              <span className="text-gray-400 material-icons text-7xl">
-                add_circle
-              </span>
-            </div>
-          ) : null}
+            ))}
+            {patterns.length === selectedImages.length || !patterns.length ? (
+              <div
+                className="img-container bg-gray-200 w-48 h-48 rounded-lg flex items-center justify-center cursor-pointer ju"
+                onClick={() => {
+                  setPatterns([
+                    ...patterns,
+                    { patternId: `pattern${patterns.length}` },
+                  ]);
+                }}
+              >
+                <span className="text-gray-400 material-icons text-7xl">
+                  add_circle
+                </span>
+              </div>
+            ) : null}
+          </div>
         </div>
         <button className="border-gray-400 border-4 text-gray-700 rounded-2xl px-7 mt-8">
           add product

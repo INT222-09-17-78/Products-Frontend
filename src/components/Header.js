@@ -12,7 +12,7 @@ const Header = (props) => {
           src={SquareLogo}
           alt="logo"
           hidden
-          className="lg:block lg:w-28 lg:h-28"
+          className="lg:block lg:w-28 lg:h-28 xl:w-32 xl:h-32"
         />
         <i
           className="lg:hidden material-icons cursor-pointer text-white"
@@ -22,14 +22,14 @@ const Header = (props) => {
         >
           menu
         </i>
-        <div className="Search flex items-center font-kanit text-xs lg:text-sm flex-grow relative">
-          <i className="material-icons absolute font-semibold text-sm lg:text-base pl-3 text-gray-400 cursor-pointer">
+        <div className="Search flex items-center font-kanit text-xs lg:text-sm xl:text-lg flex-grow relative">
+          <i className="material-icons absolute font-semibold text-sm lg:text-base pl-3 xl:text-lg text-gray-400 cursor-pointer">
             search
           </i>
           <input
             type="text"
             placeholder="search"
-            className="bg-transparent flex flex-grow h-7 lg:h-9 lg:pl-10 pl-8 bg-white rounded-3xl focus:outline-none"
+            className="bg-transparent flex flex-grow h-7 lg:h-9 lg:pl-10 xl:h-10 pl-8 bg-white rounded-3xl focus:outline-none"
             value={props.searchInput}
             onChange={handleChange}
           />
@@ -53,7 +53,7 @@ const Header = (props) => {
         ) : (
           <Link
             hidden
-            className="LoginButton ml-8 text-sm font-kanit justify-center items-center lg:flex bg-white lg:w-20 lg:h-8 text-black rounded-md flex-shrink-0"
+            className="LoginButton ml-8 text-sm font-kanit justify-center items-center lg:flex bg-white lg:w-20 lg:h-8 xl:w-32 xl:h-10 xl:text-lg text-black rounded-md flex-shrink-0"
             to={`/login`}
           >
             <button>Login</button>
