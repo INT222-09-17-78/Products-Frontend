@@ -29,7 +29,7 @@ const ProductDetail = (props) => {
       <div className="container px-8 md:px-60 2xl:px-96">
         <div className="card shadow-xl rounded-lg">
           {product.Image ? (
-            <img className="rounded-t-lg" src={`${process.env.REACT_APP_API_URL}/api/download/image/${product.Image}`}/>
+            <img className="rounded-t-lg" alt="NOT LOADED" src={`${process.env.REACT_APP_API_URL}/api/download/image/${product.Image}`}/>
           ) : null}
           <ul className="text-left p-4 space-y-2 rounded-b-lg relative">
            <Link to={`/products/productDetail/${productId}/editProduct`}>

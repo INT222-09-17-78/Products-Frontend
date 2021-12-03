@@ -48,17 +48,16 @@ const FormEditProduct = () => {
       );
       setImageName(start_and_end(response.data.Image));
 
-
       let array = [];
-      let array2 =[]
-      for (let i = 0; i < response.data.Patterns.length; i++){
-            array2.push({ patternId: `pattern${i}` })
-            array.push(
+      let array2 = [];
+      for (let i = 0; i < response.data.Patterns.length; i++) {
+        array2.push({ patternId: `pattern${i}`,patternName:  response.data.Patterns[i].PatternName});
+        array.push(
           `${process.env.REACT_APP_API_URL}/api/download/image/${response.data.Patterns[i].PatternName}`
         );
       }
       setSelectedImages(array);
-      setPatterns(array2)
+      setPatterns(array2);
     });
   }, [productId]);
   const [brands, setBrands] = useState([]);
@@ -176,8 +175,15 @@ const FormEditProduct = () => {
             e.target.value = null;
           }
         } else if (patterns.length > selectedImages.length) {
-          const pattern =  values.Patterns.find((pattern) => pattern.PatternName === e.target.files[0].name)
-          if (reader.result !==selectedImages.find((img) => img === reader.result) && pattern ? e.target.files[0].name !== pattern.PatternName : true){
+          const pattern = values.Patterns.find(
+            (pattern) => pattern.PatternName === e.target.files[0].name
+          );
+          if (
+            reader.result !==
+              selectedImages.find((img) => img === reader.result) && pattern
+              ? e.target.files[0].name !== pattern.PatternName
+              : true
+          ) {
             setSelectedImages([...selectedImages, reader.result]);
             setValues({
               ...values,
@@ -281,7 +287,7 @@ const FormEditProduct = () => {
         formData
       )
         .then((res) => {
-          console.log(res.data)
+          console.log(res.data);
           values.Patterns.forEach((pattern) => {
             pattern.ProdID = values.ProdID;
           });
@@ -439,7 +445,10 @@ const FormEditProduct = () => {
                         onChange={handleChange}
                         value={size.SizeName}
                         type="checkbox"
-                        checked={values.Sizes.some((checkedSize) => checkedSize.SizeName === size.SizeName)}
+                        checked={values.Sizes.some(
+                          (checkedSize) =>
+                            checkedSize.SizeName === size.SizeName
+                        )}
                       />
                       {size.SizeName}
                     </div>
@@ -459,7 +468,10 @@ const FormEditProduct = () => {
           </span>
           <div className="md:grid md:grid-cols-3 md:gap-x-5 md:justify-items-center lg:grid-cols-4 lg:gap-x-10 xl:grid-cols-5 flex flex-col justify-center px-5 items-center md:items-start">
             {patterns.map((pattern, i) => (
-              <div key={i} className="container-input flex flex-col items-center">
+              <div
+                key={i}
+                className="container-input flex flex-col items-center"
+              >
                 <div className="previewImage flex justify-center flex-col items-center w-48">
                   <img
                     src={selectedImages[i] ? selectedImages[i] : noimg}
@@ -477,7 +489,13 @@ const FormEditProduct = () => {
                     >
                       Choose File
                     </label>
-                    <span>{values.Patterns[i] ? values.Patterns[i].PatternName?start_and_end(values.Patterns[i].PatternName):start_and_end(pattern.PatternName) : "No file chosen"}</span>
+                    <span>
+                      {values.Patterns[i]
+                        ? values.Patterns[i].PatternName
+                          ? start_and_end(values.Patterns[i].PatternName)
+                          : start_and_end(pattern.PatternName)
+                        : "No file chosen"}
+                    </span>
                   </div>
                   <input
                     id={i}
@@ -494,7 +512,11 @@ const FormEditProduct = () => {
                       type="text"
                       name="Patterns"
                       onChange={handleChange}
-                      value={values.Patterns[i] ? values.Patterns[i].color : values.Patterns.color}
+                      value={
+                        values.Patterns[i]
+                          ? values.Patterns[i].color
+                          : values.Patterns.color
+                      }
                       className="border-b-2 border-black focus:outline-none w-full mt-5 text-center"
                       placeholder="Type your tile color"
                     />
@@ -504,15 +526,25 @@ const FormEditProduct = () => {
                 <div>
                   <button
                     id={pattern.patternId}
-                    name={i}
+                    name={pattern.patternName}
                     className="border-red-700 border-4 bg-red-700 rounded-2xl mb-10 px-7 mt-8 text-white"
                     onClick={(event) => {
                       event.preventDefault();
                       const id = event.target.id;
+                      const name = event.target.name
                       setPatterns(
                         patterns.filter((item) => item.patternId !== id)
                       );
                       selectedImages.splice(i, 1);
+                      Axios.delete(
+                        `${process.env.REACT_APP_API_URL}/api/delete/pattern/${name}`
+                      )
+                        .then((response) => {
+                          console.log(response)
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });
                     }}
                   >
                     delete

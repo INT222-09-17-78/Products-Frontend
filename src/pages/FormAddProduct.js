@@ -243,7 +243,10 @@ const FormAddProduct = (props) => {
           });
           const formData = new FormData();
           formData.append("patterns", JSON.stringify(values.Patterns));
-          formData.append("images", selectedImages);
+          for (let i = 0; i < selectedImages.length; i++) {
+            formData.append("images", selectedImages[i]);
+          }
+          console.log(formData.get("images"));
           Axios.post(
             `${process.env.REACT_APP_API_URL}/api/create/pattern`,
             formData
@@ -404,7 +407,10 @@ const FormAddProduct = (props) => {
           </span>
           <div className="md:grid md:grid-cols-3 md:gap-x-5 md:justify-items-center lg:grid-cols-4 lg:gap-x-10 xl:grid-cols-5 flex flex-col justify-center px-5 items-center md:items-start">
             {patterns.map((pattern, i) => (
-              <div key={i} className="container-input flex flex-col items-center">
+              <div
+                key={i}
+                className="container-input flex flex-col items-center"
+              >
                 <div className="previewImage flex justify-center flex-col items-center w-48">
                   <img
                     src={selectedImages[i] ? selectedImages[i] : noimg}
