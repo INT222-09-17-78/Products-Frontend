@@ -109,11 +109,16 @@ const FormAddProduct = (props) => {
     }
   };
   const [selectedImages, setSelectedImages] = useState([]);
+  const [imgs, setImgs] = useState([]);
   const onChangePictures = (e) => {
     if (e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = () => {
-        if (patterns.length === selectedImages.length) {
+        if (
+          e.target.name ===
+          patterns.find((pattern) => pattern.patternId === e.target.name)
+            .patternId
+        ) {
           if (
             reader.result !==
             selectedImages.find((img) => img === reader.result)
@@ -122,24 +127,15 @@ const FormAddProduct = (props) => {
             newImgData[e.target.id] = reader.result;
             setSelectedImages(newImgData);
 
+            let newPostData = [...imgs];
+            newPostData[e.target.id] = e.target.files[0];
+            setImgs(newPostData);
+
             let newData = [...values.Patterns];
-            newData[e.target.id].PatternName = e.target.files[0].name;
-            setImage(newData);
-          } else {
-            e.target.value = null;
-          }
-        } else if (patterns.length > selectedImages.length) {
-          if (
-            reader.result !==
-            selectedImages.find((img) => img === reader.result)
-          ) {
-            setSelectedImages([...selectedImages, reader.result]);
+            newData[e.target.id] = { PatternName: e.target.files[0].name };
             setValues({
               ...values,
-              Patterns: [
-                ...values.Patterns,
-                { PatternName: e.target.files[0].name },
-              ],
+              Patterns: newData,
             });
           } else {
             e.target.value = null;
@@ -243,10 +239,9 @@ const FormAddProduct = (props) => {
           });
           const formData = new FormData();
           formData.append("patterns", JSON.stringify(values.Patterns));
-          for (let i = 0; i < selectedImages.length; i++) {
-            formData.append("images", selectedImages[i]);
+          for (let i = 0; i < imgs.length; i++) {
+            formData.append("images", imgs[i]);
           }
-          console.log(formData.get("images"));
           Axios.post(
             `${process.env.REACT_APP_API_URL}/api/create/pattern`,
             formData
@@ -419,8 +414,8 @@ const FormAddProduct = (props) => {
                   />
                   <input
                     id={i}
+                    name={pattern.patternId}
                     type="file"
-                    name="Image"
                     onChange={onChangePictures}
                     className="text-sm w-full mt-7"
                   />

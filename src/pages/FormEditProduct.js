@@ -156,11 +156,16 @@ const FormEditProduct = () => {
     }
   };
   const [selectedImages, setSelectedImages] = useState([]);
+  const [imgs, setImgs] = useState([]);
   const onChangePictures = (e) => {
     if (e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = () => {
-        if (patterns.length === selectedImages.length) {
+        if (
+          e.target.name ===
+          patterns.find((pattern) => pattern.patternId === e.target.name)
+            .patternId
+        ) {
           if (
             reader.result !==
             selectedImages.find((img) => img === reader.result)
@@ -168,29 +173,16 @@ const FormEditProduct = () => {
             let newImgData = [...selectedImages];
             newImgData[e.target.id] = reader.result;
             setSelectedImages(newImgData);
+
+            let newPostData = [...imgs];
+            newPostData[e.target.id] = e.target.files[0];
+            setImgs(newPostData);
+
             let newData = [...values.Patterns];
-            newData[e.target.id].PatternName = e.target.files[0].name;
-            setImage(newData);
-          } else {
-            e.target.value = null;
-          }
-        } else if (patterns.length > selectedImages.length) {
-          const pattern = values.Patterns.find(
-            (pattern) => pattern.PatternName === e.target.files[0].name
-          );
-          if (
-            reader.result !==
-              selectedImages.find((img) => img === reader.result) && pattern
-              ? e.target.files[0].name !== pattern.PatternName
-              : true
-          ) {
-            setSelectedImages([...selectedImages, reader.result]);
+            newData[e.target.id] = { PatternName: e.target.files[0].name };
             setValues({
               ...values,
-              Patterns: [
-                ...values.Patterns,
-                { PatternName: e.target.files[0].name },
-              ],
+              Patterns: newData,
             });
           } else {
             e.target.value = null;
@@ -269,6 +261,7 @@ const FormEditProduct = () => {
         Sizes: values.Sizes,
       });
       const formData = new FormData();
+
       const jsonProduct = JSON.stringify({
         ProdName: values.ProdName,
         Price: values.Price,
@@ -281,7 +274,7 @@ const FormEditProduct = () => {
       });
       formData.append("product", jsonProduct);
       formData.append("image", selectedImage);
-      console.log(values);
+      
       Axios.put(
         `${process.env.REACT_APP_API_URL}/api/update/product/${values.ProdID}`,
         formData
@@ -293,7 +286,9 @@ const FormEditProduct = () => {
           });
           const formData = new FormData();
           formData.append("patterns", JSON.stringify(values.Patterns));
-          formData.append("images", selectedImages);
+          for (let i = 0; i < imgs.length; i++) {
+            formData.append("images", imgs[i]);
+          }
           Axios.put(
             `${process.env.REACT_APP_API_URL}/api/update/patterns`,
             formData
@@ -497,10 +492,10 @@ const FormEditProduct = () => {
                         : "No file chosen"}
                     </span>
                   </div>
-                  <input
+                   <input
                     id={i}
+                    name={pattern.patternId}
                     type="file"
-                    name="Image"
                     onChange={onChangePictures}
                     className="text-sm w-full mt-7 hidden"
                   />

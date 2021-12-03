@@ -68,3 +68,73 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+```
+products-frontend
+├─ .env.development
+├─ .env.production
+├─ db.json
+├─ Dockerfile
+├─ nginx.conf
+├─ package.json
+├─ postcss.config.js
+├─ public
+│  ├─ favicon.ico
+│  ├─ index.html
+│  ├─ logo192.png
+│  ├─ logo512.png
+│  ├─ manifest.json
+│  └─ robots.txt
+├─ README.md
+├─ src
+│  ├─ App.css
+│  ├─ App.js
+│  ├─ App.test.js
+│  ├─ components
+│  │  ├─ FormAddUser.js
+│  │  ├─ FormEditUser.js
+│  │  ├─ FormLogin.js
+│  │  ├─ Header.js
+│  │  ├─ Logo.js
+│  │  ├─ Navbar.js
+│  │  ├─ PrivateRoute.js
+│  │  └─ Sidebar.js
+│  ├─ images
+│  │  ├─ ads1.jpg
+│  │  ├─ ads2.jpg
+│  │  ├─ ads3.jpg
+│  │  ├─ ads4.jpg
+│  │  ├─ banner.jpg
+│  │  ├─ homeBanner.jpg
+│  │  ├─ Iconfacebook.png
+│  │  ├─ Icongmail.png
+│  │  ├─ Icontwitter.png
+│  │  ├─ mobliebanner.png
+│  │  ├─ no-img.jpg
+│  │  ├─ no-img.png
+│  │  ├─ SquareLogo.png
+│  │  ├─ SquareLogoBlack.png
+│  │  ├─ SquareLogoT.png
+│  │  ├─ tiles.jpg
+│  │  └─ tiles2.jpg
+│  ├─ index.css
+│  ├─ index.js
+│  ├─ logo.svg
+│  ├─ pages
+│  │  ├─ AllProduct.js
+│  │  ├─ FormAddProduct.js
+│  │  ├─ FormEditProduct.js
+│  │  ├─ Home.js
+│  │  ├─ ProductDetail.js
+│  │  └─ UsersManage.js
+│  ├─ reportWebVitals.js
+│  ├─ setupTests.js
+│  └─ styles
+│     ├─ output.css
+│     └─ tailwind.css
+├─ tailwind-default.config.js
+├─ tailwind.config.js
+└─ yarn.lock
+
+```
