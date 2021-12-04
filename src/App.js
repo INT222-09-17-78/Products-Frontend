@@ -67,13 +67,13 @@ const App = () => {
             path="/users"
             component={() => <UserManage setUsername={setUsername} />}
           />
-          <Route path="/addProduct" component={FormAddProduct} />
+          <PrivateRoute path="/addProduct" component={FormAddProduct} />
           <Route
             path="/products/productDetail/:productId"
             component={() => <ProductDetail />}
             exact
           />
-          <Route
+          <PrivateRoute
             path="/products/productDetail/:productId/editProduct"
             component={() => <FormEditProduct />}
             exact
