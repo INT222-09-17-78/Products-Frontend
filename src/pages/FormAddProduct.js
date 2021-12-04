@@ -400,7 +400,7 @@ const FormAddProduct = (props) => {
                         key={i}
                         name="Sizes"
                         onChange={handleChange}
-                        value={size.Description}
+                        value={size.SizeName}
                         type="checkbox"
                       />
                       {size.Description}

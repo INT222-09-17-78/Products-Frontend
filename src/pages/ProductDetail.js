@@ -58,10 +58,10 @@ const ProductDetail = (props) => {
           {product.Patterns ? (
             <div className="grid grid-cols-2 w-full justify-items-center pb-5">
               {product.Patterns.map((pattern, i) => {
-                return pattern.PatternName ? (
+                return pattern.PatternImage ? (
                   <div key={i}>
                     <img
-                      src={`${process.env.REACT_APP_API_URL}/api/download/image/${pattern.PatternName}`}
+                      src={`${process.env.REACT_APP_API_URL}/api/download/image/pattern/${pattern.PatternImage}`}
                       alt="NOT LOADED"
                       className="w-28 h-28 rounded-md"
                     />
