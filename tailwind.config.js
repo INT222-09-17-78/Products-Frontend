@@ -11,7 +11,8 @@ module.exports = {
       },
       spacing: {
         '69': '17rem',
-      }
+        '112': '28rem'
+      },
     },
   },
   variants: {

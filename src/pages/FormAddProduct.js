@@ -15,6 +15,24 @@ const PriceInput = styled.input`
 const Container1 = styled.div`
   height: fit-content;
 `;
+const Image = styled.img`
+  @media (min-width: 425px) {
+    width: 14rem;
+    height: 14rem;
+  }
+  @media (min-width: 768px) {
+    width: 16rem;
+    height: 16rem;
+  }
+  @media (min-width: 1024px) {
+    width: 20rem;
+    height: 20rem;
+  }
+  @media (min-width: 1440px) {
+    width: 25rem;
+    height: 25rem;
+  }
+`;
 const FormAddProduct = (props) => {
   const [brands, setBrands] = useState([]);
   // const [colors, setcolors] = useState([]);
@@ -256,15 +274,15 @@ const FormAddProduct = (props) => {
   return (
     <div
       onSubmit={addProduct}
-      className="font-kanit w-screen py-8 md:text-lg lg:text-xl xl:text-2xl text-gray-700"
+      className="font-kanit w-screen py-8 md:text-lg lg:text-xl xl:text-2xl text-gray-700 lg:px-20"
     >
       <span className="flex mb-8 justify-center">Add Product</span>
-      <form className="px-5 md:px-16 2xl:px-60">
-        <Container1 className="first-container rounded-xl border-2 border-gray-400 flex flex-col w-full h-full p-10 md:flex-row md:space-x-10">
-          <div className="previewImg flex justify-center flex-col items-center w-full lg:w-3/6 lg:h-3/6">
-            <img
+      <form className="px-5">
+        <Container1 className="first-container rounded-xl border-2 border-gray-300 flex flex-col w-full h-full py-10 md:flex-row md:space-x-10 md:justify-center">
+          <div className="previewImg flex justify-center flex-col items-center md:justify-start">
+            <Image
               src={img ? img : noimg}
-              className="bg-white w-full h-full rounded-xl"
+              className="bg-white rounded-xl object-cover h-48 w-48"
               alt="200 X 200"
             />
             <input
@@ -272,7 +290,7 @@ const FormAddProduct = (props) => {
               type="file"
               name="Image"
               onChange={onChangePicture}
-              className="text-sm w-full h-full mt-7 md:text-lg lg:text-xl xl:text-2xl"
+              className="text-sm mt-7 w-48 lg:text-base lg:w-60 xl:w-72"
             />
           </div>
           {errors.Image ? (
@@ -280,7 +298,7 @@ const FormAddProduct = (props) => {
               {errors.Image}
             </span>
           ) : null}
-          <div className="container-input space-y-4 flex flex-col w-full mt-5 md:mt-0 lg:space-y-7 xl:space-y-12">
+          <div className="container-input space-y-4 flex flex-col w-full mt-5 md:mt-0 md:w-72 px-5 xl:w-112">
             <div className="flex">
               <label className="pr-2">name</label>
               <input
@@ -288,7 +306,7 @@ const FormAddProduct = (props) => {
                 name="ProdName"
                 onChange={handleChange}
                 value={values.ProdName}
-                className="border-b-2 border-gray-400 focus:outline-none w-full"
+                className="border-b-2 border-gray-300 focus:outline-none w-full"
               />
             </div>
             {errors.ProdName ? (
@@ -302,7 +320,7 @@ const FormAddProduct = (props) => {
                 name="BrandId"
                 onChange={handleChange}
                 value={values.BrandId}
-                className="border-b-2 border-gray-400 focus:outline-none w-full"
+                className="border-b-2 border-gray-300 focus:outline-none w-full text-lg"
               >
                 <option disabled value="0">
                   Choose a Brand
@@ -326,7 +344,7 @@ const FormAddProduct = (props) => {
                 name="Price"
                 onChange={handleChange}
                 value={values.Price}
-                className="border-b-2 border-gray-400 focus:outline-none w-full"
+                className="border-b-2 border-gray-300 focus:outline-none w-full"
                 onWheel={(e) => e.target.blur()}
                 max="999999"
                 onKeyDown={(e) =>
@@ -348,7 +366,7 @@ const FormAddProduct = (props) => {
                 name="ProduceDate"
                 onChange={handleChange}
                 value={values.ProduceDate}
-                className="border-b-2 border-gray-400 focus:outline-none  w-full"
+                className="border-b-2 border-gray-300 focus:outline-none  w-full"
               />
             </div>
             {errors.ProduceDate ? (
@@ -362,7 +380,7 @@ const FormAddProduct = (props) => {
                 name="Description"
                 onChange={handleChange}
                 value={values.Description}
-                className="border-2 border-gray-400 focus:outline-none  w-full h-32 px-1 pt-1"
+                className="border-2 border-gray-300 focus:outline-none  w-full h-32 px-1 pt-1"
                 maxLength="300"
               />
             </div>
@@ -396,11 +414,11 @@ const FormAddProduct = (props) => {
             ) : null}
           </div>
         </Container1>
-        <div className="second-container rounded-xl border-2 border-gray-400 pb-16 mt-5 flex flex-col">
-          <span className="flex py-6 justify-center md:justify-start lg:justify-start md:pl-8 xl:pl-12">
+        <div className="second-container rounded-xl border-2 border-gray-300 pb-16 mt-5 flex flex-col px-12">
+          <span className="flex py-6 justify-center md:justify-start lg:justify-start">
             Patterns
           </span>
-          <div className="md:grid md:grid-cols-3 md:gap-x-5 md:justify-items-center lg:grid-cols-4 lg:gap-x-10 xl:grid-cols-5 flex flex-col justify-center px-5 items-center md:items-start">
+          <div className="md:grid md:grid-cols-3 md:gap-x-5 md:justify-items-center lg:grid-cols-4 lg:gap-x-10 xl:grid-cols-5 flex flex-col justify-center items-center md:items-start px-3 md:px-0 lg:px-5 xl:px-0">
             {patterns.map((pattern, i) => (
               <div
                 key={i}
@@ -428,7 +446,7 @@ const FormAddProduct = (props) => {
                       name="Patterns"
                       onChange={handleChange}
                       value={values.Patterns.color}
-                      className="border-b-2 border-black focus:outline-none w-full mt-5 text-center"
+                      className="border-b-2 border-black focus:outline-none w-full mt-5 text-center text-base"
                       placeholder="Type your tile color"
                     />
                   </div>
@@ -438,7 +456,7 @@ const FormAddProduct = (props) => {
                   <button
                     id={pattern.patternId}
                     name={i}
-                    className="border-red-700 border-4 bg-red-700 rounded-2xl mb-10 px-7 mt-8 text-white"
+                    className="border-red-700 border-4 bg-red-700 rounded-2xl mb-10 px-7 mt-8 text-white text-base"
                     onClick={(event) => {
                       event.preventDefault();
                       const id = event.target.id;

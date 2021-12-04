@@ -14,8 +14,8 @@ const Home = () => {
         <img src={homeBanner} alt="HomeBanner" className="object-cover" />
       </div>
       <div className="home-contents mt-8 px-7 font-kanit text-left md:px-14 md:mt-10">
-        <div className="home-title text-lg md:text-xl xl:text-2xl">บริษัท โซสแควร์ จำกัด (มหาชน)</div>
-        <div className="home-description text-xs font-light mt-2 md:text-sm xl:text-base">
+        <div className="home-title text-lg md:text-xl lg:text-2xl xl:text-3xl">บริษัท โซสแควร์ จำกัด (มหาชน)</div>
+        <div className="home-description text-xs font-light mt-2 md:text-sm lg:text-lg xl:text-xl">
           บริษัท โซสแควร์ จำกัด (มหาชน) จะเป็นองค์กรที่มีส่วนร่วมใน
           การพัฒนาคุณภาพของที่อยู่อาศัยด้วยการจัดจำหน่ายวัสดุ และ
           อุปกรณ์ก่อสร้างที่มีคุณภาพ รวมไปถึงเป็นผู้ให้บริการที่เป็นเลิศ
@@ -25,10 +25,10 @@ const Home = () => {
         </div>
       </div>
       <div className="flex justify-center md:mt-4">
-        <div className="HomeBanner2 grid grid-cols-2 gap-2 justify-items-center w-11/12 md:grid-cols-4">
+        <div className="HomeBanner2 grid grid-cols-2 gap-2 justify-items-center w-11/12 md:px-24 lg:px-32 xl:px-48">
         {adsCollection.map((ads, index) => {
           return (
-            <img key={index} src={ads} alt={`${ads}`} className="w-36 h-36" />
+            <img key={index} src={ads} alt={`${ads}`} className="w-36 h-36 md:w-40 md:h-40 lg:w-56 lg:h-56 xl:w-72 xl:h-72" />
           );
         })}
       </div>
