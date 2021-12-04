@@ -132,7 +132,7 @@ const FormAddProduct = (props) => {
             setImgs(newPostData);
 
             let newData = [...values.Patterns];
-            newData[e.target.id] = { PatternName: e.target.files[0].name };
+            newData[e.target.id] = { PatternImage: e.target.files[0].name };
             setValues({
               ...values,
               Patterns: newData,
@@ -256,12 +256,12 @@ const FormAddProduct = (props) => {
   return (
     <div
       onSubmit={addProduct}
-      className="font-kanit w-screen py-8 md:text-lg lg:text-xl xl:text-2xl"
+      className="font-kanit w-screen py-8 md:text-lg lg:text-xl xl:text-2xl text-gray-700"
     >
       <span className="flex mb-8 justify-center">Add Product</span>
       <form className="px-5 md:px-16 2xl:px-60">
-        <Container1 className="first-container rounded-xl border-2 border-gray-400 flex flex-col w-full h-full p-10 md:flex-row md:space-x-10 2xl:p-40">
-          <div className="previewImg flex justify-center flex-col items-center w-full">
+        <Container1 className="first-container rounded-xl border-2 border-gray-400 flex flex-col w-full h-full p-10 md:flex-row md:space-x-10">
+          <div className="previewImg flex justify-center flex-col items-center w-full lg:w-3/6 lg:h-3/6">
             <img
               src={img ? img : noimg}
               className="bg-white w-full h-full rounded-xl"
@@ -288,7 +288,7 @@ const FormAddProduct = (props) => {
                 name="ProdName"
                 onChange={handleChange}
                 value={values.ProdName}
-                className="border-b-2 border-black focus:outline-none w-full"
+                className="border-b-2 border-gray-400 focus:outline-none w-full"
               />
             </div>
             {errors.ProdName ? (
@@ -302,7 +302,7 @@ const FormAddProduct = (props) => {
                 name="BrandId"
                 onChange={handleChange}
                 value={values.BrandId}
-                className="border-b-2 border-black focus:outline-none w-full"
+                className="border-b-2 border-gray-400 focus:outline-none w-full"
               >
                 <option disabled value="0">
                   Choose a Brand
@@ -326,7 +326,7 @@ const FormAddProduct = (props) => {
                 name="Price"
                 onChange={handleChange}
                 value={values.Price}
-                className="border-b-2 border-black focus:outline-none w-full"
+                className="border-b-2 border-gray-400 focus:outline-none w-full"
                 onWheel={(e) => e.target.blur()}
                 max="999999"
                 onKeyDown={(e) =>
@@ -348,7 +348,7 @@ const FormAddProduct = (props) => {
                 name="ProduceDate"
                 onChange={handleChange}
                 value={values.ProduceDate}
-                className="border-b-2 border-black focus:outline-none  w-full"
+                className="border-b-2 border-gray-400 focus:outline-none  w-full"
               />
             </div>
             {errors.ProduceDate ? (
@@ -362,7 +362,7 @@ const FormAddProduct = (props) => {
                 name="Description"
                 onChange={handleChange}
                 value={values.Description}
-                className="border-2 border-black focus:outline-none  w-full h-32 px-1 pt-1"
+                className="border-2 border-gray-400 focus:outline-none  w-full h-32 px-1 pt-1"
                 maxLength="300"
               />
             </div>
@@ -381,10 +381,10 @@ const FormAddProduct = (props) => {
                         key={i}
                         name="Sizes"
                         onChange={handleChange}
-                        value={size.SizeName}
+                        value={size.Description}
                         type="checkbox"
                       />
-                      {size.SizeName}
+                      {size.Description}
                     </div>
                   ))
                 : null}
@@ -470,7 +470,7 @@ const FormAddProduct = (props) => {
             ) : null}
           </div>
         </div>
-        <button className="border-gray-400 border-4 text-gray-700 rounded-2xl px-7 mt-8">
+        <button className="bg-gray-500 text-white rounded-2xl px-7 py-2 mt-8">
           add product
         </button>
       </form>

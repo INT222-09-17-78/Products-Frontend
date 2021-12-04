@@ -119,9 +119,9 @@ const FormAddUser = (props) => {
   };
 
   return (
-    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-32 bg-blue-cyan z-10">
+    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-32 bg-blue-cyan z-10 text-gray-800">
     <ModalLogin className="Login-modal bg-white w-64 shadow-xl rounded-xl relative pb-52 md:pb-32">
-    <div className="font-semibold text-base md:text-lg absolute left-96 top-8 md:left-74 md:top-10 z-10">
+    <div className="font-semibold text-xl p-10 md:pl-72">
           Add User
         </div>
         <div className="absolute right-5 top-5">
@@ -130,7 +130,7 @@ const FormAddUser = (props) => {
           </i>
         </div>
         <form onSubmit={addUser} className="w-full h-full">
-          <div className="space-y-2 form-content w-full md:w-64 md:ml-72 md:mt-0 md:pt-36 text-sm flex flex-col mt-36 px-4">
+          <div className="space-y-2 form-content w-full md:w-64 md:ml-72 md:mt-0 text-sm flex flex-col px-4">
           <input
               className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none "
               type="text"

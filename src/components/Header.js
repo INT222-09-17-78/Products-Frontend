@@ -1,8 +1,10 @@
-import { BrowserRouter as Switch, Link } from "react-router-dom";
+import { BrowserRouter as Switch, Link, useHistory } from "react-router-dom";
 import SquareLogo from "../images/SquareLogo.png";
 const Header = (props) => {
-  const handleChange = event => {
-    props.setSearchInput(event.target.value)
+  const history = useHistory();
+  const handleChange = (event) => {
+    history.push("/products");
+    props.setSearchInput(event.target.value);
   };
   return (
     // <Router>
@@ -37,23 +39,26 @@ const Header = (props) => {
         {localStorage.getItem("isLoggedIn") === "true" ? (
           <div
             hidden
-            className="hidden loggedIn ml-5 lg:flex flex-col break-all items-end text-right font-kanit"
+            className="hidden loggedIn ml-5 lg:flex flex-row break-all text-right font-kanit items-center"
           >
-            <i className="material-icons cursor-pointer text-white text-5xl">
+            <i className="material-icons cursor-pointer text-white text-7xl mr-1">
               account_circle
             </i>
-            <div className="text-white">{props.username}</div>
-            <div
-              className="flex items-center text-red-500 cursor-pointer"
-              onClick={props.logOut}
-            >
-              Logout
+            <div>
+              <div className="text-white text-left mb-1 text-lg ml-1">{props.username}</div>
+              <div
+                className="flex items-center text-red-500 bg-white rounded-full px-3 py-1 cursor-pointer text-sm"
+                onClick={props.logOut}
+              >
+                <i className="material-icons mr-2 text-sm">logout</i>
+                Logout
+              </div>
             </div>
           </div>
         ) : (
           <Link
             hidden
-            className="LoginButton ml-8 text-sm font-kanit justify-center items-center lg:flex bg-white lg:w-20 lg:h-8 xl:w-32 xl:h-10 xl:text-lg text-black rounded-md flex-shrink-0"
+            className="LoginButton ml-8 text-sm font-kanit justify-center items-center lg:flex bg-white lg:w-20 lg:h-8 xl:w-32 xl:h-10 xl:text-lg text-gray-700 rounded-md flex-shrink-0"
             to={`/login`}
           >
             <button>Login</button>

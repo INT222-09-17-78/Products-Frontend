@@ -8,6 +8,9 @@ module.exports = {
       },
       fontFamily:{
         kanit: ['Kanit']
+      },
+      spacing: {
+        '69': '17rem',
       }
     },
   },

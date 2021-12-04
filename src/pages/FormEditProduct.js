@@ -51,9 +51,9 @@ const FormEditProduct = () => {
       let array = [];
       let array2 = [];
       for (let i = 0; i < response.data.Patterns.length; i++) {
-        array2.push({ patternId: `pattern${i}`,patternName:  response.data.Patterns[i].PatternName});
+        array2.push({ patternId: `pattern${i}`,patternName:  response.data.Patterns[i].PatternImage});
         array.push(
-          `${process.env.REACT_APP_API_URL}/api/download/image/${response.data.Patterns[i].PatternName}`
+          `${process.env.REACT_APP_API_URL}/api/download/image/${response.data.Patterns[i].PatternImage}`
         );
       }
       setSelectedImages(array);
@@ -179,7 +179,7 @@ const FormEditProduct = () => {
             setImgs(newPostData);
 
             let newData = [...values.Patterns];
-            newData[e.target.id] = { PatternName: e.target.files[0].name };
+            newData[e.target.id] = { PatternImage: e.target.files[0].name };
             setValues({
               ...values,
               Patterns: newData,
@@ -486,9 +486,9 @@ const FormEditProduct = () => {
                     </label>
                     <span>
                       {values.Patterns[i]
-                        ? values.Patterns[i].PatternName
-                          ? start_and_end(values.Patterns[i].PatternName)
-                          : start_and_end(pattern.PatternName)
+                        ? values.Patterns[i].PatternImage
+                          ? start_and_end(values.Patterns[i].PatternImage)
+                          : start_and_end(pattern.PatternImage)
                         : "No file chosen"}
                     </span>
                   </div>

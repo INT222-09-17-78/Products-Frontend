@@ -73,7 +73,7 @@ const Sidebar = (props) => {
             <i className="material-icons cursor-pointer text-gray-400 mr-2">
               inventory
             </i>
-            product management
+            add product
           </div>
         </Link>
         <Link to="/users">
@@ -103,7 +103,7 @@ const Sidebar = (props) => {
             <i className="material-icons cursor-pointer text-red-500 mr-2">
               logout
             </i>
-            LOGOUT
+            Logout
           </div>
         ) : null}
       </div>

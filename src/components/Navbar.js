@@ -16,7 +16,7 @@ const Navbar = () => {
         <i className="material-icons cursor-pointer mr-2">
           inventory
         </i>
-        <div className="cursor-pointer ">product management</div>
+        <div className="cursor-pointer ">add product</div>
       </Link>
       <Link to="/users" className="flex flex-row items-center">
         <i className="material-icons cursor-pointer mr-2">
