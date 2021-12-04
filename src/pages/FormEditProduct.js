@@ -74,7 +74,7 @@ const FormEditProduct = () => {
           patternName: response.data.Patterns[i].PatternImage,
         });
         array.push(
-          `${process.env.REACT_APP_API_URL}/api/download/image/${response.data.Patterns[i].PatternImage}`
+          `${process.env.REACT_APP_API_URL}/api/download/image/pattern/${response.data.Patterns[i].PatternImage}`
         );
       }
       setSelectedImages(array);
@@ -122,7 +122,9 @@ const FormEditProduct = () => {
           [name]: [...values.Sizes, { Description: value }],
         });
       } else {
-        const index = values.Sizes.findIndex((size) => size.Description === value);
+        const index = values.Sizes.findIndex(
+          (size) => size.Description === value
+        );
         values.Sizes.splice(index, 1);
         setValues({ ...values, [name]: [...values.Sizes] });
       }
@@ -326,7 +328,9 @@ const FormEditProduct = () => {
       onSubmit={editProduct}
       className="font-kanit p-5 lg:p-8 xl:p-10 w-screen xl:text-xl text-gray-700 lg:px-20"
     >
-      <span className="flex pb-5 lg:pb-8 justify-center text-lg md:text-xl lg:text-2xl xl:text-3xl">Edit Product</span>
+      <span className="flex pb-5 lg:pb-8 justify-center text-lg md:text-xl lg:text-2xl xl:text-3xl">
+        Edit Product
+      </span>
       <form className="px-5">
         <Container1 className="first-container rounded-xl border-2 border-gray-300 flex flex-col w-full h-full py-10 md:flex-row md:space-x-10 md:justify-center">
           <div className="previewImg flex justify-center flex-col items-center md:justify-start">
@@ -493,14 +497,33 @@ const FormEditProduct = () => {
                   <img
                     src={selectedImages[i] ? selectedImages[i] : noimg}
                     className="bg-gray-500 w-full h-48 rounded-xl"
-                    alt="NOT LOADED"
+                    alt="200 X 200"
                   />
+                  <div className="mt-7 flex justify-start w-full text-sm items-center">
+                    <label
+                      style={{
+                        backgroundColor: "#EFEFEF",
+                        paddingInline: "7px",
+                      }}
+                      htmlFor={i}
+                      className="btn text-left border border-gray-500 rounded-sm py-0.5 mr-1 flex-shrink-0"
+                    >
+                      Choose File
+                    </label>
+                    <span>
+                      {values.Patterns[i]
+                        ? values.Patterns[i].PatternImage
+                          ? start_and_end(values.Patterns[i].PatternImage)
+                          : start_and_end(pattern.PatternImage)
+                        : "No file chosen"}
+                    </span>
+                  </div>
                   <input
                     id={i}
                     name={pattern.patternId}
                     type="file"
                     onChange={onChangePictures}
-                    className="text-sm w-full mt-7"
+                    className="text-sm w-full mt-7 hidden"
                   />
                 </div>
                 {selectedImages[i] ? (
@@ -510,8 +533,12 @@ const FormEditProduct = () => {
                       type="text"
                       name="Patterns"
                       onChange={handleChange}
-                      value={values.Patterns.color}
-                      className="border-b-2 border-gray-300 focus:outline-none w-full mt-5 text-center text-base"
+                      value={
+                        values.Patterns[i]
+                          ? values.Patterns[i].color
+                          : values.Patterns.color
+                      }
+                      className="border-b-2 border-black focus:outline-none w-full mt-5 text-center"
                       placeholder="Type your tile color"
                     />
                   </div>
