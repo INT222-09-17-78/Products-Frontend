@@ -1,10 +1,14 @@
 import { useState } from "react";
 import Axios from "axios";
 import tiles from "../images/tiles.jpg";
+import tiles2 from "../images/tiles2.jpg";
 import styled from "styled-components";
 Axios.defaults.withCredentials = true;
 const ModalLogin = styled.div`
   height: fit-content;
+  @media (min-width: 768px) {
+      width: 36rem;
+  }
 `;
 
 const FormEditUser = (props) => {
@@ -118,19 +122,19 @@ const FormEditUser = (props) => {
   };
 
   return (
-    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute bg-black bg-opacity-50 top-0 pt-14 z-10">
-      <ModalLogin className="Login-modal bg-white w-64 md:w-104 shadow-xl rounded-xl relative pb-52 md:pb-32">
-        <div className="font-semibold text-base md:text-lg absolute left-24 top-8 md:left-74 md:top-10 z-10">
+    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-32 bg-blue-cyan z-10">
+    <ModalLogin className="Login-modal bg-white w-64 shadow-xl rounded-xl relative pb-52 md:pb-32">
+    <div className="font-semibold text-base md:text-lg absolute left-96 top-8 md:left-74 md:top-10 z-10">
           Edit User
         </div>
         <div className="absolute right-5 top-5">
-          <i className="material-icons cursor-pointer" onClick={closeEditUser}>
+        <i className="material-icons cursor-pointer" onClick={closeEditUser}>
             close
           </i>
         </div>
         <form onSubmit={editUser} className="w-full h-full">
-          <div className="form-content w-full md:w-64 md:ml-52 md:mt-28 text-sm flex flex-col mt-20 px-4 space-y-1.5">
-            <input
+          <div className="space-y-2 form-content w-full md:w-64 md:ml-72 md:mt-0 md:pt-36 text-sm flex flex-col mt-36 px-4">
+          <input
               className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none "
               type="text"
               placeholder="Username"
@@ -163,14 +167,18 @@ const FormEditUser = (props) => {
             <div className="text-red-600 self-start text-xs mt-0.5 text-left">
               {errors.mobile}
             </div>
-            {/* <input
-              className="border border-gray-300 rounded-md text-center py-1.5 mt-2 focus:outline-none"
-              type="role"
-              name="role"
-              placeholder="role"
+            <input
+              className="border border-gray-300 rounded-md text-center py-1.5 focus:outline-none"
+              type="password"
+              name="password"
+              placeholder="Password"
               onChange={handleChange}
-              value={values.role}
-            /> */}
+              value={values.password}
+            />
+            <div className="text-red-600 self-start text-xs mt-0.5 text-left">
+              {errors.password}
+            </div>
+
             <select
               name="role"
               type="role"
@@ -185,14 +193,14 @@ const FormEditUser = (props) => {
                 Admin
               </option>
             </select>
-            <div className="text-red-600 self-start text-xs mt-0.5 text-left">
+            <div className="text-red-600 self-start text-xs text-left">
               {errors.role}
             </div>
-            <div className="text-red-600 self-start text-xs mt-0.5 text-left">
+            <div className="text-red-600 self-start text- text-left">
               {errors.message}
             </div>
-            <button className="bg-cyan-blue text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-200 hover:text-cyan-blue">
-              Submit
+            <button className="bg-blue-cyan text-white border py-1.5 px-4 rounded-md text-center mt-3 hover:bg-blue-400 hover:text-cyan-blue">
+               Edit User
             </button>
           </div>
         </form>
@@ -200,7 +208,12 @@ const FormEditUser = (props) => {
           <img
             src={tiles}
             alt="Tiles"
-            className="object-cover rounded-b-xl md:rounded-l-xl md:rounded-br-none md:h-full md:w-2/6 absolute bottom-0"
+            className="object-cover rounded-b-xl md:rounded-l-xl md:rounded-br-none md:h-full md:w-2/6 absolute bottom-0 md:hidden"
+          />
+          <img
+            src={tiles2}
+            alt="Tiles2"
+            className="object-cover rounded-b-xl md:rounded-l-xl md:rounded-br-none md:h-full md:w-5/12 absolute bottom-0 hidden md:flex"
           />
         </div>
       </ModalLogin>
