@@ -264,6 +264,7 @@ const FormAddProduct = (props) => {
             `${process.env.REACT_APP_API_URL}/api/create/pattern`,
             formData
           );
+          window.alert('Add Product Success :D')
         })
         .catch((error) => {
           console.log(error);

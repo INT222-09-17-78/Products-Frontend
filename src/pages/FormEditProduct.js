@@ -52,7 +52,7 @@ const FormEditProduct = () => {
         }
       }
     ).then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       setValues({
         ProdID: response.data.ProdID,
         ProdName: response.data.ProdName,
@@ -124,11 +124,11 @@ const FormEditProduct = () => {
       if (event.target.checked) {
         setValues({
           ...values,
-          [name]: [...values.Sizes, { Description: value }],
+          [name]: [...values.Sizes, { SizeName: value }],
         });
       } else {
         const index = values.Sizes.findIndex(
-          (size) => size.Description === value
+          (size) => size.SizeName === value
         );
         values.Sizes.splice(index, 1);
         setValues({ ...values, [name]: [...values.Sizes] });
@@ -222,6 +222,7 @@ const FormEditProduct = () => {
   };
   const [errors] = useState({});
   const editProduct = (event) => {
+    console.log(values.Sizes)
     event.preventDefault();
     if (!values.ProdName) {
       errors.ProdName = "This field is required";
@@ -321,6 +322,7 @@ const FormEditProduct = () => {
             `${process.env.REACT_APP_API_URL}/api/update/patterns`,
             formData
           );
+          window.alert('Saved Success :)')
         })
         .catch((error) => {
           console.log(error);
@@ -469,14 +471,14 @@ const FormEditProduct = () => {
                         key={i}
                         name="Sizes"
                         onChange={handleChange}
-                        value={size.Description}
+                        value={size.SizeName}
                         type="checkbox"
                         checked={values.Sizes.some(
                           (checkedSize) =>
-                            checkedSize.Description === size.Description
+                            checkedSize.SizeName === size.SizeName
                         )}
                       />
-                      {size.Description}
+                      {size.SizeName}
                     </div>
                   ))
                 : null}
@@ -552,16 +554,30 @@ const FormEditProduct = () => {
                 <div>
                   <button
                     id={pattern.patternId}
-                    name={i}
+                    name={pattern.patternName}
                     className="border-red-700 border-4 bg-red-700 rounded-2xl mb-10 px-7 mt-8 text-white text-base"
                     onClick={(event) => {
-                      event.preventDefault();
-                      const id = event.target.id;
-                      setPatterns(
-                        patterns.filter((item) => item.patternId !== id)
-                      );
-                      selectedImages.splice(i, 1);
-                    }}
+                                        event.preventDefault();
+                                        if(window.confirm('Are you sure to delete the pattern ?')){
+                                          const id = event.target.id;
+                                        const name = event.target.name
+                                        console.log(name)
+                                        setPatterns(
+                                          patterns.filter((item) => item.patternId !== id)
+                                        );
+                                        selectedImages.splice(i, 1);
+                                        Axios.delete(
+                                          `${process.env.REACT_APP_API_URL}/api/delete/pattern/${name}`
+                                        )
+                                          .then((response) => {
+                                            console.log(response)
+                                          })
+                                          .catch((error) => {
+                                            console.log(error);
+                                          });
+                                        }
+                                        
+                                      }}
                   >
                     delete
                   </button>
@@ -586,7 +602,8 @@ const FormEditProduct = () => {
           </div>
         </div>
         <button className="bg-gray-500 text-white rounded-2xl px-5 py-1.5 mt-8 text-sm xl:text-2xl xl:px-8 xl:py-2.5 xl:rounded-full">
-          edit product
+          save change
+          
         </button>
       </form>
     </div>
