@@ -45,7 +45,12 @@ const FormEditProduct = () => {
   };
   useEffect(() => {
     Axios.get(
-      `${process.env.REACT_APP_API_URL}/api/show/product/${productId}`
+      `${process.env.REACT_APP_API_URL}/api/show/product/${productId}`,{
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.REACT_APP_TOKEN}`
+        }
+      }
     ).then((response) => {
       console.log(response.data);
       setValues({
