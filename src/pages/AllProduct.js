@@ -54,7 +54,7 @@ const AllProduct = (props) => {
             }}
             key={i}
           >
-            <div className="card shadow-xl rounded-xl w-32 h-56 lg:h-64 lg:h-69 lg:w-44 xl:h-96 xl:w-60">
+            <div className="card shadow-xl rounded-xl w-32 h-56 lg:h-69 lg:w-44 xl:h-96 xl:w-60">
               <div
                 className="h-32 lg:h-44 xl:h-64 rounded-t-xl bg-cover"
                 style={{
