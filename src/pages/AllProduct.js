@@ -44,7 +44,7 @@ const AllProduct = (props) => {
   }, [products, props.searchInput, state]);
   return (
     <div className="ProductsList w-screen h-screen font-kanit md:text-lg lg:text-xl xl:text-2xl text-gray-800">
-      <div className="p-5 lg:p-8 xl:p-10">All Product</div>
+      <div className="p-5 lg:p-8 xl:p-10 text-lg md:text-xl lg:text-2xl xl:text-3xl">All Product</div>
       <div className="grid grid-cols-2 gap-y-5 gap-x-6 px-5 justify-items-center md:grid-cols-4 xl:gap-x-0 md:px-16 lg:px-24">
         {searchResults.map((product, i) => (
           <Link

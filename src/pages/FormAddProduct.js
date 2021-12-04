@@ -274,9 +274,9 @@ const FormAddProduct = (props) => {
   return (
     <div
       onSubmit={addProduct}
-      className="font-kanit w-screen py-8 md:text-lg lg:text-xl xl:text-2xl text-gray-700 lg:px-20"
+      className="font-kanit p-5 lg:p-8 xl:p-10 w-screen xl:text-xl text-gray-700 lg:px-20"
     >
-      <span className="flex mb-8 justify-center">Add Product</span>
+      <span className="flex pb-5 lg:pb-8 justify-center text-lg lg:text-xl xl:text-3xl">Add Product</span>
       <form className="px-5">
         <Container1 className="first-container rounded-xl border-2 border-gray-300 flex flex-col w-full h-full py-10 md:flex-row md:space-x-10 md:justify-center">
           <div className="previewImg flex justify-center flex-col items-center md:justify-start">
@@ -290,14 +290,15 @@ const FormAddProduct = (props) => {
               type="file"
               name="Image"
               onChange={onChangePicture}
-              className="text-sm mt-7 w-48 lg:text-base lg:w-60 xl:w-72"
+              className="text-sm mt-7 w-48 xl:text-xl lg:w-60 xl:w-72"
             />
+            {errors.Image ? (
+              <span className="text-red-600 text-xs w-full text-left pt-5 ml-10 md:ml-5">
+                {errors.Image}
+              </span>
+            ) : null}
           </div>
-          {errors.Image ? (
-            <span className="text-red-600 text-xs w-full text-left pt-5">
-              {errors.Image}
-            </span>
-          ) : null}
+
           <div className="container-input space-y-4 flex flex-col w-full mt-5 md:mt-0 md:w-72 px-5 xl:w-112">
             <div className="flex">
               <label className="pr-2">name</label>
@@ -320,7 +321,7 @@ const FormAddProduct = (props) => {
                 name="BrandId"
                 onChange={handleChange}
                 value={values.BrandId}
-                className="border-b-2 border-gray-300 focus:outline-none w-full text-lg"
+                className="border-b-2 border-gray-300 focus:outline-none w-full"
               >
                 <option disabled value="0">
                   Choose a Brand
@@ -418,7 +419,7 @@ const FormAddProduct = (props) => {
           <span className="flex py-6 justify-center md:justify-start lg:justify-start">
             Patterns
           </span>
-          <div className="md:grid md:grid-cols-3 md:gap-x-5 md:justify-items-center lg:grid-cols-4 lg:gap-x-10 xl:grid-cols-5 flex flex-col justify-center items-center md:items-start px-3 md:px-0 lg:px-5 xl:px-0">
+          <div className="md:grid md:grid-cols-3 md:gap-x-10 md:justify-items-center lg:gap-x-10 xl:grid-cols-5 flex flex-col justify-center items-center md:items-start px-3 md:px-0 lg:px-5 xl:px-0">
             {patterns.map((pattern, i) => (
               <div
                 key={i}
@@ -446,7 +447,7 @@ const FormAddProduct = (props) => {
                       name="Patterns"
                       onChange={handleChange}
                       value={values.Patterns.color}
-                      className="border-b-2 border-black focus:outline-none w-full mt-5 text-center text-base"
+                      className="border-b-2 border-gray-300 focus:outline-none w-full mt-5 text-center text-base"
                       placeholder="Type your tile color"
                     />
                   </div>
@@ -473,7 +474,7 @@ const FormAddProduct = (props) => {
             ))}
             {patterns.length === selectedImages.length || !patterns.length ? (
               <div
-                className="img-container bg-gray-200 w-48 h-48 rounded-lg flex items-center justify-center cursor-pointer ju"
+                className="img-container bg-gray-200 w-48 h-48 rounded-2xl flex items-center justify-center cursor-pointer"
                 onClick={() => {
                   setPatterns([
                     ...patterns,
@@ -488,7 +489,7 @@ const FormAddProduct = (props) => {
             ) : null}
           </div>
         </div>
-        <button className="bg-gray-500 text-white rounded-2xl px-7 py-2 mt-8">
+        <button className="bg-gray-500 text-white rounded-2xl px-5 py-1.5 mt-8 text-sm xl:text-2xl xl:px-8 xl:py-2.5 xl:rounded-full">
           add product
         </button>
       </form>

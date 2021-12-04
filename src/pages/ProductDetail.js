@@ -5,6 +5,11 @@ import styled from "styled-components";
 const Description = styled.li`
   height: fit-content;
 `;
+const Textbox = styled.ul`
+  @media (min-width: 425px) {
+    padding: 2.5rem;
+  }
+`;
 const ProductDetail = (props) => {
   const history = useHistory();
   const { productId } = useParams();
@@ -24,27 +29,27 @@ const ProductDetail = (props) => {
   return (
     <div className="font-kanit md:text-lg lg:text-xl xl:text-2xl xl:flex xl:flex-col xl:justify-center xl:items-center lg:pb-20">
       {product.Brands ? (
-        <div className="text-2xl p-8">{product.Brands.BrandName}</div>
+        <div className="text-2xl p-8 md:text-4xl xl:text-5xl xl:p-10">{product.Brands.BrandName}</div>
       ) : null}
-      <div className="container px-8 md:px-60 2xl:px-96">
-        <div className="card shadow-xl rounded-lg">
+      <div className="container px-8 md:px-28 md:flex md:flex-col md:justify-center md:items-center pb-20">
+        <div className="card shadow-xl rounded-3xl md:w-96 lg:w-112">
           {product.Image ? (
-            <img className="rounded-t-lg" alt="NOT LOADED" src={`${process.env.REACT_APP_API_URL}/api/download/image/${product.Image}`}/>
+            <img className="rounded-t-3xl object-cover w-full" alt="NOT LOADED" src={`${process.env.REACT_APP_API_URL}/api/download/image/${product.Image}`}/>
           ) : null}
-          <ul className="text-left p-4 space-y-2 rounded-b-lg relative">
+          <Textbox className="text-left p-8 space-y-2 rounded-b-3xl relative">
            <Link to={`/products/productDetail/${productId}/editProduct`}>
             <i className="absolute material-icons border-2 border-gray-700 text-gray-700 rounded-md right-5 mt-1 cursor-pointer"
             >
               edit
             </i>
             </Link>
-            <li className="text-xl">{product.ProdName}</li>
+            <li className="text-xl md:text-2xl lg:text-3xl xl:text-4xl">{product.ProdName}</li>
             <li>Price: {product.Price} ฿</li>
             <li>Description</li>
             <Description className="break-words">
               {product.Description}
             </Description>
-          </ul>
+          </Textbox>
           {product.Patterns ? (
             <div className="grid grid-cols-2 w-full justify-items-center pb-5">
               {product.Patterns.map((pattern, i) => {
@@ -69,7 +74,7 @@ const ProductDetail = (props) => {
           }}
         >
           <button
-            className="bg-red-700 text-white rounded-2xl px-6 py-1 mt-5"
+            className="bg-red-700 text-white rounded-2xl px-6 py-1 mt-10"
             onClick={()=>{deleteThisProduct(product.ProdID)}}
           >
             delete
