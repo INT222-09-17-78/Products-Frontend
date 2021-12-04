@@ -56,6 +56,11 @@ const FormLogin = (props) => {
       Axios.post(`${process.env.REACT_APP_API_URL}/api/users/login`, {
         username: values.username,
         password: values.password,
+      },{
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.REACT_APP_TOKEN}`
+        }
       })
         .then((res) => {
           localStorage.setItem("isLoggedIn", true);
@@ -67,12 +72,12 @@ const FormLogin = (props) => {
           window.location = "/";
         })
         .catch((error) => {
-          errors.message = error.response.data.message;
-          setValues({
-            ...values,
-            username: values.username,
-            password: values.password,
-          });
+          // errors.message = error.response.data.message;
+          // setValues({
+          //   ...values,
+          //   username: values.username,
+          //   password: values.password,
+          // });
         });
     }
   };

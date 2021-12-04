@@ -12,7 +12,12 @@ const AllProduct = (props) => {
   const [searchResults, setSearchResults] = useState([]);
   const { state } = useLocation();
   useEffect(() => {
-    Axios.get(`${process.env.REACT_APP_API_URL}/api/show/products`)
+    Axios.get(`${process.env.REACT_APP_API_URL}/api/show/products`,{
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.REACT_APP_TOKEN}`
+      }
+    })
       .then((response) => {
         setProducts(response.data);
       })

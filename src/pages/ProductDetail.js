@@ -15,7 +15,12 @@ const ProductDetail = (props) => {
   const { productId } = useParams();
   const [product, setProduct] = useState({});
   useEffect(() => {
-    Axios.get(`${process.env.REACT_APP_API_URL}/api/show/product/${productId}`)
+    Axios.get(`${process.env.REACT_APP_API_URL}/api/show/product/${productId}`,{
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.REACT_APP_TOKEN}`
+      }
+    })
       .then((response) => {
         setProduct(response.data);
       })
