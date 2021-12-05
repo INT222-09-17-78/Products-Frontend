@@ -64,7 +64,7 @@ const FormLogin = (props) => {
       })
         .then((res) => {
           // localStorage.setItem("isLoggedIn", true);
-          
+
           setValues({
             ...values,
             username: "",
@@ -83,7 +83,7 @@ const FormLogin = (props) => {
     }
   };
   return (
-    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-52 bg-blue-cyan z-10">
+    <div className="BaseLogin w-screen h-screen flex justify-center overflow-auto absolute top-0 pt-20 bg-blue-cyan z-10">
       <ModalLogin className="Login-modal bg-white w-64 shadow-xl rounded-xl relative pb-52 md:pb-32">
         <img
           src={SquareLogoBlack}
