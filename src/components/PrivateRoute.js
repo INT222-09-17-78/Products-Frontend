@@ -5,20 +5,19 @@
 // If not: they are redirected to the login page.
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
-
-const PrivateRoute = ({ component: Component ,  ...rest }) => {
-  // Add your own authentication on the below line.
-  const isLoggedIn = localStorage.getItem('isLoggedIn')
+import Axios from "axios";
+import { useState, useEffect } from "react";
+const PrivateRoute = ({ component: Component , isLoggedIn , wasInitialized , ...rest }) => {
   return (
     <Route
       {...rest}
       render={(props) =>
-        isLoggedIn ? (
+        isLoggedIn === true ? (
           <Component {...props} />
-        ) : (
+        ) : (wasInitialized ?
           <Redirect
             to={{ pathname: "/login", state: { from: props.location } }}
-          />
+          />:null
         )
       }
     />

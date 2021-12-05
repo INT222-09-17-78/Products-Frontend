@@ -16,28 +16,54 @@ import FormEditProduct from "./pages/FormEditProduct";
 import ProductDetail from "./pages/ProductDetail";
 const App = () => {
   const [username, setUsername] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role , setRole] = useState("");
+  const [wasInitalized, setWasInitalized] = useState(true);
   const [showSidebar, setShowSidebar] = useState("-translate-x-full");
   const logOut = () => {
     if (window.confirm("Do you want to logout?") === true) {
       Axios.get(`${process.env.REACT_APP_API_URL}/api/users/logout`);
-      localStorage.removeItem("isLoggedIn");
+      // localStorage.removeItem("isLoggedIn");
       window.location = "/login";
     }
   };
   const [searchInput, setSearchInput] = useState("");
   useEffect(() => {
-    Axios.get(`${process.env.REACT_APP_API_URL}/api/users/login`)
+    Axios.get(`${process.env.REACT_APP_API_URL}/api/users/username`)
       .then((response) => {
-        setUsername(response.data.user);
+        setUsername(response.data.username);
       })
       .catch((error) => {
-        if (error.response.status === 401) {
-          localStorage.removeItem("isLoggedIn");
-        } else {
-          console.log(error);
-        }
+        // if (error.response.status === 401) {
+        //   localStorage.removeItem("isLoggedIn");
+        // } else {
+          console.log(error.message);
+        // }
+      });
+      Axios.get(`${process.env.REACT_APP_API_URL}/api/users/role`)
+      .then((response) => {
+        setRole(response.data.role);
+      })
+      .catch((error) => {
+        // if (error.response.status === 401) {
+        //   localStorage.removeItem("isLoggedIn");
+        // } else {
+          console.log(error.message);
+        // }
+      });
+      Axios.get(`${process.env.REACT_APP_API_URL}/api/users/isLoggedIn`)
+      .then((response) => {
+        setIsLoggedIn(response.data.isLoggedIn);
+      })
+      .catch((error) => {
+        // if (error.response.status === 401) {
+        //   localStorage.removeItem("isLoggedIn");
+        // } else {
+          console.log(error.message);
+        // }
       });
   }, [username]);
+  
   return (
     <div className="App w-screen h-screen overflow-x-hidden">
       <Router>
@@ -47,27 +73,40 @@ const App = () => {
           logOut={logOut}
           setSearchInput={setSearchInput}
           searchInput={searchInput}
-        ></Header>
-        <Navbar />
+          isLoggedIn={isLoggedIn}
+        />
+        <Navbar 
+        role={role}
+        />
         <Sidebar
           username={username}
           showSidebar={showSidebar}
           setShowSidebar={setShowSidebar}
           logOut={logOut}
+          role={role}
+          isLoggedIn={isLoggedIn}
         />
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={Home}/>
           <Route
             path="/products"
             component={() => <AllProduct searchInput={searchInput}/>}
             exact
           />
-          <Route path="/login" component={FormLogin} />
+          <Route path="/login" component={FormLogin} exact/>
           <PrivateRoute
             path="/users"
             component={() => <UserManage setUsername={setUsername} />}
+            wasInitialized={wasInitalized}
+            isLoggedIn={isLoggedIn}
+            exact
           />
-          <PrivateRoute path="/addProduct" component={FormAddProduct} />
+          <PrivateRoute path="/addProduct" 
+            component={FormAddProduct} 
+            wasInitialized={wasInitalized}
+            isLoggedIn={isLoggedIn}
+            exact
+          />
           <Route
             path="/products/productDetail/:productId"
             component={() => <ProductDetail />}
@@ -76,6 +115,8 @@ const App = () => {
           <PrivateRoute
             path="/products/productDetail/:productId/editProduct"
             component={() => <FormEditProduct />}
+            wasInitialized={wasInitalized}
+            isLoggedIn={isLoggedIn}
             exact
           />
         </Switch>

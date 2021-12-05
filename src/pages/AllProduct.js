@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
+import images from '../images/ads1.jpg'
 import {
   BrowserRouter as Router,
   Route,
@@ -28,6 +29,21 @@ const AllProduct = (props) => {
       setProducts([]);
     };
   }, []);
+  // useEffect(() => {
+  //   Axios.get(`https://freesvg.org/download/195072`,{
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': `Bearer ${process.env.REACT_APP_TOKEN}`
+  //     },
+  //     // responseType: 'image/jpeg'
+  //   }).then(response=>{
+  //     // const data = `data:${response.headers['content-type']};base64,${new Buffer.from(response.data,'binary').toString('base64')}`;
+  //     const data = `data:${response.headers['content-type']};base64,${new Buffer(response.data).toString('base64')}`;
+  //     // const file = new Blob([response.data], {type:'image/png'})
+  //     // console.log(file.size)
+  //     setImg(data)
+  //   })
+  // },[])
   useEffect(() => {
     const results = products.filter(
       (product) =>

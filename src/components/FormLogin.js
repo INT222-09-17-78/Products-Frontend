@@ -63,7 +63,8 @@ const FormLogin = (props) => {
         }
       })
         .then((res) => {
-          localStorage.setItem("isLoggedIn", true);
+          // localStorage.setItem("isLoggedIn", true);
+          
           setValues({
             ...values,
             username: "",

@@ -1,11 +1,15 @@
 import { BrowserRouter as Switch, Link, useHistory } from "react-router-dom";
 import SquareLogo from "../images/SquareLogo.png";
+// import { useState } from "react";
+// import Axios from "axios";
 const Header = (props) => {
   const history = useHistory();
+  // const [isLoggedIn, setIsLoggedIn] = useState("");
   const handleChange = (event) => {
     history.push("/products");
     props.setSearchInput(event.target.value);
   };
+  
   return (
     // <Router>
     <>
@@ -36,7 +40,7 @@ const Header = (props) => {
             onChange={handleChange}
           />
         </div>
-        {localStorage.getItem("isLoggedIn") === "true" ? (
+        {props.isLoggedIn ? (
           <div
             hidden
             className="hidden loggedIn ml-5 lg:flex flex-row break-all text-right font-kanit items-center"

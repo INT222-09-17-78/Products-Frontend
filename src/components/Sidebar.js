@@ -12,7 +12,7 @@ const Sidebar = (props) => {
       >
         close
       </i>
-      {localStorage.getItem("isLoggedIn") === "true" ? (
+      {props.isLoggedIn ? (
         <div className="w-full h-24 flex items-center space-x-1.5 text-gray-500 font-kanit text-sm">
           <i className="material-icons cursor-pointer text-gray-400 text-5xl">
             account_circle
@@ -76,7 +76,8 @@ const Sidebar = (props) => {
             add product
           </div>
         </Link>
-        <Link to="/users">
+        {props.role === 'Admin' ?
+          <Link to="/users">
           <div
             className="flex items-center cursor-pointer"
             onClick={() => {
@@ -88,14 +89,16 @@ const Sidebar = (props) => {
             </i>
             user management
           </div>
-        </Link>
+        </Link> : null
+        }
+        
         <div className="flex items-center">
           <i className="material-icons cursor-pointer text-gray-400 mr-2">
             groups
           </i>
           about us
         </div>
-        {localStorage.getItem("isLoggedIn") === "true" ? (
+        {props.isLoggedIn ? (
           <div
             className="flex items-center text-red-500 cursor-pointer"
             onClick={props.logOut}

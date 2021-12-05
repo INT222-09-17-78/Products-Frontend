@@ -1,5 +1,5 @@
 import { BrowserRouter as Route, Link } from "react-router-dom";
-const Navbar = () => {
+const Navbar = (props) => {
   return (
     <div className="Navbar px-20 font-kanit border-none w-full text-sm capitalize font-light bg-blue-cyan text-white h-16 relative lg:flex flex-row shadow-xl z-10 space-x-10 hidden items-center xl:text-lg">
       <Link to="/" className="flex flex-row items-center">
@@ -18,12 +18,15 @@ const Navbar = () => {
         </i>
         <div className="cursor-pointer ">add product</div>
       </Link>
-      <Link to="/users" className="flex flex-row items-center">
+      {props.role === 'Admin' ? 
+        <Link to="/users" className="flex flex-row items-center">
         <i className="material-icons cursor-pointer mr-2">
           manage_accounts
         </i>
         <div className="cursor-pointer ">user management</div>
-      </Link>
+      </Link> : null
+      }
+      
       <Link to="#" className="flex flex-row items-center">
         <i className="material-icons cursor-pointer mr-2">
           groups
