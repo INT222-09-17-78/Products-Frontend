@@ -263,11 +263,13 @@ const FormAddProduct = (props) => {
           Axios.post(
             `${process.env.REACT_APP_API_URL}/api/create/pattern`,
             formData
-          );
-          window.alert('Add Product Success :D')
+          ).catch((error) => {
+            console.log(error.response.data.message)
+            // errors.message = error.response.data.message;
+          });
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.message)
         });
     }
   };
@@ -453,7 +455,6 @@ const FormAddProduct = (props) => {
                     />
                   </div>
                 ) : null}
-
                 <div>
                   <button
                     id={pattern.patternId}

@@ -73,7 +73,7 @@ const FormLogin = (props) => {
           window.location = "/";
         })
         .catch((error) => {
-          // errors.message = error.response.data.message;
+          errors.message = error.response.data.message;
           // setValues({
           //   ...values,
           //   username: values.username,
