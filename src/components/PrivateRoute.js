@@ -7,17 +7,19 @@ import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import Axios from "axios";
 import { useState, useEffect } from "react";
-const PrivateRoute = ({ component: Component , isLoggedIn , wasInitialized , ...rest }) => {
+const PrivateRoute = ({
+  component: Component,
+  ...rest
+}) => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn")
   return (
     <Route
       {...rest}
       render={(props) =>
-        isLoggedIn === true ? (
+        isLoggedIn ? (
           <Component {...props} />
-        ) : (wasInitialized ?
-          <Redirect
-            to={{ pathname: "/login", state: { from: props.location } }}
-          />:null
+        ) : (
+           <Redirect to="/login" />
         )
       }
     />

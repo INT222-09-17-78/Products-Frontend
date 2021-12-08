@@ -18,12 +18,11 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role , setRole] = useState("");
-  const [wasInitalized, setWasInitalized] = useState(true);
   const [showSidebar, setShowSidebar] = useState("-translate-x-full");
   const logOut = () => {
     if (window.confirm("Do you want to logout?") === true) {
       Axios.get(`${process.env.REACT_APP_API_URL}/api/users/logout`);
-      // localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("isLoggedIn")
       window.location = "/login";
     }
   };
@@ -34,33 +33,20 @@ const App = () => {
         setUsername(response.data.username);
       })
       .catch((error) => {
-        // if (error.response.status === 401) {
-        //   localStorage.removeItem("isLoggedIn");
-        // } else {
-          console.log(error.message);
-        // }
       });
       Axios.get(`${process.env.REACT_APP_API_URL}/api/users/role`)
       .then((response) => {
         setRole(response.data.role);
       })
       .catch((error) => {
-        // if (error.response.status === 401) {
-        //   localStorage.removeItem("isLoggedIn");
-        // } else {
-          console.log(error.message);
-        // }
       });
       Axios.get(`${process.env.REACT_APP_API_URL}/api/users/isLoggedIn`)
       .then((response) => {
         setIsLoggedIn(response.data.isLoggedIn);
+        localStorage.setItem("isLoggedIn", response.data.isLoggedIn)
       })
       .catch((error) => {
-        // if (error.response.status === 401) {
-        //   localStorage.removeItem("isLoggedIn");
-        // } else {
-          console.log(error.message);
-        // }
+
       });
   }, [username]);
   
@@ -97,26 +83,21 @@ const App = () => {
           <PrivateRoute
             path="/users"
             component={() => <UserManage setUsername={setUsername} />}
-            wasInitialized={wasInitalized}
-            isLoggedIn={isLoggedIn}
             exact
           />
           <PrivateRoute path="/addProduct" 
             component={FormAddProduct} 
-            wasInitialized={wasInitalized}
-            isLoggedIn={isLoggedIn}
             exact
           />
           <Route
             path="/products/productDetail/:productId"
             component={() => <ProductDetail />}
+            isLoggedIn={isLoggedIn}
             exact
           />
           <PrivateRoute
             path="/products/productDetail/:productId/editProduct"
             component={() => <FormEditProduct />}
-            wasInitialized={wasInitalized}
-            isLoggedIn={isLoggedIn}
             exact
           />
         </Switch>

@@ -43,7 +43,6 @@ const FormEditUser = (props) => {
       })
       .catch((error) => {
         if (!error.response || error.response.status === 401) {
-          console.log(error.response);
         }
       });
   };
@@ -54,18 +53,11 @@ const FormEditUser = (props) => {
       })
       .catch((error) => {
         if (!error.response || error.response.status === 401) {
-          console.log(error.response);
         }
       });
   };
   const editUser = (event) => {
-    console.log(values.role);
-    console.log(values.username);
-    event.preventDefault();
-    //Username validation
-    // if (!values.username.trim()) {
-    //   errors.username = "This field is required";
-    // } else
+    event.preventDefault()
     if (values.username.trim().length > 25) {
       errors.username = "Your username must be only 25 characters";
     } else if (!usernameFormat.test(values.username)) {
@@ -75,16 +67,6 @@ const FormEditUser = (props) => {
     } else {
       errors.username = "";
     }
-    // if (!mailFormat.test(values.email)) {
-    //   errors.email = "Enter your email only";
-    // } else {
-    //   errors.email = "";
-    // }
-    // if (!moblieFormat.test(values.mobile)) {
-    //   errors.mobile = "Enter your mobile only";
-    // } else {
-    //   errors.mobile = "";
-    // }
     if (errors.message || errors.username || errors.email || errors.mobile) {
       errors.message = "";
       setValues({

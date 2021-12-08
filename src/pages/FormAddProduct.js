@@ -45,14 +45,12 @@ const FormAddProduct = (props) => {
         setBrands(response.data);
       })
       .catch((error) => {
-        console.log(error);
       });
     Axios.get(`${process.env.REACT_APP_API_URL}/api/show/sizes`)
       .then((response) => {
         setSizes(response.data);
       })
       .catch((error) => {
-        console.log(error);
       });
   }, []);
   const [values, setValues] = useState({
@@ -165,7 +163,6 @@ const FormAddProduct = (props) => {
   };
   const [errors] = useState({});
   const addProduct = (event) => {
-    console.log(values);
     event.preventDefault();
     if (!values.ProdName) {
       errors.ProdName = "This field is required";
@@ -263,13 +260,9 @@ const FormAddProduct = (props) => {
           Axios.post(
             `${process.env.REACT_APP_API_URL}/api/create/pattern`,
             formData
-          ).catch((error) => {
-            console.log(error.response.data.message)
-            // errors.message = error.response.data.message;
-          });
+          );
         })
         .catch((error) => {
-          console.log(error.response.data.message)
         });
     }
   };
