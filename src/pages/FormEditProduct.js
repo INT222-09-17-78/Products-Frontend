@@ -98,7 +98,7 @@ const FormEditProduct = () => {
       .catch((error) => {
         if(!error.response || error.response.status === 401){
           localStorage.removeItem("isLoggedIn")
-          window.location = "/login";
+          // window.location = "/login";
         }
       });
     Axios.get(`${process.env.REACT_APP_API_URL}/api/show/sizes`)
@@ -108,7 +108,7 @@ const FormEditProduct = () => {
       .catch((error) => {
         if(!error.response || error.response.status === 401){
           localStorage.removeItem("isLoggedIn")
-          window.location = "/login";
+          // window.location = "/login";
         }
       });
   }, []);
@@ -328,7 +328,7 @@ const FormEditProduct = () => {
         .catch((error) => {
           if(!error.response || error.response.status === 401){
             localStorage.removeItem("isLoggedIn")
-            window.location = "/login";
+            // window.location = "/login";
           }
         });
     }
@@ -579,7 +579,7 @@ const FormEditProduct = () => {
                                           .catch((error) => {
                                             if(!error.response || error.response.status === 401){
                                               localStorage.removeItem("isLoggedIn")
-                                              window.location = "/login";
+                                              // window.location = "/login";
                                             }
                                           });
                                         }
