@@ -34,12 +34,20 @@ const App = () => {
         setUsername(response.data.username);
       })
       .catch((error) => {
+        if(!error.response || error.response.status === 401){
+          localStorage.removeItem("isLoggedIn")
+          window.location = "/login";
+        }
       });
       Axios.get(`${process.env.REACT_APP_API_URL}/api/users/role`)
       .then((response) => {
         setRole(response.data.role);
       })
       .catch((error) => {
+        if(!error.response || error.response.status === 401){
+          localStorage.removeItem("isLoggedIn")
+          window.location = "/login";
+        }
       });
       Axios.get(`${process.env.REACT_APP_API_URL}/api/users/isLoggedIn`)
       .then((response) => {
@@ -47,7 +55,10 @@ const App = () => {
         localStorage.setItem("isLoggedIn", response.data.isLoggedIn)
       })
       .catch((error) => {
-
+        if(!error.response || error.response.status === 401){
+          localStorage.removeItem("isLoggedIn")
+          window.location = "/login";
+        }
       });
   }, [username]);
   
