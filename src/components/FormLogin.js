@@ -74,11 +74,11 @@ const FormLogin = (props) => {
         })
         .catch((error) => {
           errors.message = error.response.data.message;
-          // setValues({
-          //   ...values,
-          //   username: values.username,
-          //   password: values.password,
-          // });
+          setValues({
+            ...values,
+            username: values.username,
+            password: values.password,
+          });
         });
     }
   };
