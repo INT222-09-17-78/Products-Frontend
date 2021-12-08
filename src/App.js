@@ -14,6 +14,7 @@ import Sidebar from "./components/Sidebar";
 import FormAddProduct from "./pages/FormAddProduct";
 import FormEditProduct from "./pages/FormEditProduct";
 import ProductDetail from "./pages/ProductDetail";
+import Team from "./pages/Team";
 const App = () => {
   const [username, setUsername] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -95,6 +96,7 @@ const App = () => {
             isLoggedIn={isLoggedIn}
             exact
           />
+          <Route path="/aboutus" component={Team} exact/>
           <PrivateRoute
             path="/products/productDetail/:productId/editProduct"
             component={() => <FormEditProduct />}

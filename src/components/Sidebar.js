@@ -91,13 +91,19 @@ const Sidebar = (props) => {
           </div>
         </Link> : null
         }
-        
-        <div className="flex items-center">
+         <Link to="/aboutus">
+         <div
+            className="flex items-center cursor-pointer"
+            onClick={() => {
+              props.setShowSidebar("-translate-x-full");
+            }}
+          >
           <i className="material-icons cursor-pointer text-gray-400 mr-2">
             groups
           </i>
           about us
         </div>
+        </Link>
         {props.isLoggedIn ? (
           <div
             className="flex items-center text-red-500 cursor-pointer"

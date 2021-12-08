@@ -27,7 +27,7 @@ const Navbar = (props) => {
       </Link> : null
       }
       
-      <Link to="#" className="flex flex-row items-center">
+      <Link to="/aboutus" className="flex flex-row items-center">
         <i className="material-icons cursor-pointer mr-2">
           groups
         </i>
