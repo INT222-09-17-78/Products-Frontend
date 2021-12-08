@@ -213,6 +213,7 @@ const FormEditProduct = () => {
   const [errors] = useState({});
   const editProduct = (event) => {
     event.preventDefault();
+    // console.log(values.Patterns)
     if (!values.ProdName) {
       errors.ProdName = "This field is required";
     } else {
@@ -266,6 +267,7 @@ const FormEditProduct = () => {
         Description: values.Description,
         ProduceDate: values.ProduceDate,
         Sizes: values.Sizes,
+        Patterns: values.Patterns
       });
     } else {
       setValues({
@@ -277,6 +279,7 @@ const FormEditProduct = () => {
         Description: values.Description,
         ProduceDate: values.ProduceDate,
         Sizes: values.Sizes,
+        Patterns: values.Patterns
       });
       const formData = new FormData();
 
@@ -310,6 +313,7 @@ const FormEditProduct = () => {
             `${process.env.REACT_APP_API_URL}/api/update/patterns`,
             formData
           );
+
           window.alert('Saved Success :)')
         })
         .catch((error) => {
@@ -552,11 +556,12 @@ const FormEditProduct = () => {
                                           patterns.filter((item) => item.patternId !== id)
                                         );
                                         selectedImages.splice(i, 1);
+                                        values.Patterns.splice(i, 1)
                                         Axios.delete(
                                           `${process.env.REACT_APP_API_URL}/api/delete/pattern/${name}`
                                         )
                                           .then((response) => {
-    
+                                            
                                           })
                                           .catch((error) => {
                                           });
