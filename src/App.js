@@ -52,7 +52,7 @@ const App = () => {
       Axios.get(`${process.env.REACT_APP_API_URL}/api/users/isLoggedIn`)
       .then((response) => {
         setIsLoggedIn(response.data.isLoggedIn);
-        localStorage.setItem("isLoggedIn", response.data.isLoggedIn)
+        // localStorage.setItem("isLoggedIn", response.data.isLoggedIn)
       })
       .catch((error) => {
         if(!error.response || error.response.status === 401){
