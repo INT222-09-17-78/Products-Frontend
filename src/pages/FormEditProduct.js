@@ -96,12 +96,20 @@ const FormEditProduct = () => {
         setBrands(response.data);
       })
       .catch((error) => {
+        if(!error.response || error.response.status === 401){
+          localStorage.removeItem("isLoggedIn")
+          window.location = "/login";
+        }
       });
     Axios.get(`${process.env.REACT_APP_API_URL}/api/show/sizes`)
       .then((response) => {
         setSizes(response.data);
       })
       .catch((error) => {
+        if(!error.response || error.response.status === 401){
+          localStorage.removeItem("isLoggedIn")
+          window.location = "/login";
+        }
       });
   }, []);
   const [values, setValues] = useState({
@@ -197,11 +205,12 @@ const FormEditProduct = () => {
             setImgs(newPostData);
 
             let newData = [...values.Patterns];
-            newData[e.target.id] = { PatternImage: e.target.files[0].name };
+            newData[e.target.id] = { PatternImage: e.target.files[0].name,color: values.Patterns[e.target.id].color };
             setValues({
               ...values,
               Patterns: newData,
             });
+            console.log(values.Patterns)
           } else {
             e.target.value = null;
           }
@@ -213,7 +222,7 @@ const FormEditProduct = () => {
   const [errors] = useState({});
   const editProduct = (event) => {
     event.preventDefault();
-    // console.log(values.Patterns)
+    console.log(values.Patterns)
     if (!values.ProdName) {
       errors.ProdName = "This field is required";
     } else {
@@ -317,6 +326,10 @@ const FormEditProduct = () => {
           window.alert('Saved Success :)')
         })
         .catch((error) => {
+          if(!error.response || error.response.status === 401){
+            localStorage.removeItem("isLoggedIn")
+            window.location = "/login";
+          }
         });
     }
   };
@@ -564,6 +577,10 @@ const FormEditProduct = () => {
                                             
                                           })
                                           .catch((error) => {
+                                            if(!error.response || error.response.status === 401){
+                                              localStorage.removeItem("isLoggedIn")
+                                              window.location = "/login";
+                                            }
                                           });
                                         }
                                         

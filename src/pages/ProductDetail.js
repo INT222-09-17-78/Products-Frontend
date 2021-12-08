@@ -27,7 +27,10 @@ const ProductDetail = (props) => {
       .then((response) => {
         setProduct(response.data);
       })
-      .catch(() => {
+      .catch((error) => {
+        if(!error.response || error.response.status === 401){
+          localStorage.removeItem("isLoggedIn")       
+        }
         history.push("/products");
       });
   }, [productId, history]);

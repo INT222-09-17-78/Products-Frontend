@@ -22,7 +22,7 @@ const AllProduct = (props) => {
       .then((response) => {
         setProducts(response.data);
       })
-      .catch((error) => {
+      .catch((error) => {  
       });
     return () => {
       setProducts([]);

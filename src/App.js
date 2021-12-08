@@ -24,7 +24,7 @@ const App = () => {
     if (window.confirm("Do you want to logout?") === true) {
       Axios.get(`${process.env.REACT_APP_API_URL}/api/users/logout`);
       localStorage.removeItem("isLoggedIn")
-      window.location = "/login";
+      window.location = "/";
     }
   };
   const [searchInput, setSearchInput] = useState("");

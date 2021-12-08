@@ -45,12 +45,20 @@ const FormAddProduct = (props) => {
         setBrands(response.data);
       })
       .catch((error) => {
+        if(!error.response || error.response.status === 401){
+          localStorage.removeItem("isLoggedIn")
+          window.location = "/login";
+        }
       });
     Axios.get(`${process.env.REACT_APP_API_URL}/api/show/sizes`)
       .then((response) => {
         setSizes(response.data);
       })
       .catch((error) => {
+        if(!error.response || error.response.status === 401){
+          localStorage.removeItem("isLoggedIn")
+          window.location = "/login";
+        }
       });
   }, []);
   const [values, setValues] = useState({
@@ -264,6 +272,10 @@ const FormAddProduct = (props) => {
           window.alert('Added Success :)')
         })
         .catch((error) => {
+          if(!error.response || error.response.status === 401){
+            localStorage.removeItem("isLoggedIn")
+            window.location = "/login";
+          }
         });
     }
   };
