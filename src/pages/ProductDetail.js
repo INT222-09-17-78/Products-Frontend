@@ -29,7 +29,7 @@ const ProductDetail = (props) => {
       });
   }, [productId,history]);
   const deleteThisProduct = (id) => {
-    Axios.delete(`${process.env.REACT_APP_API_URL}/api/delete/product/${id}`);
+    Axios.delete(`${process.env.REACT_APP_API_URL}/api/delete/product/${id}`).then(()=>window.alert('Deleted Success :)'));
   };
   return (
     <div className="font-kanit md:text-lg lg:text-xl xl:text-2xl xl:flex xl:flex-col xl:justify-center xl:items-center lg:pb-20">
@@ -80,7 +80,13 @@ const ProductDetail = (props) => {
         >
           <button
             className="bg-red-700 text-white rounded-2xl px-6 py-1 mt-10"
-            onClick={()=>{deleteThisProduct(product.ProdID)}}
+            onClick={()=>{
+              if (
+                window.confirm(
+                  `Do you want to delete product ${product.ProdName} ? `
+                ) === true
+              )
+              deleteThisProduct(product.ProdID)}}
           >
             delete
           </button>
