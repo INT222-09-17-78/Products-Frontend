@@ -205,7 +205,7 @@ const FormEditProduct = () => {
             setImgs(newPostData);
 
             let newData = [...values.Patterns];
-            newData[e.target.id] = { PatternImage: e.target.files[0].name,color: values.Patterns[e.target.id].color };
+            newData[e.target.id] = { PatternImage: e.target.files[0].name};
             setValues({
               ...values,
               Patterns: newData,
