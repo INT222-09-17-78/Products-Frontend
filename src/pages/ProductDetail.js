@@ -103,7 +103,7 @@ const ProductDetail = (props) => {
                 ) === true
               ) {
                 deleteThisProduct(product.ProdID);
-                history.push("/products");
+                window.location("/products");
               }
             }}
           >
