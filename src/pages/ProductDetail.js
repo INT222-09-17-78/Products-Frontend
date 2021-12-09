@@ -93,7 +93,6 @@ const ProductDetail = (props) => {
             state: product.ProdID,
           }}
         > */}
-        {props.isLoggedIn ? (
           <button
             className="bg-red-700 text-white rounded-2xl px-6 py-1 mt-10"
             onClick={() => {
@@ -109,7 +108,6 @@ const ProductDetail = (props) => {
           >
             delete
           </button>
-        ) : null}
         {/* </Link> */}
       </div>
     </div>
